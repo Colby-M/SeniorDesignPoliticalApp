@@ -9,7 +9,7 @@ import ICON64_SettingsBlack from '../icons/ICON64_SettingsBlack.vue';
 </script>
 
 <template>
-    <div class="NavElementSpacing flex flex-col grow shrink self-stretch justify-between items-start gap-3">
+    <div class="NavElementSpacing items-top-center flex flex-col grow shrink self-stretch justify-between items-start gap-3">
             <img class="w-16 h-16" src="@/logo/LogoTest2.png" />
            <RouterLink to="/about">
                <NAV_ELEMENT_IconText>
