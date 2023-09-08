@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
 
   </header>
-    <div class="flex max-w-5xl mx-auto border-0 border-dark-5">
+    <div class="flex max-w-5xl mx-auto border-0 bg-slate-100 border-dark-5">
       <RouterView />
     </div>
 
