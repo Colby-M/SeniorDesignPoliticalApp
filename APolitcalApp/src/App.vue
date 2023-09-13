@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
 
   </header>
-    <div class="flex max-w-5xl mx-auto border-0 bg-slate-100 border-dark-5">
+    <div class="grid grid-cols-[1fr_224px_minmax(610px,768px)_1fr] h-screen">
       <RouterView />
     </div>
 

@@ -3,16 +3,26 @@ import Nav_Column from '@/components/nav/NavColumn.vue';
 </script>
 
 <template>
-    <div class="NavContainer w-1/6 flex" >
-        <div class="NavFrame grow flex items-start h-screen pb-20 rounded-lg border-x border-dark-5 "> 
+    <div class="PagePadding"></div>
+    <div class="flex mx-auto flex-shrink-0 flex-start">
+        <div class="flex pb-[300px]">
             <Nav_Column></Nav_Column>
         </div>
     </div>
 
-    <div class="ContentContainer w-5/6 shrink justify-center items-start border-r min-w-500 border-dark-5">
+    <div class="grid grid-rows-[86px_1fr]">
+        <div class="ToolbarContainer px-2 border-b border-dark-5">
+            <div>
+                <slot name="ToolbarSlot"></slot>
+            </div>
 
-        <slot name="Content"></slot>
-    </div> 
+        </div>
+        <div class="ContentContainer container ">
+            <slot name="ContentSlot"></slot>
+        </div>
+
+    </div>
+    <div class="PagePadding"></div>
 
 
 </template>
