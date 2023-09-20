@@ -20,20 +20,29 @@ onMounted(() => {
 </script>
 
 <template>
+
   <div>
     <Account v-if="session != undefined" :session="session" />
     <Auth v-else />
   </div>
-  <!-- <header>
-    <h1 class="text-9xl font-bold underline">Tailwind Test</h1>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <header>
+    <h1 class="text-3xl font-bold underline">Test Pages</h1>
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-  </header> -->
+        <li>
+          <RouterLink to="/">Home</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/about">About</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/testicon">IconTest</RouterLink>
+        </li>
 
-  <!-- <RouterView /> -->
+
+      </nav>
+  </header>
+
+  <RouterView />
 </template>
 
 <style scoped>

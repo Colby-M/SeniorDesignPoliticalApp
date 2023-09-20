@@ -24,7 +24,7 @@ module.exports = {
       'text-white': '#e8e8e8', /* light-5 */
       'text-dark': '#353b3c',  /* dark-5 */
 
-      'icon-white': '#e8e8e8', /* light-5 */
+      'icon-light': '#e8e8e8', /* light-5 */
       'icon-dark': '#353b3c'   /* dark-5 */
     }
   },
