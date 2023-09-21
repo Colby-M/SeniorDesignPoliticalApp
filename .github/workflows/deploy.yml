@@ -36,8 +36,10 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies
+        working-directory: ./APoliticalApp
         run: npm install
       - name: Build
+        working-directory: ./APoliticalApp
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -45,7 +47,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload dist repository
-          path: './dist'
+          path: './APoliticalApp/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
