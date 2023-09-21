@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: ./APoliticalApp-app/package-lock.json
+          cache-dependency-path: '**/package-lock.json'
       - name: Install dependencies
         working-directory: './APoliticalApp'
         run: npm install
