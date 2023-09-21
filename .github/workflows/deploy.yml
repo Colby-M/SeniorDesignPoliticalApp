@@ -37,10 +37,10 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
       - name: Install dependencies
-        working-directory: 'APoliticalApp'
+        working-directory: APolitcalApp
         run: npm install
       - name: Build
-        working-directory: 'APoliticalApp'
+        working-directory: APolitcalApp
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
