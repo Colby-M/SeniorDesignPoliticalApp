@@ -20,6 +20,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="text-3xl">
+    HELLO
+  </div>
   <div>
     <Account v-if="session != undefined" :session="session" />
     <Auth v-else />
