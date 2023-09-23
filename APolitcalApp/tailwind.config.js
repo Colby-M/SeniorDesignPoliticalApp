@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{vue,js,ts}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'md-lg-xl' : 'min-content minmax(500px, 768px)' /* Template Columns for resolutions > 768px */
+      }
+    },
     colors: {
       transparent: 'transparent',
       /* 

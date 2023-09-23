@@ -26,9 +26,12 @@ onMounted(() => {
           <Account v-if="session != undefined" :session="session" />
           <Auth v-else />
         </div> -->
-  <div class="grid lg:grid-cols-[1fr_auto_610px_1fr] h-screen">
-    <RouterView />
+  <div class="h-full">
+    <div class="grid w-full justify-center mx-auto grid-cols-md-lg-xl">
+      <RouterView />
+    </div>
   </div>
+
 
 </template>
 

@@ -13,7 +13,17 @@ import IconSettings from '../icons/IconSettings.vue';
 <template>
     <div>
         <div class="NavElementSpacing flex flex-col flex-grow self-stretch justify-between items-start gap-2 min-h-[424px] max-h-[654px]">
-            <img class="w-16 h-16" src="@/logo/LogoTest2.png" />
+                <div class="flex py-8">
+                    <RouterLink to="/profile">
+                        <NavElement_IconText>
+                            <template #Icon>
+                                <IconBase iconColor="dark" iconSize="medium"> <IconProfile/> </IconBase>
+                            </template>
+                            <template #Header>tempLogo</template>
+                        </NavElement_IconText>
+                    </RouterLink>
+                </div>
+
                 <RouterLink to="/profile">
                     <NavElement_IconText>
                         <template #Icon>

@@ -1,26 +1,22 @@
 <script setup lang="ts">
 import Nav_Column from '@/components/nav/NavColumn.vue';
+/* sm:w-[500px] md:w-[576px] lg:w-[640px] */
 </script>
 
 <template>
-    <div class="PagePadding"></div>
-    <div class="flex mx-auto flex-shrink-0 flex-start">
+    <div class="hidden flex-shrink-0 flex-start sm:flex">
         <Nav_Column></Nav_Column>
     </div>
 
-    <div class="grid grid-rows-[86px_1fr]">
-        <div class="ToolbarContainer px-2 border-b border-dark-5">
-            <div>
-                <slot name="ToolbarSlot"></slot>
-            </div>
-
+    <div class="grid grid-rows-[86px_1fr] px-2">
+        <div class="ToolbarContainer border-b border-dark-5">
+            <slot name="ToolbarSlot"></slot>
         </div>
         <div class="ContentContainer container ">
             <slot name="ContentSlot"></slot>
         </div>
-
     </div>
-    <div class="PagePadding"></div>
+
 
 
 </template>
