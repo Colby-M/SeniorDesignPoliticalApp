@@ -11,9 +11,8 @@ import IconSettings from '../icons/IconSettings.vue';
 </script>
 
 <template>
-    <div>
-        <div class="NavElementSpacing flex flex-col flex-grow self-stretch justify-between items-start gap-2 min-h-[424px] max-h-[654px]">
-                <div class="flex py-8">
+        <div class="NavElementSpacing flex flex-col flex-grow self-stretch justify-between items-center lg:items-start min-h-[424px] max-h-[654px]">
+                <div class="flex py-6">
                     <RouterLink to="/profile">
                         <NavElement_IconText>
                             <template #Icon>
@@ -65,5 +64,4 @@ import IconSettings from '../icons/IconSettings.vue';
                     </NavElement_IconText>
                 </RouterLink>
         </div>
-    </div>
 </template>

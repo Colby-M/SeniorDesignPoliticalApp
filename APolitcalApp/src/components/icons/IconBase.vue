@@ -7,18 +7,18 @@ export default {
     },
     iconColor: {
       type: String,
-      default: 'icon-dark'
+      default: 'dark'
     }
   },
   computed: {
     iconColorClass() {
       switch (this.iconColor) {
         case 'dark':
-          return 'stroke-icon-dark fill-transparent';
+          return 'stroke-dark fill-transparent';
         case 'light':
-          return 'stroke-icon-light fill-transparent';
+          return 'stroke-light fill-transparent';
         default:
-          return 'stroke-icon-dark fill-transparent'; 
+          return 'stroke-dark fill-transparent'; 
       }
     },
     iconSizeClass() {

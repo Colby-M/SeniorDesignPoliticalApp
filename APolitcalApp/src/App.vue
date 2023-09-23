@@ -27,9 +27,8 @@ onMounted(() => {
           <Auth v-else />
         </div> -->
   <div class="h-full">
-    <div class="grid w-full justify-center mx-auto grid-cols-md-lg-xl">
+
       <RouterView />
-    </div>
   </div>
 
 

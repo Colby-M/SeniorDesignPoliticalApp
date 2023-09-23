@@ -15,7 +15,7 @@ export default{
         <IconBase iconColor="dark" iconSize="small" > <IconApprove></IconApprove> </IconBase>
         <IconBase iconColor="dark" iconSize="medium" > <IconApprove></IconApprove> </IconBase>
         <IconBase iconColor="dark" iconSize="large" > <IconApprove></IconApprove> </IconBase>
-        <div class="bg-dark-5">
+        <div class="bg-dark">
             <IconBase iconColor="light" iconSize="large" > <IconApprove></IconApprove> </IconBase>
         </div>
         <IconBase> <IconApprove/> </IconBase>
