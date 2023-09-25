@@ -6,23 +6,14 @@ import IconReview from '../icons/IconReview.vue';
 import IconDiscover from '../icons/IconDiscover.vue';
 import IconCreate from '../icons/IconCreate.vue';
 import IconSettings from '../icons/IconSettings.vue';
+import NavLogo from './NavLogo.vue';
 
 
 </script>
 
 <template>
-        <div class="NavElementSpacing flex flex-col flex-grow self-stretch justify-between items-center lg:items-start min-h-[424px] max-h-[654px]">
-                <div class="flex py-6">
-                    <RouterLink to="/profile">
-                        <NavElement_IconText>
-                            <template #Icon>
-                                <IconBase iconColor="dark" iconSize="medium"> <IconProfile/> </IconBase>
-                            </template>
-                            <template #Header>tempLogo</template>
-                        </NavElement_IconText>
-                    </RouterLink>
-                </div>
-
+        <nav class="NavElementSpacing flex-col flex-grow shrink items-center gap-3 justify-between inline-flex self-stretch max-h-[444px] lg:items-start">
+                <NavLogo></NavLogo>
                 <RouterLink to="/profile">
                     <NavElement_IconText>
                         <template #Icon>
@@ -44,7 +35,7 @@ import IconSettings from '../icons/IconSettings.vue';
                         <template #Icon>
                             <IconBase iconColor="dark" iconSize="medium"> <IconReview/> </IconBase>
                         </template>
-                        <template #Header>review & sign</template>
+                        <template #Header>review</template>
                     </NavElement_IconText>
                 </RouterLink>
                 <RouterLink to="/create">
@@ -52,7 +43,7 @@ import IconSettings from '../icons/IconSettings.vue';
                         <template #Icon>
                             <IconBase iconColor="dark" iconSize="medium"> <IconCreate/> </IconBase>
                         </template>
-                        <template #Header>create petition</template>
+                        <template #Header>compose</template>
                     </NavElement_IconText>
                 </RouterLink>
                 <RouterLink to="/settings">
@@ -63,5 +54,5 @@ import IconSettings from '../icons/IconSettings.vue';
                         <template #Header>settings</template>
                     </NavElement_IconText>
                 </RouterLink>
-        </div>
+        </nav>
 </template>

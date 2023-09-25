@@ -4,8 +4,8 @@ import Nav_Column from '@/components/nav/NavColumn.vue';
 </script>
 
 <template>
-    <div class="grid w-full justify-center mx-auto grid-cols-sm-md-lg-xl">
-        <div class="hidden flex-shrink-0 flex-start sm:flex">
+    <div class="grid w-full h-screen justify-center mx-auto grid-cols-sm-md-lg-xl">
+        <div class="flex-shrink-0 flex flex-start pb-48">
             <Nav_Column></Nav_Column>
         </div>
 
