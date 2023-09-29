@@ -4,6 +4,6 @@ import MainLayout from '@/components/layouts/MainLayout.vue';
 
 <template>
   <MainLayout>
-    <template #Content>Settings</template>
+    <template #ContentSlot>Settings</template>
   </MainLayout>
 </template>

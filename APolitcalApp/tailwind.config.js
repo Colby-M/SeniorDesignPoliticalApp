@@ -13,6 +13,9 @@ module.exports = {
       gridTemplateRows: {
         'sm-md-lg-xl' : '80px 1fr',                 /* Content Rows for resolutions > w-640px */
         'mobile'      : '80px 1fr 80px'             /* Content Rows for resolutions < w-640px */
+      },
+      maxHeight: {
+        '112' : '28rem', /* 440px */
       }
     },
     colors: {

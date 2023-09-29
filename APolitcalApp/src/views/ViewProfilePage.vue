@@ -4,6 +4,9 @@ import MainLayout from '@/components/layouts/MainLayout.vue';
 
 <template>
   <MainLayout>
-    <template #Content>Profile</template>
+    <template #ContentSlot>
+      <h1>profile</h1>
+      <img src="../components/logo/walter.png"/>
+    </template>
   </MainLayout>
 </template>

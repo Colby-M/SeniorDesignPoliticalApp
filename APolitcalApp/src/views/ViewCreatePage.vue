@@ -4,6 +4,6 @@ import MainLayout from '@/components/layouts/MainLayout.vue';
 
 <template>
   <MainLayout>
-    <template #Content>Create</template>
+    <template #ContentSlot>Create</template>
   </MainLayout>
 </template>
