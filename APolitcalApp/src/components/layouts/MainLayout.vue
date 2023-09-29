@@ -10,8 +10,8 @@ import NavRow from '../nav/NavRow.vue';
             <Nav_Column></Nav_Column>
         </div>
 
-        <div class="grid w-full grid-rows-mobile sm:grid-rows-sm-md-lg-xl">
-            <div class="ToolbarContainer border-b border-dark-5">
+        <div class="grid w-full grid-rows-mobile sm:grid-rows-sm-md-lg-xl sm:pr-2">
+            <div class="ToolbarContainer border-b border-border">
                 <slot name="ToolbarSlot"></slot>
             </div>
             <div class="w-full ">

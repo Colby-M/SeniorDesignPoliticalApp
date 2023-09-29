@@ -25,7 +25,8 @@ module.exports = {
       */
       'light': '#f1f5f9',
       'dark': '#353b3c',
-      'highlight': '#5F8173'
+      'highlight': '#5F8173',
+      'border': '#aeb1b1'
     }
   },
   plugins: [],

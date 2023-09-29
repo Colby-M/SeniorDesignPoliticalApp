@@ -1,12 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BasePageView from '../views/BasePageView.vue'
-import ViewProfilePage from '../views/ViewProfilePage.vue'
-import ViewDiscoverPage from '@/views/ViewDiscoverPage.vue'
-import ViewReviewPage from '@/views/ViewReviewPage.vue'
-import ViewCreatePage from '@/views/ViewCreatePage.vue'
-import ViewSettingsPage from '@/views/ViewSettingsPage.vue'
-import HomeView from '../views/HomeView.vue'
-import IconTestView from '../views/IconTestView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

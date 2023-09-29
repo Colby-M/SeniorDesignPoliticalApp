@@ -9,7 +9,7 @@ import IconReview from '../icons/IconReview.vue';
 </script>
 
 <template>
-<div class="fixed bottom-0 left-0 w-full h-16 bg-white border-t border-dark">
+<div class="fixed bottom-0 left-0 w-full h-16 bg-white border-t border-border">
     <div class="grid h-full w-full grid-cols-4 mx-auto font-medium">
         <div class="flex-col m-auto px-5">
             <RouterLink to="/profile">

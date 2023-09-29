@@ -26,8 +26,7 @@ onMounted(() => {
           <Account v-if="session != undefined" :session="session" />
           <Auth v-else />
         </div> -->
-  <div class="h-full">
-
+  <div class="h-full bg-light">
       <RouterView />
   </div>
 
