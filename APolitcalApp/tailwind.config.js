@@ -7,10 +7,12 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'sm-md-lg-xl' : 'min-content minmax(500px, 768px)', /* Template Columns for resolutions > w-640px */
+        'sm-md-lg-xl' : 'min-content minmax(434px, 967px)', /* Template Columns for resolutions > w-640px */
+        'mobile'      : 'minmax(434px, 639px)'              /* Template Columns for resolutions < w-640px */
       },
       gridTemplateRows: {
-        'Content-sm-md-lg-xl' : '80px 1fr',                 /* Content Rows for resolutions > w-640px */
+        'sm-md-lg-xl' : '80px 1fr',                 /* Content Rows for resolutions > w-640px */
+        'mobile'      : '80px 1fr 80px'             /* Content Rows for resolutions < w-640px */
       }
     },
     colors: {

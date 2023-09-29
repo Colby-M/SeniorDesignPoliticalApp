@@ -13,46 +13,46 @@ import NavLogo from './NavLogo.vue';
 
 <template>
         <nav class="NavElementSpacing flex-col flex-grow shrink items-center gap-3 justify-between inline-flex self-stretch max-h-[444px] lg:items-start">
-                <NavLogo></NavLogo>
-                <RouterLink to="/profile">
-                    <NavElement_IconText>
-                        <template #Icon>
-                            <IconBase iconColor="dark" iconSize="medium"> <IconProfile/> </IconBase>
-                        </template>
-                        <template #Header>profile</template>
-                    </NavElement_IconText>
-                </RouterLink>
-                <RouterLink to="/discover">
-                    <NavElement_IconText>
-                        <template #Icon>
-                            <IconBase iconColor="dark" iconSize="medium"> <IconDiscover/> </IconBase>
-                        </template>
-                        <template #Header>discover</template>
-                    </NavElement_IconText>
-                </RouterLink>
-                <RouterLink to="/review">
-                    <NavElement_IconText>
-                        <template #Icon>
-                            <IconBase iconColor="dark" iconSize="medium"> <IconReview/> </IconBase>
-                        </template>
-                        <template #Header>review</template>
-                    </NavElement_IconText>
-                </RouterLink>
-                <RouterLink to="/create">
-                    <NavElement_IconText>
-                        <template #Icon>
-                            <IconBase iconColor="dark" iconSize="medium"> <IconCreate/> </IconBase>
-                        </template>
-                        <template #Header>compose</template>
-                    </NavElement_IconText>
-                </RouterLink>
-                <RouterLink to="/settings">
-                    <NavElement_IconText>
-                        <template #Icon>
-                            <IconBase iconColor="dark" iconSize="medium"> <IconSettings/> </IconBase>
-                        </template>
-                        <template #Header>settings</template>
-                    </NavElement_IconText>
-                </RouterLink>
+            <NavLogo></NavLogo>
+            <RouterLink to="/profile">
+                <NavElement_IconText>
+                    <template #Icon>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconProfile/> </IconBase>
+                    </template>
+                    <template #Header>profile</template>
+                </NavElement_IconText>
+            </RouterLink>
+            <RouterLink to="/discover">
+                <NavElement_IconText>
+                    <template #Icon>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconDiscover/> </IconBase>
+                    </template>
+                    <template #Header>discover</template>
+                </NavElement_IconText>
+            </RouterLink>
+            <RouterLink to="/review">
+                <NavElement_IconText>
+                    <template #Icon>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconReview/> </IconBase>
+                    </template>
+                    <template #Header>review</template>
+                </NavElement_IconText>
+            </RouterLink>
+            <RouterLink to="/create">
+                <NavElement_IconText>
+                    <template #Icon>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconCreate/> </IconBase>
+                    </template>
+                    <template #Header>compose</template>
+                </NavElement_IconText>
+            </RouterLink>
+            <RouterLink to="/settings">
+                <NavElement_IconText>
+                    <template #Icon>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconSettings/> </IconBase>
+                    </template>
+                    <template #Header>settings</template>
+                </NavElement_IconText>
+            </RouterLink>
         </nav>
 </template>
