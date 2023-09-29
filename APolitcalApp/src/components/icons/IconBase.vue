@@ -35,7 +35,6 @@ const iconSizeClass = computed(() => {
           return 'w-12 h-12'; 
       }
 })
-
 </script>
 
 <template>

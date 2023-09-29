@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Sidebar_Column from '@/components/nav/SidebarColumn.vue';
+import Sidebar_Column from '@/components/nav/Sidebar.vue';
 import NavRow from '../nav/NavRow.vue';
 </script>
 
 <template>
     <div class="grid w-screen h-screen justify-center grid-cols-mobile sm:grid-cols-sm-md-lg-xl">
-        <div class="hidden sm:flex flex-start pb-48">
+        <div class="hidden sm:flex flex-start pb-12">
             <Sidebar_Column></Sidebar_Column>
         </div>
 
