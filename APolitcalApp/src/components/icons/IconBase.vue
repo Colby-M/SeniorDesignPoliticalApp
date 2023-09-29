@@ -1,18 +1,19 @@
-<script lang="ts">
-export default {
-  props: {
+<script lang="ts" setup>
+import { computed } from 'vue'
+
+const props = defineProps({
     iconSize: {
       type: String,
-      default: 'large'
+      requred: false /* Class functions default to 'large' if invalid or empty */
     },
     iconColor: {
       type: String,
-      default: 'dark'
+      requred: false /* Class functions default to 'dark' if invalid or empty */
     }
-  },
-  computed: {
-    iconColorClass() {
-      switch (this.iconColor) {
+});
+
+const iconColorClass = computed(() => {
+  switch (props.iconColor) {
         case 'dark':
           return 'stroke-dark fill-transparent';
         case 'light':
@@ -20,9 +21,10 @@ export default {
         default:
           return 'stroke-dark fill-transparent'; 
       }
-    },
-    iconSizeClass() {
-      switch (this.iconSize) {
+})
+
+const iconSizeClass = computed(() => {
+  switch (props.iconSize) {
         case 'small':
           return 'w-4 h-4';
         case 'medium':
@@ -32,9 +34,8 @@ export default {
         default:
           return 'w-12 h-12'; 
       }
-    }
-  }
-}
+})
+
 </script>
 
 <template>

@@ -1,13 +1,7 @@
-<script lang="ts">
+<script lang="ts" setup>
 import IconBase from "../components/icons/IconBase.vue";
 import IconApprove from "../components/icons/IconApprove.vue";
 
-export default{
-    components: {
-        IconBase,
-        IconApprove
-    }
-}
 </script>
 
 <template>
