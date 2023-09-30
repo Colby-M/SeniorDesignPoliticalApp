@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
 // import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import Account from './components/Auth/AuthAccount.vue';
@@ -20,32 +21,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text-3xl">
-    HELLO
+
+   <!-- <div>
+          <Account v-if="session != undefined" :session="session" />
+          <Auth v-else />
+        </div> -->
+  <div class="h-full bg-light">
+      <RouterView />
   </div>
-  <div>
-    <Account v-if="session != undefined" :session="session" />
-    <Auth v-else />
-  </div>
-  <header>
-    <h1 class="text-3xl font-bold underline">Test Pages</h1>
-      <nav>
-        <li>
-          <RouterLink to="/">Home</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/about">About</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/testicon">IconTest</RouterLink>
-        </li>
 
 
-      </nav>
-  </header>
-
-  <RouterView />
 </template>
 
-<style scoped>
-</style>

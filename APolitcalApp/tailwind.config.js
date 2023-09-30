@@ -5,7 +5,19 @@ module.exports = {
     "./src/**/*.{vue,js,ts}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'sm-md-lg-xl' : 'min-content minmax(434px, 967px)', /* Template Columns for resolutions > w-640px */
+        'mobile'      : 'minmax(434px, 639px)'              /* Template Columns for resolutions < w-640px */
+      },
+      gridTemplateRows: {
+        'sm-md-lg-xl' : '80px 1fr',                 /* Content Rows for resolutions > w-640px */
+        'mobile'      : '80px 1fr 80px'             /* Content Rows for resolutions < w-640px */
+      },
+      maxHeight: {
+        '112' : '28rem', /* 440px */
+      }
+    },
     colors: {
       transparent: 'transparent',
       /* 
@@ -14,18 +26,10 @@ module.exports = {
           - 5 is the base color
           - higher than 5 is darker
       */
-      'light-3': '#efefef',
-      'light-5': '#e8e8e8',
-      'light-7': '#e0e0e0',
-
-
-      'dark-5': '#353b3c',
-
-      'text-white': '#e8e8e8', /* light-5 */
-      'text-dark': '#353b3c',  /* dark-5 */
-
-      'icon-light': '#e8e8e8', /* light-5 */
-      'icon-dark': '#353b3c'   /* dark-5 */
+      'light': '#f1f5f9',
+      'dark': '#353b3c',
+      'highlight': '#5F8173',
+      'border': '#aeb1b1'
     }
   },
   plugins: [],
