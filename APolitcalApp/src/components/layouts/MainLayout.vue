@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Sidebar_Column from '@/components/nav/SidebarColumn.vue';
+import Sidebar_Column from '@/components/nav/Sidebar.vue';
 import NavRow from '../nav/NavRow.vue';
 </script>
 

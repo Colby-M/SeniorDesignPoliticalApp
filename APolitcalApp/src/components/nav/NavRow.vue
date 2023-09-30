@@ -1,9 +1,5 @@
 <script lang="ts" setup>
 import IconBase from '../icons/IconBase.vue';
-import IconProfile from '../icons/IconProfile.vue';
-import IconDiscover from '../icons/IconDiscover.vue';
-import IconCreate from '../icons/IconCreate.vue';
-import IconReview from '../icons/IconReview.vue';
 
 
 </script>
@@ -13,22 +9,22 @@ import IconReview from '../icons/IconReview.vue';
     <div class="grid h-full w-full grid-cols-4 mx-auto font-medium">
         <div class="flex-col m-auto px-5">
             <RouterLink to="/profile">
-                    <IconBase iconColor="dark" iconSize="medium"><IconProfile/></IconBase>
+                    <IconBase iconColor="animate-dark" iconSize="medium" iconName="profile"></IconBase>
             </RouterLink>
         </div>
         <div class="flex-col m-auto px-5">
             <RouterLink to="/discover">
-                    <IconBase iconColor="dark" iconSize="medium"><IconDiscover/></IconBase>
+                    <IconBase iconColor="animate-dark" iconSize="medium" iconName="discover"></IconBase>
             </RouterLink>
         </div>
         <div class="flex-col m-auto px-5">
             <RouterLink to="/create">
-                    <IconBase iconColor="dark" iconSize="medium"><IconCreate/></IconBase>
+                    <IconBase iconColor="animate-dark" iconSize="medium" iconName="create"></IconBase>
             </RouterLink>
         </div>
         <div class="flex-col m-auto px-5">
             <RouterLink to="/review">
-                    <IconBase iconColor="dark" iconSize="medium"><IconReview/></IconBase>
+                    <IconBase iconColor="animate-dark" iconSize="medium" iconName="review"></IconBase>
             </RouterLink>
         </div>
     </div>
