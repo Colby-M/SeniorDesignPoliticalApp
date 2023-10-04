@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import MainLayout from '@/components/layouts/MainLayout.vue';
-import ButtonBase from '@/components/button/ButtonBase.vue'
+import ButtonBase from '@/components/button/ButtonBase.vue';
+import SearchBar from '@/components/search/SearchBar.vue';
 </script>
 
 <template>
   <MainLayout>
-    <template #ToolbarSlot>Button Type Tests</template>
+    <template #ToolbarSlot>
+        <SearchBar></SearchBar>
+    </template>
     <template #ContentSlot>
         <ButtonBase></ButtonBase>
     </template>

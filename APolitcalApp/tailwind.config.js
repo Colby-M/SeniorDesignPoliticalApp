@@ -16,6 +16,11 @@ module.exports = {
       },
       maxHeight: {
         '112' : '28rem', /* 440px */
+      },
+      width: {
+        '50' : '12.5rem',/* */
+        '52' : '13rem',/* */
+        '46' : '11.5rem'
       }
     },
     colors: {
