@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import IconBase from '../icons/IconBase.vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     sidebarElementText: {
@@ -9,7 +10,19 @@ const props = defineProps({
     sidebarIconName: {
         type: String,
         required: true
+    },
+    sidebarElementIsActive: {
+        type: Boolean,
+        required: true
     }
+});
+
+const textClass = computed( () => {
+    return props.sidebarElementIsActive ? 'text-highlight font-medium leading-10' : 'text-dark font-medium leading-10 group-hover:text-highlight duration-200' ;
+});
+
+const iconClass = computed( () => {
+    return props.sidebarElementIsActive ? 'static-highlight' : 'animate-dark';
 });
 
 </script>
@@ -17,10 +30,9 @@ const props = defineProps({
 
 <template>
     <div class="group flex justify-center items-center px-2 lg:justify-start lg:gap-1 lg:pr-8"> 
-        <IconBase iconColor="animate-dark" iconSize="medium" :iconName="sidebarIconName"></IconBase>
+        <IconBase :iconColor="iconClass" iconSize="medium" :iconName="sidebarIconName"></IconBase>
         <div class="hidden lg:block lg:w-16">
-            <span class="text-dark font-medium leading-10 group-hover:text-highlight duration-200"> {{ sidebarElementText }} </span>
+            <span :class="textClass"> {{ sidebarElementText }} </span>
         </div>
     </div>
-    
 </template>

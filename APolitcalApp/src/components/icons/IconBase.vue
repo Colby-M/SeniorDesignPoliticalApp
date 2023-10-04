@@ -35,6 +35,8 @@ const iconColorClass = computed(() => {
           return 'stroke-dark fill-transparent';
         case 'static-light':
           return 'stroke-light fill-transparent';
+        case 'static-highlight':
+          return 'stroke-highlight fill-transparent';
         case 'animate-dark':
           return 'stroke-dark fill-transparent group-hover:stroke-highlight duration-100';
         default:
