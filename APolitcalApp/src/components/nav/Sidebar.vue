@@ -11,6 +11,7 @@ const sidebarData = ref([
     {text: 'review',   icon: 'review',   path: 'review'},
     {text: 'create',   icon: 'create',   path: 'create'},
     {text: 'settings', icon: 'settings', path: 'settings'},
+    {text: 'devTests',  icon: 'editable', path:'devTest'}
 ]);
 
 const Route = useRoute()
