@@ -38,6 +38,14 @@ import SidebarLogo from './SidebarLogo.vue';
                     <template #Header>review</template>
                 </SidebarElement_IconText>
             </RouterLink>
+            <RouterLink to="/news">
+                <SidebarElement_IconText>
+                    <template #Icon>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconReview/> </IconBase>
+                    </template>
+                    <template #Header>review</template>
+                </SidebarElement_IconText>
+            </RouterLink>
             <RouterLink to="/create">
                 <SidebarElement_IconText>
                     <template #Icon>
