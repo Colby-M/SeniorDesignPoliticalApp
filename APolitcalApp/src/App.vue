@@ -18,17 +18,30 @@ onMounted(() => {
     session.value = _session ?? undefined;
   })
 })
+
+async function signInWithGithub()
+{
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github'
+  });
+}
+async function signOut()
+{
+  const { error } = await supabase.auth.signOut();
+}
 </script>
 
 <template>
 
-   <!-- <div>
-          <Account v-if="session != undefined" :session="session" />
-          <Auth v-else />
-        </div> -->
-  <div class="h-full bg-light">
+   <div>
+      <Account v-if="session != undefined" :session="session" />
+      <button v-else @click="signInWithGithub()" >
+        Sign in with Github
+      </button>
+    </div>
+  <!-- <div class="h-full bg-light">
       <RouterView />
-  </div>
+  </div> -->
 
 
 </template>
