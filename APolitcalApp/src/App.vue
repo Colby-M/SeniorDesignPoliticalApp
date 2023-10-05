@@ -1,44 +1,31 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 // import { RouterLink, RouterView } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import Account from './components/Auth/AuthAccount.vue';
-import Auth from './components/Auth/AuthComponent.vue';
-import supabase from './lib/supabaseClient';
-import type { Session } from '@supabase/supabase-js';
+import { useAuthStore } from './stores/Auth';
 
-const session = ref<Session>();
-
-onMounted(() => {
-  supabase.auth.getSession().then(({ data }) => {
-    session.value = data.session ?? undefined;
-  })
-
-  supabase.auth.onAuthStateChange((_, _session) => {
-    session.value = _session ?? undefined;
-  })
-})
-
-async function signInWithGithub()
-{
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github'
+  const authStore = useAuthStore();
+  const input = reactive({
+    username: null,
+    password: null
   });
-}
-async function signOut()
-{
-  const { error } = await supabase.auth.signOut();
-}
 </script>
 
 <template>
 
    <div>
-      <Account v-if="session != undefined" :session="session" />
-      <button v-else @click="signInWithGithub()" >
+      <Account v-if="authStore.session != undefined" :session="authStore.session" />
+      <button v-else @click="authStore.signInWithGithub()" >
         Sign in with Github
       </button>
     </div>
+    <input type="text" name="username" v-model="input.username" placeholder="Email or Phone" />
+    <input type="password" name="password" v-model="input.password" placeholder="Password" />
+    <button type="button" @click="authStore.signInWithCredentials(input.username, input.password)">Login</button>
+    <input type="text" name="username" v-model="input.username" placeholder="Email or Phone" />
+    <input type="password" name="password" v-model="input.password" placeholder="Password" />
+    <button type="button" @click="authStore.signUp(input.username, input.password)">SignUp</button>
   <!-- <div class="h-full bg-light">
       <RouterView />
   </div> -->
