@@ -13,7 +13,7 @@ import NavRow from '../nav/NavRow.vue';
             <div class="border-b border-border flex  px-2 justify-center items-center">
                 <slot name="ToolbarSlot"></slot>
             </div>
-            <div class="w-full flex justify-center">
+            <div class="w-full">
                 <slot name="ContentSlot"></slot>
             </div>
         </div>

@@ -3,7 +3,6 @@ import IconBase from '../icons/IconBase.vue';
 import { RouterLink } from 'vue-router';
 import { computed } from 'vue'
 
-
 const props = defineProps({
     petitionTitle: {
         type: String,
@@ -19,8 +18,6 @@ const props = defineProps({
 const linkToPetition = computed(() => {
     return '/review/' + props.petitionId
 })
-
-
 
 </script>
 
