@@ -9,7 +9,8 @@ import { ref } from 'vue';
 /* TODO: Redirect to this page if no user is signed in */
     
 const showPopup = ref(false);
-
+const ShowSignIn = ref(false);
+const ShowSignUp = ref(false);
 
 </script>
 

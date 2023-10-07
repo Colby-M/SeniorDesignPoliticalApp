@@ -21,11 +21,15 @@ const emitClosePopup = () => {
     emit('close-popup');
 }
 
+const emitRememberMe = () => {
+    emit('remember-me');
+}
+
 
 </script>
 
 <template>
-        <div v-if="visible" class="flex flex-col bg-dark/30 items-center justify-center px-6 py-8 mx-auto h-screen">
+        <div v-if="visible" class="flex flex-col bg-dark/50 items-center justify-center px-6 py-8 mx-auto h-screen">
             <div class="bg-white rounded-lg bg-light shadow md:mt-0 w-full max-w-md">
                 <div class="p-8 space-y-6">
                     <div>
@@ -52,12 +56,13 @@ const emitClosePopup = () => {
                         <div class="flex items-center justify-between">
                             <div class="flex items-start">
                                 <div class="flex items-center h-5">
-                                  <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-dark rounded bg-dark focus:ring-3 focus:ring-primary-300 dark:bg-dark dark:border-dark dark:focus:ring-primary-600 dark:ring-offset-dark" required="true">
+                                  <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-border rounded bg-dark focus:ring-3" required="true">
                                 </div>
                                 <div class="ml-3 text-sm">
-                                  <label for="remember" class="text-dark dark:text-dark">Remember me</label>
+                                  <label for="remember" @click="emitRememberMe" class="text-dark">Remember me</label>
                                 </div>
                             </div>
+                            <!-- TODO: Add Redirect to Forgot Password Page -->
                             <a href="#" class="text-sm font-light text-dark hover:underline">Forgot password?</a>
                         </div>
                         <button type="submit" class="w-1/2 mx-auto bg-highlight/90 border border-border text-light sm:text-sm rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Sign in</button>
