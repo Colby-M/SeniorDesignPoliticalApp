@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import ButtonSignInOptions from '../button/ButtonSignInOptions.vue';
 import FormSignIn from '../forms/FormSignIn.vue';
+import FormSignUp from '../forms/FormSignUp.vue';
 
 
 import { ref } from 'vue';
 /* TODO: Upscale The Logo So Edges are Smooth at High Resolution */
-/* TODO: Get Functions for auth from colby */
 /* TODO: Redirect to this page if no user is signed in */
-    
-const showPopup = ref(false);
+/* TODO: Redirect on sign in */
+
 const ShowSignIn = ref(false);
 const ShowSignUp = ref(false);
 
@@ -16,8 +16,9 @@ const ShowSignUp = ref(false);
 
 <template>
 
-    <div v-if="showPopup" class="w-full h-screen absolute">
-        <FormSignIn :isVisible="showPopup" @close-popup="showPopup = false"></FormSignIn>
+    <div v-if="ShowSignIn || ShowSignUp" class="w-full h-screen absolute bg-dark/30">
+        <FormSignIn :isVisible="ShowSignIn" @close-popup="ShowSignIn = false"></FormSignIn>
+        <FormSignUp :isVisible="ShowSignUp" @close-popup="ShowSignUp = false"></FormSignUp>
     </div>
 
     <div class="grid w-full h-screen justify-center grid-cols-mobile z-10 sm:grid-cols-landing">
@@ -31,13 +32,10 @@ const ShowSignUp = ref(false);
                 <img src="../logo/VoteBoatLogo.png" class="w-44 h-44 sm:hidden"/>
                 <ButtonSignInOptions buttonType="sign-up-github"></ButtonSignInOptions>
                 <p class="font">or</p>
-                <ButtonSignInOptions buttonType="sign-up"></ButtonSignInOptions>
+                <ButtonSignInOptions buttonType="sign-up"  @show-sign-up="ShowSignUp = true"></ButtonSignInOptions>
                 <div class="h-2 border-t border-dark w-50"></div>
-                <ButtonSignInOptions buttonType="sign-in" @show-popup="showPopup = true"></ButtonSignInOptions>            
+                <ButtonSignInOptions buttonType="sign-in" @show-sign-in="ShowSignIn = true" ></ButtonSignInOptions>            
             </div>
         </div>
-</div>
-
-
-
+    </div>
 </template>
