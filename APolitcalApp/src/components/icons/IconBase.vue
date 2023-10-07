@@ -12,6 +12,7 @@ import IconLocked from './IconLocked.vue';
 import IconProfile from './IconProfile.vue';
 import IconReview from './IconReview.vue';
 import IconSettings from './IconSettings.vue';
+import IconExit from './IconExit.vue';
 import IconNull from './IconSettings.vue';
 
 const props = defineProps({
@@ -83,6 +84,8 @@ const iconComponent = computed(() => {
           return IconReview;
         case 'settings':
           return IconSettings;
+        case 'exit':
+          return IconExit;
         default:
           return IconNull; 
       }
