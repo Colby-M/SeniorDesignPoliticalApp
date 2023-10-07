@@ -1,14 +1,36 @@
 <script setup lang="ts">
 import ButtonSignInOptions from '../button/ButtonSignInOptions.vue';
+
+import {computed, defineEmits } from 'vue';
+
+const props = defineProps({
+    isVisible: {
+        type: Boolean,
+        required: true
+    }
+})
+
+const visible = computed( () => {
+    return props.isVisible
+})
+
+const emit = defineEmits();
+
+const emitClosePopup = () => {
+    emit('close-popup');
+}
+
+
 </script>
 
 <template>
-        <div class="flex flex-col bg-dark/30 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div v-if="visible" class="flex flex-col bg-dark/30 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div class="w-full bg-white rounded-lg bg-light shadow md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <a href="#" class="flex items-center font-light mb-6 text-2xl text-dark dark:text-white">
                         <img class="w-8 h-8 mr-2" src="../logo/VoteBoatLogo_Nero AI_Standard_x4.png" alt="logo">
-                        Vote Boat    
+                        Vote Boat
+                        <button @click="emitClosePopup" class="top-2 right-2 px-2 py-1 ml-4"> close popup test </button>    
                     </a>
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-dark md:text-2xl dark:text-white">
                         Sign in to your account
@@ -25,7 +47,7 @@ import ButtonSignInOptions from '../button/ButtonSignInOptions.vue';
                         <div class="flex items-center justify-between">
                             <div class="flex items-start">
                                 <div class="flex items-center h-5">
-                                  <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-dark rounded bg-dark focus:ring-3 focus:ring-primary-300 dark:bg-dark dark:border-dark dark:focus:ring-primary-600 dark:ring-offset-dark" required="">
+                                  <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-dark rounded bg-dark focus:ring-3 focus:ring-primary-300 dark:bg-dark dark:border-dark dark:focus:ring-primary-600 dark:ring-offset-dark" required="true">
                                 </div>
                                 <div class="ml-3 text-sm">
                                   <label for="remember" class="text-dark dark:text-dark">Remember me</label>
