@@ -3,7 +3,6 @@ import ButtonSignInOptions from '../button/ButtonSignInOptions.vue';
 import FormSignIn from '../forms/FormSignIn.vue';
 import FormSignUp from '../forms/FormSignUp.vue';
 
-
 import { ref } from 'vue';
 /* TODO: Upscale The Logo So Edges are Smooth at High Resolution */
 /* TODO: Redirect to this page if no user is signed in */

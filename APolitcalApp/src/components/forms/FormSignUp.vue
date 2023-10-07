@@ -10,7 +10,9 @@ import { useAuthStore } from '../../stores/Auth';
 const authStore = useAuthStore();
   const input = reactive({
     username: null,
-    password: null
+    password: null,
+    confirmPassword: null,
+    validated: true
   });
 
 const props = defineProps({
@@ -25,6 +27,16 @@ const visible = computed( () => {
 })
 
 const emit = defineEmits();
+
+const validateForm = () =>{
+    if(input.password !== input.confirmPassword) {
+        /* passwords do not match, do not submit and warn the user */
+        input.validated = false;
+    }
+    else {
+        authStore.signUp(input.username, input.password)
+    }
+}
 
 const emitClosePopup = () => {
     emit('close-popup');
@@ -48,7 +60,7 @@ const emitClosePopup = () => {
 </script>
 
 <template>
-    <div v-if="visible" class="flex flex-col bg-dark/50 items-center justify-center px-6 py-8 mx-auto h-screen">
+    <div v-if="visible" class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen">
         <div class="bg-white rounded-lg bg-light shadow md:mt-0 w-full max-w-md">
             <div class="p-8 space-y-6">
                 <div>
@@ -70,7 +82,12 @@ const emitClosePopup = () => {
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-dark">Password</label>
-                        <input type="password" name="password" id="password" v-model="input.password" placeholder="••••••••••••••••" class="bg-light border border-border text-dark sm:text-sm rounded-lg block w-full p-2.5 focus:border-dark" required="true">
+                        <input type="password" name="password" id="password" v-model="input.password" @input="input.validated = true" placeholder="••••••••••••••••" class="bg-light border border-border text-dark sm:text-sm rounded-lg block w-full p-2.5 focus:border-dark" required="true">
+                    </div>
+                    <div>
+                        <label for="confirm password" class="block mb-2 text-sm font-medium text-dark">Confirm Password</label>
+                        <input type="password" name="password" id="password" v-model="input.confirmPassword" placeholder="confirm password" @input="input.validated = true" class="bg-light border border-border text-dark sm:text-sm rounded-lg block w-full p-2.5 focus:border-dark" required="true">
+                        <p v-if="input.validated === false" class="text-sm font-normal justify-self-end text-dark">Passwords do not match</p>
                     </div>
                         <!--REMEMBER ME (Leaving Here If Needed Later)-->
                         <!-- <div class="flex items-start">
@@ -82,15 +99,14 @@ const emitClosePopup = () => {
                                  </div>
                              </div> -->
                         <!-- TODO: Add Redirect to Forgot Password Page -->
-                    <a href="#" class="text-sm font-extralight justify-self-end text-dark hover:underline">Forgot password?</a>
-                    <button type="submit" @click="authStore.signInWithCredentials(input.username, input.password)" class="w-1/2 mx-auto bg-highlight/90 border border-border text-light sm:text-sm rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Sign in</button>
+                    <button type="submit" @click="validateForm" class="w-1/2 mx-auto bg-dark/90 border border-border text-light sm:text-sm rounded-full block hover:bg-dark/70 p-2.5 focus:border-dark">Sign up</button>
                     <div class="flex items-center">
                         <div class="flex-1 border-b border-border"></div>
                         <span class="px-2">or</span>
                         <div class="flex-1 border-b border-border"></div>
                     </div>
                     <div class="w-full flex items-center justify-center">
-                        <ButtonSignInOptions buttonType="sign-in-github"></ButtonSignInOptions>
+                        <ButtonSignInOptions buttonType="sign-up-github"></ButtonSignInOptions>
                     </div>
                 </form>
             </div>

@@ -48,7 +48,7 @@ const emitClosePopup = () => {
 </script>
 
 <template>
-    <div v-if="visible" class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen">
+    <div v-if="visible" class="flex flex-col bg-dark/50 items-center justify-center px-6 py-8 mx-auto h-screen">
         <div class="bg-white rounded-lg bg-light shadow md:mt-0 w-full max-w-md">
             <div class="p-8 space-y-6">
                 <div>
