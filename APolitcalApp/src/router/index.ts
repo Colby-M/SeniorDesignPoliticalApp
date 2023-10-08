@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import BasePageView from '../views/BasePageView.vue'
+import LandingPageView from '../views/LandingPageView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: BasePageView
+      component: LandingPageView
     },
     {
       path: '/profile',
