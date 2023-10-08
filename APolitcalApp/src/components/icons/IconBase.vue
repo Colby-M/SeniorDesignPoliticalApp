@@ -50,7 +50,7 @@ const iconSizeClass = computed(() => {
         case 'small':
           return 'w-4 h-4';
         case 'medium':
-          return 'w-8 h-8';
+          return 'w-6 h-6';
         case 'large':
         return 'w-12 h-12';
         default:
