@@ -11,6 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   supabase.auth.onAuthStateChange((_, _session) => {
+    console.log(_session);
     session.value = _session ?? undefined;
   })
 
@@ -45,18 +46,31 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function signUp(username: string | null, password: string | null)
+  async function signUp(
+    username: string | null,
+    password: string | null,
+    firstName: string | null = null,
+    lastName: string | null = null,
+    age: number | null = null
+  )
   {
-    console.log(username, password);
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
       const { data, error } = await supabase.auth.signUp({
         email: username,
-        password: password
+        password: password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            age: age,
+            full_name: firstName + ' ' + lastName
+          }
+        }
       })
     }
-    else if (username.length == 10)
+    else if (username.length == 10 && username.matchAll(new RegExp("[0-9]")))
     {
       const { data, error } = await supabase.auth.signUp({
         phone: username,

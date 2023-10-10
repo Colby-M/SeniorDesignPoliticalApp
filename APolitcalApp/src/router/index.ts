@@ -57,6 +57,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ViewDevTestPage.vue')
     },
+    {
+      path: '/:pathMatch(.*)*', 
+      name: 'not-found',
+      redirect: '/'
+    }
   ]
 })
 
