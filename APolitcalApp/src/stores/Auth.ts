@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import supabase from "../lib/supabaseClient";
 import { defineStore } from 'pinia'
 import type { Session } from '@supabase/supabase-js';
@@ -11,7 +11,6 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   supabase.auth.onAuthStateChange((_, _session) => {
-    console.log(_session);
     session.value = _session ?? undefined;
   })
 
