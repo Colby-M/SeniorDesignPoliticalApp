@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import LandingPageView from '../views/LandingPageView.vue'
 
 const router = createRouter({
