@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import LandingPageView from '../views/LandingPageView.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -57,6 +57,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ViewDevTestPage.vue')
     },
+    {
+      path: '/:pathMatch(.*)*', 
+      name: 'not-found',
+      redirect: '/'
+    }
   ]
 })
 
