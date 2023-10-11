@@ -7,12 +7,12 @@ import {computed, reactive } from 'vue';
 import { useAuthStore } from '../../stores/Auth';
 
 const authStore = useAuthStore();
-  const input = reactive({
+const input = reactive({
     username: null,
     password: null,
     confirmPassword: null,
     validated: true
-  });
+});
 
 const props = defineProps({
     isVisible: {

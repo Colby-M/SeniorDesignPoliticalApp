@@ -3,13 +3,13 @@ import SidebarElement from './SidebarElement.vue';
 import SidebarLogo from './SidebarLogo.vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { ref } from 'vue';
+import IconBase from '../icons/IconBase.vue';
 
 /* TODO: Add dynamic routing to user specific profile page*/
 const sidebarData = ref([
     {text: 'Profile',   icon: 'profile',  path: 'profile'},
     {text: 'Discover',  icon: 'discover', path: 'discover'},
     {text: 'Review',    icon: 'review',   path: 'review'},
-    {text: 'Create',    icon: 'create',   path: 'create'},
     {text: 'Settings',  icon: 'settings', path: 'settings'},
     {text: 'DevTests',  icon: 'editable', path: 'devTest'}
 ]);
@@ -18,6 +18,12 @@ const Route = useRoute()
 
 function isActive(path: string): boolean {
     return Route.name === path
+}
+
+const emit = defineEmits();
+
+const emitShowCreatePopup = () => {
+    emit('show-create-popup')
 }
 
 </script>
@@ -30,6 +36,17 @@ function isActive(path: string): boolean {
                     <SidebarElement :sidebarIconName="element.icon" :sidebarElementText="element.text" :sidebarElementIsActive="isActive(element.path)"></SidebarElement>
                 </RouterLink>
             </div>
+            <div class="w-full items-center justify-center flex">
+                <button @click="emitShowCreatePopup" class="w-[36px] h-[36px] px-[7px] rounded-full py-1 bg-highlight/70 lg:w-full hover:bg-highlight/60">
+                    <p class="hidden text-light font-medium lg:block">Create</p>
+                    <div class="lg:hidden">
+                        <IconBase iconName="create" iconColor="static-light" iconSize="medium"></IconBase>
+                    </div>
+
+                </button>
+            </div>
+
+
 
         </nav>
 </template>
