@@ -36,11 +36,16 @@ function removeTag(tag: string){
 </script>
 
 <template>
-    <div class="flex flex-col gap-2">
-        <div class="flex flex-row gap-2">
-            <label></label>
-            <input type="goal" name="goal" id="goal" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="goal signatures">
-            <input type="tags" name="tags" id="tags" v-model="tagStore.tagField" @input="constructTags" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="comma seperated tags...">        
+    <div class="flex flex-col gap-2">  
+        <div class="flex flex-row space-x-2">
+            <div class="flex flex-col">
+                <label>Signature Goal</label>
+                <input type="goal" name="goal" id="goal" class="bg-light border w-3/3 border-border text-dark text-sm rounded-lg p-2.5 focus:border-dark" placeholder="goal">
+            </div>
+            <div class="flex flex-col">
+                <label>Tags</label>
+                <input type="tags" name="tags" id="tags" v-model="tagStore.tagField" @input="constructTags" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="comma seperated tags...">        
+            </div>
         </div>
         
         <div class="flex flex-wrap gap-2 justify-center">

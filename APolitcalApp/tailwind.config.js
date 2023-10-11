@@ -9,7 +9,8 @@ module.exports = {
       gridTemplateColumns: {
         'sm-md-lg-xl' : 'min-content minmax(434px, 967px)', /* Template Columns for resolutions > w-640px */
         'mobile'      : 'minmax(434px, 639px)',             /* Template Columns for resolutions < w-640px */
-        'landing'     : '1fr 1fr'                           /* Template Columns for landing page          */
+        'landing'     : '1fr 1fr',                          /* Template Columns for landing page          */
+        'form-1/3-2/3': '1fr 2fr'
       },
       gridTemplateRows: {
         'sm-md-lg-xl' : '80px 1fr',                 /* Content Rows for resolutions > w-640px */

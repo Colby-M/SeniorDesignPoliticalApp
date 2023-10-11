@@ -45,18 +45,11 @@ const emitClosePopup = () => {
                         <button @click="emitClosePopup" class="justify-self-end"> <IconBase iconColor="animate-dark" iconName="exit" iconSize="medium"/> </button>                        
                     </div>
                 </div>
-                <h1 class="text-2xl font-bold leading-tight tracking-tight text-dark">
-                </h1>
                 <form class="space-y-6" action="#">
                     <formFieldsTagBox></formFieldsTagBox>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-dark">Password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••••••••••" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" required="true">
-                    </div>
-                    <a href="#" class="text-sm font-extralight justify-self-end text-dark hover:underline">Forgot password?</a>
                     <div class="flex flex-row gap-2">
-                        <button type="submit" class="w-1/2 mx-auto bg-light border border-border text-dark text-sm font-medium rounded-full block hover:bg-dark/10 p-2.5 focus:border-dark">Save Draft</button>
-                        <button type="submit" class="w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Create</button>
+                        <button class="w-1/2 mx-auto bg-light border border-border text-dark text-sm font-medium rounded-full block hover:bg-dark/10 p-2.5 focus:border-dark">Save Draft</button>
+                        <button class="w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Create</button>
                     </div>
                 </form>
             </div>

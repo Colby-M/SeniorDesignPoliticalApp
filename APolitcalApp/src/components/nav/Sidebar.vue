@@ -42,7 +42,6 @@ const emitShowCreatePopup = () => {
                     <div class="lg:hidden">
                         <IconBase iconName="create" iconColor="static-light" iconSize="medium"></IconBase>
                     </div>
-
                 </button>
             </div>
 
