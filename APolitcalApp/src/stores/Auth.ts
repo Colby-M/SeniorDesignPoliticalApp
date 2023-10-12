@@ -65,7 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
       await supabase.auth.signInWithPassword({
         email: username,
         password: password,
-      });
+      }).then(() => changedAuth());
     }
     else if (username.length == 10)
     {
