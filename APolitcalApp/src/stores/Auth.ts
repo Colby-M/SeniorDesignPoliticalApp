@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: "https://colby-m.github.io/SeniorDesignPoliticalApp/"
+        redirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "https://localhost:5173/Profile" 
       }
     });
   }
