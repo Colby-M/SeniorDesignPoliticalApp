@@ -10,6 +10,7 @@ const props = defineProps({
   },
 
 });
+const emits = defineEmits(['sign-out']);
 
 const loading = ref(true);
 const username = ref('');
@@ -64,17 +65,9 @@ async function updateProfile() {
     loading.value = false;
   }
 }
-
-async function signOut() {
-  try {
-    loading.value = true;
-    let { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  } catch (error) {
-    alert(error);
-  } finally {
-    loading.value = false;
-  }
+function signOut()
+{
+  emits('sign-out');
 }
 </script>
 
@@ -103,7 +96,7 @@ async function signOut() {
     </div>
 
     <div>
-      <button class="button block" @click="signOut" :disabled="loading">Sign Out</button>
+      <button class="button block" @click="signOut()" :disabled="loading">Sign Out</button>
     </div>
   </form>
 </template>

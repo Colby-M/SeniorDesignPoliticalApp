@@ -11,21 +11,40 @@ export const useAuthStore = defineStore('auth', () => {
     session.value = data.session ?? undefined;
   })
 
-  supabase.auth.onAuthStateChange((_, _session) => {
-    if (_session != null && _session != undefined)
-    {
-      router.replace("/profile");
-    }
-    else
-    {
-      router.replace("/");
-    }
-    session.value = _session ?? undefined;
-  })
+  // supabase.auth.onAuthStateChange((_, _session) => {
+  //   if (_session != null && _session != undefined)
+  //   {
+  //     router.replace("/profile");
+  //   }
+  //   else
+  //   {
+  //     router.replace("/");
+  //   }
+  //   router.replace({ "query": {"email": null, "password": null} } );
+  //   session.value = _session ?? undefined;
+  // })
+  supabase.auth.onAuthStateChange(() => changedAuth())
+
+  function changedAuth()
+  {
+    supabase.auth.getSession().then(({ data }) => {
+      session.value = data.session ?? undefined;
+    })
+    router.replace({"query": {"email": null, "password": null}}).finally(() => {
+      if (session.value != null && session.value != undefined)
+      {
+        router.push("/profile");
+      }
+      else
+      {
+        router.push("/");
+      }
+    });
+  }
 
   async function signInWithGithub()
   {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
         redirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "https://localhost:5173" 
@@ -35,7 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function logout()
   {
-    const { error } = await supabase.auth.signOut();
+    await supabase.auth.signOut();
   }
 
   async function signInWithCredentials(username: string | null, password: string | null)
@@ -43,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      await supabase.auth.signInWithPassword({
         email: username,
         password: password,
       });
