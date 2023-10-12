@@ -2,7 +2,7 @@
 import { useAuthStore } from '../../stores/Auth';
 const authStore = useAuthStore();
 
-const emit = defineEmits();
+const emit = defineEmits(['show-sign-in', 'show-sign-up']);
 
 const props = defineProps({
   buttonType: {

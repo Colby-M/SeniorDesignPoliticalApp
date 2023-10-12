@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import supabase from "../lib/supabaseClient";
 import { defineStore } from 'pinia'
 import type { Session } from '@supabase/supabase-js';
+import router from '@/router';
 
 export const useAuthStore = defineStore('auth', () => {
 
@@ -11,6 +12,14 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   supabase.auth.onAuthStateChange((_, _session) => {
+    if (_session != null && _session != undefined)
+    {
+      router.replace("/profile");
+    }
+    else
+    {
+      router.replace("/");
+    }
     session.value = _session ?? undefined;
   })
 
@@ -19,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "https://localhost:5173/Profile" 
+        redirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "https://localhost:5173" 
       }
     });
   }
@@ -36,15 +45,15 @@ export const useAuthStore = defineStore('auth', () => {
     {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: username,
-        password: password
-      })
+        password: password,
+      });
     }
     else if (username.length == 10)
     {
       const { data, error } = await supabase.auth.signInWithPassword({
         phone: username,
         password: password
-      })
+      });
     }
   }
 
