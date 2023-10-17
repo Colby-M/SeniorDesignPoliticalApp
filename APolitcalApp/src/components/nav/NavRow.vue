@@ -3,13 +3,6 @@ import IconBase from '../icons/IconBase.vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { ref } from 'vue';
 
-const navRowData = ref([
-    {icon: 'profile',  path: 'profile'},
-    {icon: 'discover', path: 'discover'},
-    {icon: 'review',   path: 'review'},
-    {icon: 'create',   path: 'create'},
-]);
-
 const Route = useRoute()
 
 function iconColoring(path: string): string {
@@ -21,15 +14,30 @@ function iconColoring(path: string): string {
     }
 }
 
+const emit = defineEmits();
+
+const emitShowCreatePopup = () => {
+    emit('show-create-popup')
+}
+
+const navRowData = ref([
+    {icon: 'profile',  path: 'profile' },
+    {icon: 'discover', path: 'discover'},
+    {icon: 'review',   path: 'review'  },
+]);
+
 </script>
 
 <template>
 <div class="bottom-0 w-full h-16 bg-white border-t border-border">
     <div class="grid h-full w-full grid-cols-4 mx-auto font-medium">
-        <div v-for="element in navRowData" class="flex-col m-auto px-5">
-            <RouterLink :to="element.path">
+        <div v-for="element in navRowData" class="px-5 m-auto">
+                <RouterLink :to="element.path">
                     <IconBase :iconColor="iconColoring(element.path)" iconSize="medium" :iconName="element.icon"></IconBase>
-            </RouterLink>
+                </RouterLink>
+        </div>
+        <div class="px-5 m-auto">
+            <IconBase @click="emitShowCreatePopup" iconColor="static-dark" iconSize="medium" iconName="create"></IconBase>
         </div>
     </div>
 </div>

@@ -28,11 +28,11 @@ const showCreatePopup = ref(false)
             <div class="border-b border-border flex  px-2 justify-center items-center">
                 <slot name="ToolbarSlot"></slot>
             </div>
-            <div class="w-full overflow-y-hidden">
+            <div class="w-full">
                 <slot name="ContentSlot"></slot>
             </div>
             <div class="flex bg-light sm:hidden">
-                <NavRow></NavRow>
+                <NavRow @show-create-popup="showCreatePopup = true"></NavRow>
             </div>
         </div>
 

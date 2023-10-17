@@ -5,10 +5,10 @@ import formFieldsTagBox from './formFields/formFieldsTagBox.vue';
 const emit = defineEmits()
 /* TODO
 -------------
-Fix XS resolutions
-Adds scrollbar to popup and not the whole page
+Fix XS resolutions (tag/sign width)
+COMPLETE: Adds scrollbar to popup and not the whole page
 Fix Color of Slider
-ADD Lock/editable
+ADD Lock/editable (Could put into label field)
 Add 2 page popup with question or petition selection
 
 */
@@ -86,7 +86,7 @@ function removeTag(tag: string){
 
 <template>
     <div class="flex absolute flex-col items-center bg-dark sm:bg-dark/50 justify-center px-6 py-8 mx-auto h-full w-full">
-        <div class="bg-white rounded-lg border border-border bg-light drop-shadow-sm w-full max-w-md animate-[ease-in_0.5s]">
+        <div class="bg-white rounded-lg border border-border bg-light drop-shadow-sm w-full max-w-md overflow-y-auto">
             <div class="p-8 space-y-6">
                 <div>
                     <div href="#" class="grid grid-cols-2 font-light mb-6 text-2xl text-dark">
@@ -99,21 +99,26 @@ function removeTag(tag: string){
                 </div>
                 <form class="space-y-6" action="#">
                     <div class="flex flex-col">
-                        <label>Petition Title</label>
-                        <input type="title" name="title" id="petitionTitle" v-model="createFormData.contentTitle.text" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title...">  
+                        <label>Petition Title
+                            <input type="title" name="title" id="petitionTitle" v-model="createFormData.contentTitle.text" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title...">
+                        </label>
+                          
                     </div>
                     <div class="flex flex-col">
-                        <label>Summary</label>
-                        <textarea type="petition" name="title" maxlength="512" id="petitionTitle" v-model="createFormData.contentDescription.text" class="bg-light border h-32 border-border text-dark text-sm top-1 rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title..."></textarea>  
+                        <label>Summary
+                            <textarea type="petition" name="title" maxlength="512" id="petitionSummary" v-model="createFormData.contentDescription.text" class="bg-light border h-32 border-border text-dark text-sm top-1 rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title..."></textarea> 
+                        </label> 
                     </div> 
-                    <div class="flex flex-row gap-6">
-                            <div class="flex flex-col">
-                                <label>Signature Goal</label>
-                                <input type="number" name="goal" id="goal" v-model="createFormData.contentGoalSigners.contentText" class="bg-light border border-border text-dark text-sm rounded-lg p-2.5 block focus:border-dark" placeholder="goal">
+                    <div class="gap-2 sm:flex sm:flex-row">
+                            <div class=" mx-auto sm:flex">
+                                <label>Signature Goal
+                                    <input type="number" name="goal" id="goal" v-model="createFormData.contentGoalSigners.contentText" class="bg-light border border-border text-dark text-sm rounded-lg p-2.5 block focus:border-dark" placeholder="goal">
+                                </label>                  
                             </div>
-                            <div class="flex flex-col">
-                                <label>Tags</label>
-                                <input type="tags" name="tags" id="tags" v-model="createFormData.contentTagStore.tagField" @input="constructTags" maxlength="30" class="bg-light border border-border text-dark text-sm rounded-lg block p-2.5 focus:border-dark" placeholder="comma seperated tags...">        
+                            <div class="mx-auto sm:flex">
+                                <label>Tags
+                                    <input type="tags" name="tags" id="tags" v-model="createFormData.contentTagStore.tagField" @input="constructTags" maxlength="30" class="bg-light border border-border text-dark text-sm rounded-lg block p-2.5 focus:border-dark" placeholder="tag 1, tag 2,...">
+                                </label>        
                             </div>
                     </div>
                         <div class="flex flex-wrap gap-2 justify-center">
@@ -126,8 +131,9 @@ function removeTag(tag: string){
                             </div>
                         </div>
                         <div class="flex flex-col gap-1">
-                            <label>Petition Scope</label>
-                            <input id="steps-range" type="range" min="1" max="4" value="2" step="1" class="w-full h-3 thumb-full bg-light rounded-lg border border-border cursor-pointer">
+                            <label>Petition Scope
+                                <input id="steps-range" type="range" min="1" max="4" value="2" step="1" class="w-full h-3 thumb-full bg-light rounded-lg border border-border cursor-pointer">
+                            </label>
                             <div class="flex justify-between mt-0.5">
                                 <span class="font-light text-dark">local</span>
                                 <span class="font-light text-dark">regional</span>
