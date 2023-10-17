@@ -13,6 +13,14 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  build: {
+    rollupOptions: {
+      input: {
+        index: 'index.html',
+        404: "404.html"
+      }
+    }
+  },
   base: process.env.NODE_ENV === 'production' ? "/SeniorDesignPoliticalApp/"
   : "/"
 })
