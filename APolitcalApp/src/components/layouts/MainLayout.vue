@@ -13,8 +13,6 @@ import { ref } from 'vue';
 */
 
 const showCreatePopup = ref(false)
-
-
 </script>
 
 
@@ -26,17 +24,18 @@ const showCreatePopup = ref(false)
             <Sidebar_Column @show-create-popup="showCreatePopup = true"></Sidebar_Column>
         </div>
 
-        <div class="grid w-full grid-rows-mobile sm:grid-rows-sm-md-lg-xl sm:pr-2">
+        <div class="grid w-full h-full grid-rows-mobile sm:grid-rows-sm-md-lg-xl sm:pr-2">
             <div class="border-b border-border flex  px-2 justify-center items-center">
                 <slot name="ToolbarSlot"></slot>
             </div>
-            <div class="w-full">
+            <div class="w-full overflow-y-hidden">
                 <slot name="ContentSlot"></slot>
             </div>
+            <div class="flex bg-light sm:hidden">
+                <NavRow></NavRow>
+            </div>
         </div>
-        <div class="flex sm:hidden">
-            <NavRow></NavRow>
-        </div>
+
     </div>
 
 
