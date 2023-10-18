@@ -7,12 +7,12 @@ import {computed, reactive } from 'vue';
 import { useAuthStore } from '../../stores/Auth';
 
 const authStore = useAuthStore();
-  const input = reactive({
+const input = reactive({
     username: null,
     password: null,
     confirmPassword: null,
     validated: true
-  });
+});
 
 const props = defineProps({
     isVisible: {
@@ -46,7 +46,7 @@ const emitClosePopup = () => {
 
 <template>
     <div v-if="visible" class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen">
-        <div class="bg-white rounded-lg bg-light shadow mt-0 w-full max-w-md">
+        <div class="bg-white rounded-lg bg-light shadow mt-0 w-full max-w-md overflow-y-auto">
             <div class="p-8 space-y-6">
                 <div>
                     <div href="#" class="grid grid-cols-2 font-light mb-6 text-2xl text-dark">

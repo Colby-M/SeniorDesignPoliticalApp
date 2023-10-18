@@ -47,7 +47,7 @@ const emitClosePopup = () => {
 
 <template>
     <div v-if="visible" class="flex flex-col bg-dark/50 items-center justify-center px-6 py-8 mx-auto h-screen">
-        <div class="bg-white rounded-lg bg-light shadow w-full max-w-md">
+        <div class="bg-white rounded-lg bg-light shadow w-full max-w-md overflow-y-auto">
             <div class="p-8 space-y-6">
                 <div>
                     <div href="#" class="grid grid-cols-2 font-light mb-6 text-2xl text-dark">
