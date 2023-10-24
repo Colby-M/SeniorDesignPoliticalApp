@@ -23,12 +23,12 @@ const linkToPetition = computed(() => {
 
 <template>
     <RouterLink :to="linkToPetition">
-        <div class="group flex flex-row w-52 h-14 rounded-full border gap-4 items-center border-border hover:border-dark duration-300">
+        <div class="group flex flex-row w-64 h-14 border-dark rounded-full border gap-4 items-center bg-light hover:border-dark duration-300">
             <div class="w-14 h-14 flex rounded-full items-center justify-center bg-dark">
                 <!-- TODO Replace Icon Base with link to users profile image (Work with backend to define this process) -->
                 <IconBase iconColor="static-light" iconName="profile" iconSize="medium"></IconBase>
             </div>
-            <span class="text-dark font-normal">{{ petitionTitle }}</span>
+            <span class="text-dark font-normal text-sm">{{ petitionTitle }}</span>
         </div>
     </RouterLink>
 </template>

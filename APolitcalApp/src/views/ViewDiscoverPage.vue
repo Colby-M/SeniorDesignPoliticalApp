@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import MainLayout from '@/components/layouts/MainLayout.vue';
+import CardPetitionTitle from '@/components/cards/CardPetitionTitle.vue';
+import CardFullPetition from '@/components/cards/CardFullPetition.vue';
+
+import { reactive } from 'vue';
+
+const testPetitionObject = reactive({
+  petitionTitle: 'test',
+  petitionId: 'test',
+  petitionSummary: 'test',
+})
 
 </script>
 
@@ -10,27 +20,11 @@ import MainLayout from '@/components/layouts/MainLayout.vue';
       <div class="w-[350px] h-[412px] bg-light group-hover:drop-shadow-2xl duration-700">
         <div class="group w-[338px] h-[400px] bg-dark  absolute"></div>
         <div class="group w-[338px] h-[400px] ml-[12px] mt-[12px] bg-highlight absolute">
-          <div class="group w-[314px] h-[376px] m-[12px] border-dashed border-light border"></div>
+          <div class="flex group w-[314px] h-[376px] m-[12px] border-dashed border-light border py-4 justify-center">
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>           
+          </div>
         </div>
-      </div>
-      <div class="w-[350px] h-[412px] bg-light group-hover:drop-shadow-2xl duration-700">
-        <div class="group w-[338px] h-[400px] bg-dark  absolute"></div>
-        <div class="group w-[338px] h-[400px] ml-[12px] mt-[12px] bg-highlight absolute">
-          <div class="group w-[314px] h-[376px] m-[12px] border-dashed border-light border"></div>
-        </div>
-      </div>
-      <div class="w-[350px] h-[412px] bg-light group-hover:drop-shadow-2xl duration-700">
-        <div class="group w-[338px] h-[400px] bg-dark  absolute"></div>
-        <div class="group w-[338px] h-[400px] ml-[12px] mt-[12px] bg-highlight absolute">
-          <div class="group w-[314px] h-[376px] m-[12px] border-dashed border-light border"></div>
-        </div>
-      </div>
-      <div class="w-[350px] h-[412px] bg-light group-hover:drop-shadow-2xl duration-700">
-        <div class="group w-[338px] h-[400px] bg-dark  absolute"></div>
-        <div class="group w-[338px] h-[400px] ml-[12px] mt-[12px] bg-highlight absolute">
-          <div class="group w-[314px] h-[376px] m-[12px] border-dashed border-light border"></div>
-        </div>
-      </div>
+    </div>
     </div>
     </template>
   </MainLayout>
