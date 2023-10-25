@@ -12,6 +12,10 @@ const props = defineProps({
 </script>
 
 <template>
+  <div class="w-[350px] h-[412px] bg-light group-hover:drop-shadow-2xl duration-700">
+  <div class="w-[338px] h-[400px] bg-dark/90 absolute"></div>
+  <div class="w-[338px] h-[400px] ml-[6px] mt-[6px] bg-highlight absolute">
+    <div class="flex group w-[314px] h-[376px] m-[12px] border-dashed border-light border py-4 justify-center">
     <div class="flex flex-col gap-2 px-1 pt-3">
         <CardPetitionTitle :petitionTitle="props.petitionObject.petitionTitle" :petitionId="props.petitionObject.petitionId"></CardPetitionTitle>
         <div class="w-64 h-48 border rounded-[28px] bg-light border-dark px-3 py-2">
@@ -38,5 +42,7 @@ const props = defineProps({
             </button>  
         </div>
     </div>
-
+  </div>
+  </div>
+</div>
 </template>
