@@ -139,7 +139,7 @@ function submitPetitionDraftForm() {
 </script>
 
 <template>
-    <div class="flex absolute flex-col items-center bg-dark sm:bg-dark/50 justify-center px-6 py-8 mx-auto h-full w-full">
+    <div class="flex absolute flex-col z-50 items-center bg-dark sm:bg-dark/50 justify-center px-6 py-8 mx-auto h-full w-full">
         <div class="bg-white rounded-lg border border-border bg-light drop-shadow-sm w-full max-w-md overflow-y-auto">
             <div class="p-8 space-y-6">
                 <div href="#" class="flex row font-light text-start mb-6 text-2xl justify-between text-dark">
