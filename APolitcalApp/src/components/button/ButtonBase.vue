@@ -92,7 +92,7 @@ const emits = defineEmits()
   </svg>
 </button>
 
-<button type="button" class="text-light bg-[#5F8173] hover:bg-[#5F8173]/90 h-[24px] w-[24px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1 py-1 items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button type="button" class="text-light bg-highlight hover:bg-highlight/90 h-[24px] w-[24px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1 py-1 items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
     <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
     viewBox="0 0 32 32">
     <path fill-rule="evenodd" d="M10.6667 2L14 5.33333L5.33333 14H2V10.6667L10.6667 2Z" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
@@ -109,7 +109,7 @@ const emits = defineEmits()
 
 
 
-<button v-if="buttonType === 'block-lg'" @click="emits('block')" type="button" class="text-light bg-[#5F8173] hover:bg-[#5F8173]/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-[#5F8173]/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button v-if="buttonType === 'block-lg'" @click="emits('block')" type="button" class="text-light bg-highlight hover:bg-highlight/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-highlight/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
   <svg class="w-8 h-8 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
     viewBox="0 0 32 32">
     <path fill-rule="evenodd" d="M16 31C24.2843 31 31 24.2843 31 16C31 7.71573 24.2843 1 16 1C7.71573 1 1 7.71573 1 16C1 24.2843 7.71573 31 16 31Z M5.39502 5.39502L26.605 26.605" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
@@ -171,7 +171,7 @@ const emits = defineEmits()
   Discard
 </button>
 
-<button v-if="buttonType === 'create-lg'" @click="emits('create')" type="button" class="text-light bg-[#5F8173] hover:bg-[#5F8173]/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-[#5F8173]/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button v-if="buttonType === 'create-lg'" @click="emits('create')" type="button" class="text-light bg-highlight hover:bg-highlight/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-highlight/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
   <svg class="w-8 h-8 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
     viewBox="0 0 32 32">
     <path fill-rule="evenodd" d="M26.6668 14.7733V10.6666L18.6668 2.66663H8.00016C7.29292 2.66663 6.61464 2.94758 6.11454 3.44767C5.61445 3.94777 5.3335 4.62605 5.3335 5.33329V26.6666C5.3335 28.1333 6.5335 29.3333 8.00016 29.3333H16.0002 M18.6665 4V10.6667H25.3332M23.9998 28V20M19.9998 24H27.9998" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
@@ -179,14 +179,14 @@ const emits = defineEmits()
   Create
 </button>
 
-<button v-if="buttonType === 'create-sm'" @click="emits('create')" type="button" class="text-light bg-[#5F8173] hover:bg-[#5F8173]/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-[#5F8173]/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button v-if="buttonType === 'create-sm'" @click="emits('create')" type="button" class="text-light bg-highlight hover:bg-highlight/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-highlight/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
     <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
     viewBox="0 0 32 32">
     <path fill-rule="evenodd" d="M26.6668 14.7733V10.6666L18.6668 2.66663H8.00016C7.29292 2.66663 6.61464 2.94758 6.11454 3.44767C5.61445 3.94777 5.3335 4.62605 5.3335 5.33329V26.6666C5.3335 28.1333 6.5335 29.3333 8.00016 29.3333H16.0002 M18.6665 4V10.6667H25.3332M23.9998 28V20M19.9998 24H27.9998" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
   </svg>
 </button>
 
-<button v-if="buttonType === 'follow-lg'" @click="emits('follow')" type="button" class="text-light bg-[#5F8173] hover:bg-[#5F8173]/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-[#5F8173]/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button v-if="buttonType === 'follow-lg'" @click="emits('follow')" type="button" class="text-light bg-highlight hover:bg-highlight/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-highlight/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
   <svg class="w-8 h-8 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
     viewBox="0 0 32 32">
     <path fill-rule="evenodd" d="M21.3335 28V25.3333C21.3335 23.9188 20.7716 22.5623 19.7714 21.5621C18.7712 20.5619 17.4147 20 16.0002 20H6.66683C5.25234 20 3.89579 20.5619 2.89559 21.5621C1.8954 22.5623 1.3335 23.9188 1.3335 25.3333V28 M11.3333 14.6667C14.2789 14.6667 16.6667 12.2789 16.6667 9.33333C16.6667 6.38781 14.2789 4 11.3333 4C8.38781 4 6 6.38781 6 9.33333C6 12.2789 8.38781 14.6667 11.3333 14.6667Z M26.6665 10.6666V18.6666 M30.6665 14.6666H22.6665 " stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
@@ -194,7 +194,7 @@ const emits = defineEmits()
   Follow
 </button>
 
-<button v-if="buttonType === 'follow-sm'" @click="emits('follow')" type="button" class="text-light bg-[#5F8173] hover:bg-[#5F8173]/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-[#5F8173]/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button v-if="buttonType === 'follow-sm'" @click="emits('follow')" type="button" class="text-light bg-highlight hover:bg-highlight/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-highlight/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
     <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
     viewBox="0 0 32 32">
     <path fill-rule="evenodd" d="M21.3335 28V25.3333C21.3335 23.9188 20.7716 22.5623 19.7714 21.5621C18.7712 20.5619 17.4147 20 16.0002 20H6.66683C5.25234 20 3.89579 20.5619 2.89559 21.5621C1.8954 22.5623 1.3335 23.9188 1.3335 25.3333V28 M11.3333 14.6667C14.2789 14.6667 16.6667 12.2789 16.6667 9.33333C16.6667 6.38781 14.2789 4 11.3333 4C8.38781 4 6 6.38781 6 9.33333C6 12.2789 8.38781 14.6667 11.3333 14.6667Z M26.6665 10.6666V18.6666 M30.6665 14.6666H22.6665" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
