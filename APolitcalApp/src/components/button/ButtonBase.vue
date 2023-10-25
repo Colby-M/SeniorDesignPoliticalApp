@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 /* TODO: Restyle Animation To Flash Ring on Click (Low-Priority) */
-import { defineProps } from 'vue';
 
 const props = defineProps({
         buttonType: {

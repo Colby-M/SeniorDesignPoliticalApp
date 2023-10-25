@@ -28,11 +28,7 @@ const showCreatePopup = ref(false)
             <div class="border-b border-border flex  px-2 justify-center items-center">
                 <slot name="ToolbarSlot"></slot>
             </div>
-<<<<<<< HEAD
-            <div class="min-w-full justify-center">
-=======
             <div class="w-full">
->>>>>>> main
                 <slot name="ContentSlot"></slot>
             </div>
             <div class="flex bg-light sm:hidden">
