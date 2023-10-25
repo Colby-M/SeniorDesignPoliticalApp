@@ -9,10 +9,10 @@ import { reactive } from 'vue';
 Sample Petition Object
 */
 const testPetitionObject = reactive({
-  petitionTitle: 'DDDDDDDDDDDDDDDDDD',
+  petitionTitle: 'DDDDDDDDDDDDDDDDDDDDDDDDD',
   petitionId: 'test',
   petitionSummary: 'It seems like youre looking for a summary or information about a specific topic or test. It seems like youre looking for a summary or information about a specific topic or test.. It seems like youre looking for a summary or information about a specific topic or test.. Please provide more details or specify the test youre interested in, and Ill be happy to provide you with a summary or relevant information.',
-  petitionLocked: false,
+  petitionLocked: true,
 })
 
 </script>

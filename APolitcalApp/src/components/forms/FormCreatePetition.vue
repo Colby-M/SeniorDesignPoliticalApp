@@ -171,7 +171,7 @@ function submitPetitionDraftForm() {
                             </div>
                         </div>
 
-                        <input type="title" name="title" id="petitionTitle" v-model="createFormData.contentTitle.text" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title...">                      
+                        <input type="title" name="title" id="petitionTitle" maxlength="25" v-model="createFormData.contentTitle.text" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title...">                      
                     </div>
                      
                     <!-- Petition Summary -->
