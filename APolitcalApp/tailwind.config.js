@@ -8,14 +8,31 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         'sm-md-lg-xl' : 'min-content minmax(434px, 967px)', /* Template Columns for resolutions > w-640px */
-        'mobile'      : 'minmax(434px, 639px)'              /* Template Columns for resolutions < w-640px */
+        'mobile'      : 'minmax(400px, 639px)',             /* Template Columns for resolutions < w-640px */
+        'landing'     : '1fr 1fr',                          /* Template Columns for landing page          */
+        'form-1/3-2/3': '1fr 2fr'
       },
       gridTemplateRows: {
         'sm-md-lg-xl' : '80px 1fr',                 /* Content Rows for resolutions > w-640px */
-        'mobile'      : '80px 1fr 80px'             /* Content Rows for resolutions < w-640px */
+        'mobile'      : '80px 1fr 64px'             /* Content Rows for resolutions < w-640px */
       },
       maxHeight: {
         '112' : '28rem', /* 440px */
+      },
+      width: {
+        '46' : '11.5rem',  /* 184px */
+        '50' : '12.5rem',  /* 200px */
+        '51' : '12.75rem', /* 204px */
+        '52' : '13rem',    /* 208px */
+        '53' : '13.25rem', /* 212px */
+      },
+      height: {
+        '30' : '7.5rem',
+        '46' : '11.5rem',  /* 184px */
+        '50' : '12.5rem',  /* 200px */
+        '51' : '12.75rem', /* 204px */
+        '52' : '13rem',    /* 208px */
+        '53' : '13.25rem', /* 212px */        
       }
     },
     colors: {

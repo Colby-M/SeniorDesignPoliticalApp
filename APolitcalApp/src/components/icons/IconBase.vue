@@ -12,6 +12,7 @@ import IconLocked from './IconLocked.vue';
 import IconProfile from './IconProfile.vue';
 import IconReview from './IconReview.vue';
 import IconSettings from './IconSettings.vue';
+import IconExit from './IconExit.vue';
 import IconNull from './IconSettings.vue';
 
 const props = defineProps({
@@ -49,7 +50,7 @@ const iconSizeClass = computed(() => {
         case 'small':
           return 'w-4 h-4';
         case 'medium':
-          return 'w-8 h-8';
+          return 'w-6 h-6';
         case 'large':
         return 'w-12 h-12';
         default:
@@ -83,6 +84,8 @@ const iconComponent = computed(() => {
           return IconReview;
         case 'settings':
           return IconSettings;
+        case 'exit':
+          return IconExit;
         default:
           return IconNull; 
       }

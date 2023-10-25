@@ -18,7 +18,7 @@ const props = defineProps({
 });
 
 const textClass = computed( () => {
-    return props.sidebarElementIsActive ? 'text-highlight font-medium leading-10' : 'text-dark font-medium leading-10 group-hover:text-highlight duration-200' ;
+    return props.sidebarElementIsActive ? 'text-highlight text-lg font-regular' : 'text-dark font-regular text-lg group-hover:text-highlight duration-200' ;
 });
 
 const iconClass = computed( () => {

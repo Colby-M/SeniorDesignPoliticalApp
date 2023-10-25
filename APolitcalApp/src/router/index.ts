@@ -1,13 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import BasePageView from '../views/BasePageView.vue'
+import { createMemoryHistory, createRouter } from 'vue-router'
+import LandingPageView from '../views/LandingPageView.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: BasePageView
+      component: LandingPageView
     },
     {
       path: '/profile',
@@ -34,14 +34,6 @@ const router = createRouter({
       component: () => import('../views/ViewReviewPage.vue')
     },
     {
-      path: '/create',
-      name: 'create',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ViewCreatePage.vue')
-    },
-    {
       path: '/settings',
       name: 'settings',
       // route level code-splitting
@@ -58,12 +50,9 @@ const router = createRouter({
       component: () => import('../views/ViewDevTestPage.vue')
     },
     {
-      path: '/testicon',
-      name: 'IconTest',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/IconTestView.vue')
+      path: '/:pathMatch(.*)*', 
+      name: 'not-found',
+      redirect: '/'
     }
   ]
 })

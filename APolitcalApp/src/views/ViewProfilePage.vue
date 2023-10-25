@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import MainLayout from '@/components/layouts/MainLayout.vue';
+  import AuthAccount from '@/components/Auth/AuthAccount.vue';
+  import MainLayout from '@/components/layouts/MainLayout.vue';
+  import { useAuthStore } from '@/stores/Auth';
+
+  const authStore = useAuthStore();
 </script>
 
 <template>
   <MainLayout>
     <template #ContentSlot>
       <h1>profile</h1>
-      <img src="../components/logo/walter.png"/>
+      <AuthAccount @sign-out="authStore.logout()" v-if="authStore.session" :session="authStore.session" />
     </template>
   </MainLayout>
 </template>

@@ -10,10 +10,11 @@ const props = defineProps({
   },
 
 });
+const emits = defineEmits(['sign-out']);
 
 const loading = ref(true);
 const username = ref('');
-const website = ref('');
+const age = ref<number>();
 
 onMounted(() => {
   getProfile();
@@ -25,16 +26,16 @@ async function getProfile() {
     const { user } = props.session;
 
     let { data, error, status } = await supabase
-      .from('profiles')
-      .select(`username, website`)
+      .from('Profiles')
+      .select(`full_name, age`)
       .eq('id', user.id)
       .single();
 
     if (error && status !== 406) throw error;
 
     if (data) {
-      username.value = data.username;
-      website.value = data.website;
+      username.value = data.full_name;
+      age.value = data.age;
     }
   } catch (error) {
     alert(error);
@@ -51,11 +52,11 @@ async function updateProfile() {
     const updates = {
       id: user.id,
       username: username.value,
-      website: website.value,
+      age: age.value,
       updated_at: new Date(),
     }
 
-    let { error } = await supabase.from('profiles').upsert(updates)
+    let { error } = await supabase.from('Profiles').upsert(updates)
 
     if (error) throw error
   } catch (error) {
@@ -64,17 +65,9 @@ async function updateProfile() {
     loading.value = false;
   }
 }
-
-async function signOut() {
-  try {
-    loading.value = true;
-    let { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  } catch (error) {
-    alert(error);
-  } finally {
-    loading.value = false;
-  }
+function signOut()
+{
+  emits('sign-out');
 }
 </script>
 
@@ -89,8 +82,8 @@ async function signOut() {
       <input id="username" type="text" v-model="username" />
     </div>
     <div>
-      <label for="website">Website</label>
-      <input id="website" type="url" v-model="website" />
+      <label for="website">Age</label>
+      <input id="website" type="number" v-model="age" />
     </div>
 
     <div>
@@ -103,7 +96,7 @@ async function signOut() {
     </div>
 
     <div>
-      <button class="button block" @click="signOut" :disabled="loading">Sign Out</button>
+      <button class="button block" @click="signOut()" :disabled="loading">Sign Out</button>
     </div>
   </form>
 </template>
