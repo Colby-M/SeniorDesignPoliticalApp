@@ -15,7 +15,7 @@ const testPetitionObject = reactive({
 <template>
   <MainLayout>
     <template #ContentSlot>Discover
-    <div class="flex flex-wrap gap-8 px-16 items-center justify-center overflow-y-auto">
+    <div class="flex flex-wrap gap-8 px-16 items-center j ustify-center overflow-y-auto">
       <div class="w-[350px] h-[412px] bg-light group-hover:drop-shadow-2xl duration-700">
         <div class="w-[338px] h-[400px] bg-dark/90 absolute"></div>
         <div class="w-[338px] h-[400px] ml-[6px] mt-[6px] bg-highlight absolute">
@@ -44,6 +44,7 @@ const testPetitionObject = reactive({
         <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
         <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
         <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+
       </div>
     </template>
   </MainLayout>
