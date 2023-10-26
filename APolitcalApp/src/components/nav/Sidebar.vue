@@ -44,8 +44,5 @@ const emitShowCreatePopup = () => {
                     </div>
                 </button>
             </div>
-
-
-
         </nav>
 </template>

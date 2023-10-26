@@ -7,6 +7,8 @@ import ButtonBase from '../button/ButtonBase.vue'
 import router from '@/router';
 import type { RouteLocationRaw } from 'vue-router';
 
+const emit = defineEmits()
+
 const props = defineProps({
     petitionObject: {
         type: Object,
@@ -25,7 +27,7 @@ const linkToPetition = computed(() => {
 })
 
 const denyPetition = () => {
-  //TODO: Add deny database call
+  emit('test')
 }
 
 const reviewPetition = () => {
