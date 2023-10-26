@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Chrome/Safari Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(35, 59, 60, 0.3);;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(35, 59, 60, 1);
+}

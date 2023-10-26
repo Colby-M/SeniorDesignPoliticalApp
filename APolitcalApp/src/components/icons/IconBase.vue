@@ -14,6 +14,7 @@ import IconReview from './IconReview.vue';
 import IconSettings from './IconSettings.vue';
 import IconExit from './IconExit.vue';
 import IconNull from './IconSettings.vue';
+import IconUnlocked from './IconUnlocked.vue';
 
 const props = defineProps({
     iconSize: {
@@ -86,6 +87,8 @@ const iconComponent = computed(() => {
           return IconSettings;
         case 'exit':
           return IconExit;
+        case 'unlocked':
+          return IconUnlocked
         default:
           return IconNull; 
       }
