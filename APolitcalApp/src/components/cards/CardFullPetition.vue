@@ -49,12 +49,12 @@ const approvePetition = () => {
             <div class="group flex flex-row w-64 h-10 px-0.5 border-dark rounded-lg border gap-1 items-center bg-light hover:border-dark duration-300">
               <span class="text-dark font-medium text-sm">{{ props.petitionObject.petitionTitle }}</span>
             </div>
-            <div class="grid grid-cols-1 grid-rows-1 w-64 h-48 border rounded-lg shadow-inner bg-light border-dark px-3 py-2 overflow-y-auto">
-                <div class="w-6 h-6 flex rounded-full items-center justify-center bg-dark">
-                    <IconBase v-if="props.petitionObject.petitionLocked" iconColor="static-light" iconName="locked" iconSize="small"></IconBase>
-                    <IconBase v-if="!props.petitionObject.petitionLocked" iconColor="static-light" iconName="unlocked" iconSize="small"></IconBase>
+            <div class="grid grid-cols-1 grid-rows-1 w-64 h-48 border rounded-lg shadow-inner bg-light border-dark overflow-y-auto">
+                <div class="w-6 h-6 flex rounded-full items-center justify-center bg-transparent">
+                    <IconBase v-if="props.petitionObject.petitionLocked" iconColor="static-dark" iconName="locked" iconSize="small"></IconBase>
+                    <IconBase v-if="!props.petitionObject.petitionLocked" iconColor="static-dark" iconName="unlocked" iconSize="small"></IconBase>
                 </div>
-                <p class="text-dark font-normal text-sm text-center ">{{ props.petitionObject.petitionSummary }}</p>
+                <p class="text-dark font-normal text-sm text-center px-4 py-2">{{ props.petitionObject.petitionSummary }}</p>
             </div>
             <div class="w-64 flex flex-row justify-between">
                 <ButtonBase buttonType="deny-sm" @deny="denyPetition"/>

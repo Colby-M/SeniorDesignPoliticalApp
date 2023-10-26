@@ -28,7 +28,7 @@ const showCreatePopup = ref(false)
             <div class="border-b border-border flex px-2 justify-center items-center">
                 <slot name="ToolbarSlot"></slot>
             </div>
-            <div class="max-h-[80vh] sm:max-h-[100vh] overflow-y-auto">
+            <div class="max-h-[100vh] overflow-y-auto">
                 <slot name="ContentSlot"></slot>
             </div>
             <div class="flex bg-light sm:hidden">

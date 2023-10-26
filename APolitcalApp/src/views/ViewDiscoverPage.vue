@@ -42,6 +42,17 @@ const testPetitionObject = reactive({
 </template>
 
 <style>
+/* Hide scrollbar in WebKit-based browsers */
+::-webkit-scrollbar {
+  width: 0.5em;
+}
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
 
 </style>
