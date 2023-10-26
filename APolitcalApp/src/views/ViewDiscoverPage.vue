@@ -19,14 +19,24 @@ const testPetitionObject = reactive({
 
 <template>
   <MainLayout>
-    <template #ContentSlot>Discover
-      <div class="flex flex-wrap gap-8 px-16 items-center justify-center overflow-y-auto">
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-
+    <template #ContentSlot>
+      <div class="max-h-[90vh] overflow-y-auto scrollbar-hide">
+        <div>
+          <div class="flex pt-4 flex-wrap gap-8 px-16 items-center justify-center">
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+            <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          </div>
+        </div>
       </div>
     </template>
   </MainLayout>
 </template>
+
+<style>
+
+
+</style>

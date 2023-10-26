@@ -19,16 +19,16 @@ const showCreatePopup = ref(false)
 
 <template>
     <FormCreatePetition v-if="showCreatePopup" @close-popup="showCreatePopup=false"></FormCreatePetition>
-    <div class="grid w-screen h-screen justify-center grid-cols-mobile sm:grid-cols-sm-md-lg-xl">
-        <div class="hidden sm:flex flex-start pb-48">
+    <div class="grid w-full h-screen justify-center grid-cols-mobile sm:grid-cols-sm-md-lg-xl">
+        <div class="hidden sm:flex flex-start sm:pb-48">
             <Sidebar_Column @show-create-popup="showCreatePopup = true"></Sidebar_Column>
         </div>
 
-        <div class="grid w-full h-full grid-rows-mobile sm:grid-rows-sm-md-lg-xl sm:pr-2">
-            <div class="border-b border-border flex  px-2 justify-center items-center">
+        <div class="grid w-full h-full grid-rows-mobile sm:px-2 sm:grid-rows-sm-md-lg-xl">
+            <div class="border-b border-border flex px-2 justify-center items-center">
                 <slot name="ToolbarSlot"></slot>
             </div>
-            <div class="w-full">
+            <div>
                 <slot name="ContentSlot"></slot>
             </div>
             <div class="flex bg-light sm:hidden">
