@@ -55,7 +55,7 @@ const emits = defineEmits()
   </svg>
 </button>
 
-<button type="button" class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+<button type="button" class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2  ">
   <svg class="w-8 h-8 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
     <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
   </svg>
@@ -134,10 +134,9 @@ const emits = defineEmits()
 </button>
 
 <button v-if="buttonType === 'refresh-lg'" @click="emits('refresh')" type="button" class="text-light bg-dark hover:bg-dark/90  h-14 w-[132px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
-  <svg class="w-8 h-8 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-    viewBox="0 0 32 32">
+  <svg class="w-8 h-8 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none">
     <path fill-rule="evenodd" d="M3.3335 2.66663V10.6666H11.3335M28.6668 29.3333V21.3333H20.6668 M29.3332 15.3334C29.2069 12.4154 28.126 9.61958 26.2565 7.37555C24.387 5.13152 21.8324 3.56342 18.9852 2.9122C16.138 2.26098 13.1557 2.56266 10.4966 3.7709C7.83751 4.97914 5.6487 7.02708 4.2665 9.60005M2.6665 16.6667C2.81911 19.574 3.91907 22.3515 5.79841 24.5749C7.67776 26.7984 10.2332 28.3456 13.0744 28.9804C15.9157 29.6151 18.8866 29.3025 21.5335 28.0902C24.1804 26.878 26.3578 24.8327 27.7332 22.2667" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd"/>
-  </svg>
+  </svg>  
   Refresh
 </button>
 
