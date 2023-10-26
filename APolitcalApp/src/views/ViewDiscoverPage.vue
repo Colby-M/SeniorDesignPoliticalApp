@@ -41,7 +41,7 @@ const petitionNames = ['Petition Test', 'Test2', 'Petition Number 2', 'Testing 3
 
 
 function getPosts(numberPosts: number) {
-  let postArr = []
+  let postArr = <Array<{testPetitionObject: {petitionTitle: String, petitionId: String, petitionSummary:string, petitionLocked:boolean}}>>[]
 
   for (var i = 0; i < numberPosts; i++) 
   {
@@ -51,39 +51,31 @@ function getPosts(numberPosts: number) {
 
   return postArr
 }
-const posts = ref(getPosts(6))
+
+const posts = reactive(getPosts(6))
 //const posts = <Array<{testPetitionObject: {petitionTitle: String, petitionId: String, petitionSummary:string, petitionLocked:boolean}}>>ref([getPosts(6)])
 const scrollComponent = ref(null)
 
 const loadMorePosts = () => {
   isLoadingPosts.value = true
-
-  let newPosts = getPosts(6)
-  console.log(newPosts)
-
+  posts.push(getPosts(4))
   isLoadingPosts.value = false
-  //posts = newPosts
- }
+
+}
 
 
 const handleScroll = () => {
   let element = <HTMLElement>document.getElementById("discoverScroll");
   const scrollY = element.scrollTop;
-        const scrollHeight = element.scrollHeight;
-        const offsetHeight = element.offsetHeight;
-        const scrollThreshold = 0.8;
+  const scrollHeight = element.scrollHeight;
+  const offsetHeight = element.offsetHeight;
 
-        if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
-            loadMorePosts();
-            console.log('loadmoreposts')
-        }
-  /*
-  if (element.getBoundingClientRect().bottom < 0) 
-  {
-    loadMorePosts()
-  } 
-  
-  */
+  const scrollThreshold = 0.8;
+
+  if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
+      loadMorePosts();
+      console.log('loadmoreposts')
+  }
 }
 
 
