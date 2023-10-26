@@ -20,7 +20,7 @@ const testPetitionObject = reactive({
 <template>
   <MainLayout>
     <template #ContentSlot>
-      <div class="max-h-[90vh] overflow-y-auto scrollbar-hide">
+      <div class="max-h-[80vh] sm:max-h-[90vh] overflow-y-auto scrollbar-hide">
         <div>
           <div class="flex pt-4 flex-wrap gap-8 px-16 items-center justify-center">
             <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
