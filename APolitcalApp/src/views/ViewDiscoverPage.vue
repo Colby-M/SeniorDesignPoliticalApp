@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MainLayout from '@/components/layouts/MainLayout.vue';
 import CardFullPetition from '@/components/cards/CardFullPetition.vue';
+import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
 
 import { reactive } from 'vue';
 /* TODO: Implement Infinite Scoll With Petition Populating Functions */
@@ -22,13 +23,20 @@ const testPetitionObject = reactive({
     <template #ToolbarSlot>
       <ToolbarDiscover></ToolbarDiscover>
     </template>
-    <template #ContentSlot>Discover
-      <div class="flex flex-wrap gap-8 px-16 items-center justify-center overflow-y-auto">
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
-        <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+    <template #ContentSlot>
+        <div>
+        <div class="flex flex-wrap gap-8 px-16 py-2 items-center justify-center">
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+          <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+        </div>
       </div>
+
     </template>
   </MainLayout>
 </template>
