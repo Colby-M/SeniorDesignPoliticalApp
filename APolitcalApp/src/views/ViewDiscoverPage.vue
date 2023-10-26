@@ -19,6 +19,9 @@ const testPetitionObject = reactive({
 
 <template>
   <MainLayout>
+    <template #ToolbarSlot>
+      <ToolbarDiscover></ToolbarDiscover>
+    </template>
     <template #ContentSlot>Discover
       <div class="flex flex-wrap gap-8 px-16 items-center justify-center overflow-y-auto">
         <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
