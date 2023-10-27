@@ -26,13 +26,7 @@ const sampleFullPetitionData = {petitionTitle: "Sample", petitionId: "124124", p
     </template>
     <template #ContentSlot>
       <div class="flex flex-wrap gap-4 justify-center">
-        <CardTriTitle :petitionInfoArray="samplePetitionData"></CardTriTitle>
-        <CardFullPetition :petitionObject="sampleFullPetitionData"></CardFullPetition>
-        <CardTriTitle :petitionInfoArray="samplePetitionData"></CardTriTitle>
-        <CardFullPetition :petitionObject="sampleFullPetitionData"></CardFullPetition>
-        <CardTriTitle :petitionInfoArray="samplePetitionData"></CardTriTitle>
-        <CardFullPetition :petitionObject="sampleFullPetitionData"></CardFullPetition>
-        <CardTriTitle :petitionInfoArray="samplePetitionData"></CardTriTitle>
+
       </div>
     </template>
   </MainLayout>
