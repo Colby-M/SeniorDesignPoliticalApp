@@ -39,7 +39,11 @@ const testData: petitionTypeReview[] = [
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
-        <CardFullPetitionReview></CardFullPetitionReview>
+        <CardFullPetitionReview :petitionTitle="testData[1].petitionTitle" :petitionGoal="testData[1].petitionGoal" 
+                                :petitionId="testData[1].petitionId" :petitionLocked="testData[1].petitionLocked"  
+                                :petitionScope="testData[1].petitionScope" :petitionSummary="testData[1].petitionSummary"  
+                                :petitionTags="testData[1].petitionTags" :petitionSignatures="100"/>
+
       </div>
     </template>
   </MainLayout>
