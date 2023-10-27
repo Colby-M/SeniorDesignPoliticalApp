@@ -59,9 +59,9 @@ const approvePetition = () => {
                 <p class="text-dark font-normal text-sm text-center px-4 py-2">{{ props.petitionObject.petitionSummary }}</p>
             </div>
             <div class="w-64 flex flex-row justify-between">
-                <ButtonBase buttonType="deny-sm" @deny="denyPetition"/>
+                <ButtonBase buttonType="deny-sm" @deny-petition="denyPetition"/>
                 <ButtonBase buttonType="review-sm" @review="reviewPetition"/>
-                <ButtonBase buttonType="approve-sm" @approve="approvePetition"/>
+                <ButtonBase buttonType="approve-sm" @approve-petition="approvePetition"/>
             </div>
           </div>
         </div>

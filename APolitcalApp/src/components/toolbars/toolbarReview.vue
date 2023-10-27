@@ -21,15 +21,15 @@ const denyClicked = () => {
     <toolbarBase>
         <template #toolbar-buttons-lg>
             <ButtonBase buttonType="filter" @filter="filterClicked"></ButtonBase>
-            <ButtonBase buttonType="approve-lg" @approve="approveClicked"></ButtonBase>
-            <ButtonBase buttonType="deny-lg" @deny="denyClicked"></ButtonBase>
+            <ButtonBase buttonType="approve-lg" @approve-petition="approveClicked"></ButtonBase>
+            <ButtonBase buttonType="deny-lg" @deny-petition="denyClicked"></ButtonBase>
 
         </template>
 
         <template #toolbar-buttons-sm>
             <ButtonBase buttonType="filter" @filter="filterClicked"></ButtonBase>
-            <ButtonBase buttonType="approve-sm" @approve="approveClicked"></ButtonBase>
-            <ButtonBase buttonType="deny-sm" @deny="denyClicked"></ButtonBase>
+            <ButtonBase buttonType="approve-sm" @approve-petition="approveClicked"></ButtonBase>
+            <ButtonBase buttonType="deny-sm" @deny-petition="denyClicked"></ButtonBase>
         </template>
 
         <template #toolbar-search-filter>

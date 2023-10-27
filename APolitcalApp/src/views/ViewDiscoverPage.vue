@@ -10,7 +10,6 @@ let isLoadingPosts = ref(false)
 
 onMounted(() => {
   let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
-  console.log(internalDiv)
   if(internalDiv !== null)
   {
     internalDiv.addEventListener("scroll", handleScroll)

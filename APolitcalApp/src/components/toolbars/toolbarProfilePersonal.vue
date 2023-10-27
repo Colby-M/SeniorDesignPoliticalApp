@@ -17,12 +17,12 @@ const filterClicked = () => {
     <toolbarBase>
         <template #toolbar-buttons-lg>
             <ButtonBase buttonType="filter" @filter="filterClicked"></ButtonBase>
-            <ButtonBase buttonType="create-lg" @create="createClicked"></ButtonBase>
+            <ButtonBase buttonType="create-lg" @show-create-popup="createClicked"></ButtonBase>
         </template>
 
         <template #toolbar-buttons-sm>
             <ButtonBase buttonType="filter" @filter="filterClicked"></ButtonBase>
-            <ButtonBase buttonType="create-sm" @create="createClicked"></ButtonBase>
+            <ButtonBase buttonType="create-sm" @show-create-popup="createClicked"></ButtonBase>
         </template>
 
         <template #toolbar-search-filter>
