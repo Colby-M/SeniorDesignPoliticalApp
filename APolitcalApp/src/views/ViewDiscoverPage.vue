@@ -6,7 +6,7 @@ import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
 import { reactive, onMounted, onUnmounted, ref } from 'vue';
 /* TODO: Implement Infinite Scoll With Petition Populating Functions */
 
-interface petitionType {
+interface petitionTypeDiscover {
   petitionTitle: string; 
   petitionSummary: string; 
   petitionId:string; 
@@ -14,10 +14,10 @@ interface petitionType {
 }
 
 const isLoadingPosts = ref(false)
-const postArray = ref<petitionType[]>([])
+const postArray = ref<petitionTypeDiscover[]>([])
 const testSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum iaculis eu non diam phasellus vestibulum lorem. Diam in arcu cursus euismod quis. Nunc non blandit massa enim nec dui nunc. Tincidunt eget nullam non nisi est sit amet facilisis magna.'
 
-const testData: petitionType[] = [
+const testData: petitionTypeDiscover[] = [
   { petitionId: '1',  petitionTitle: 'Title 1',  petitionSummary: testSummary,  petitionLocked: false },
   { petitionId: '2',  petitionTitle: 'Title 2',  petitionSummary: testSummary,  petitionLocked: true  },
   { petitionId: '3',  petitionTitle: 'Title 3',  petitionSummary: testSummary,  petitionLocked: false },
@@ -103,7 +103,7 @@ const handleScroll = () => {
   </MainLayout>
 </template>
 
-<style>
+<style scoped>
 /* Hide scrollbar in WebKit-based browsers */
 ::-webkit-scrollbar {
   width: 0.5em;
