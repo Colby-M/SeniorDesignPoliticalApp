@@ -12,7 +12,7 @@ const props = defineProps({
         }
 })
 
-const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'refresh', 'approve-petition', 'show-create-popup' ,'follow', 'review'])
+const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'deny', 'refresh', 'approve-petition', 'show-create-popup' ,'follow', 'review', 'suggest'])
 
 /* Currently Unused Buttons... Keeping Here Incase Decide to use them
 <button type="button" class="text-light bg-dark hover:bg-dark/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center dark:focus:ring-[#4285F4]/55 ">
@@ -214,8 +214,17 @@ const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'refres
   <IconBase iconName="review" iconColor="static-dark"></IconBase>
 </button>
 
-<button v-if="buttonType === 'filter'" @click="emit('filter')" type="button" class="text-light bg-transparent hover:bg-dark/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center mr-2  ">
+<button v-if="buttonType === 'filter'" @click="emit('filter')" type="button" class="text-light bg-transparent hover:bg-dark/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center  ">
   <IconBase iconName="filter" iconSize="large"></IconBase>
 </button>
+
+<button v-if="buttonType === 'suggest'" @click="emit('suggest')" type="button" class="text-light bg-highlight justify-center hover:bg-highlight/90 h-[36px] w-[36px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1.5 py-1.5 items-center  ">
+  <IconBase iconName="editable" iconSize="medium" icon-color="static-light"></IconBase>
+</button>
+
+<button v-if="buttonType === 'discard-xs'" @click="emit('discard')" type="button" class="text-light bg-dark justify-center hover:bg-dark/90 h-[36px] w-[36px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1.5 py-1.5 items-center  ">
+  <IconBase iconName="disapprove" iconSize="medium" icon-color="static-light"></IconBase>
+</button>
+
 
 </template>

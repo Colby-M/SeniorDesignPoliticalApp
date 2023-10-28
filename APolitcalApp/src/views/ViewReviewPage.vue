@@ -2,6 +2,7 @@
 import MainLayout from '@/components/layouts/MainLayout.vue';
 import ToolbarReview from '../components/toolbars/toolbarReview.vue'
 import CardFullPetitionReview from '../components/cards/CardFullPetitionReview.vue';
+import CardSolutionsPersonalSuggestion from '@/components/cards/CardSolutionsPersonalSuggestion.vue';
 
 interface petitionTypeReview {
   petitionTitle: string; 
@@ -17,16 +18,16 @@ const testSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, se
 const sampleTagArray = ['tag1', 'tag2', 'tag3', 'tag5']
 
 const testData: petitionTypeReview[] = [
-  { petitionId: '1',  petitionTitle: 'Title 1',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 0, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '2',  petitionTitle: 'Petition Title 1',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 2, petitionTags: sampleTagArray, petitionGoal: 1423},
+  { petitionId: '1',  petitionTitle: 'Title 1',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 1, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '2',  petitionTitle: 'Petition Title 1',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 10250},
   { petitionId: '3',  petitionTitle: 'Title 3',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '4',  petitionTitle: 'Title 4',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 1, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '5',  petitionTitle: 'Title 5',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 2, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '6',  petitionTitle: 'Title 6',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 0, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '7',  petitionTitle: 'Title 7',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 0, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '8',  petitionTitle: 'Title 8',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '9',  petitionTitle: 'Title 9',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '10', petitionTitle: 'Title 10', petitionSummary: testSummary,  petitionLocked: true , petitionScope: 1, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '4',  petitionTitle: 'Title 4',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 2, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '5',  petitionTitle: 'Title 5',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '6',  petitionTitle: 'Title 6',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 1, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '7',  petitionTitle: 'Title 7',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 1, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '8',  petitionTitle: 'Title 8',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 4, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '9',  petitionTitle: 'Title 9',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 4, petitionTags: sampleTagArray, petitionGoal: 1200},
+  { petitionId: '10', petitionTitle: 'Title 10', petitionSummary: testSummary,  petitionLocked: true , petitionScope: 2, petitionTags: sampleTagArray, petitionGoal: 1200},
   // ... add more test data as required
 ];
 
@@ -39,13 +40,13 @@ const testData: petitionTypeReview[] = [
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] w-full overflow-y-auto py-2" ref="scrollComponent">
-        <div class="flex flex-col gap-2 items-center justify-center">
+        <div class="flex flex-col gap-2 items-center py-2 justify-center">
           <CardFullPetitionReview :petitionTitle="testData[1].petitionTitle" :petitionGoal="testData[1].petitionGoal" 
                                   :petitionId="testData[1].petitionId" :petitionLocked="testData[1].petitionLocked"  
                                   :petitionScope="testData[1].petitionScope" :petitionSummary="testData[1].petitionSummary"  
                                   :petitionTags="testData[1].petitionTags" :petitionSignatures="1600"/>
-          <div class="w-full border-t border-dashed px-6 border-border h-96">
-
+          <div class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
+            <CardSolutionsPersonalSuggestion :linkedPetition="testData[1].petitionId"></CardSolutionsPersonalSuggestion>
 
           </div>
         </div>

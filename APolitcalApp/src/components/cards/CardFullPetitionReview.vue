@@ -56,7 +56,7 @@ const goalString = computed( () =>
           <!-- Petition Scope Elements -->
           <div class="flex flex-col">
               <label>Petition Scope
-                  <input id="steps-range" disabled="true" readonly :value="goalString" type="range" min="1"  max="4" step="1" class="w-full accent-highlight h-3 thumb-full bg-light rounded-lg border border-border cursor-pointer">
+                  <input id="steps-range" disabled="true" readonly :value="petitionScope" type="range" min="1"  max="4" step="1" class="w-full accent-highlight h-3 thumb-full bg-light rounded-lg border border-border cursor-pointer">
               </label>
               <div class="flex justify-between mt-0.5">
                   <span class="font-light text-dark">local</span>
