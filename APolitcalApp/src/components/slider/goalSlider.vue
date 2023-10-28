@@ -21,12 +21,9 @@ const labelStyles = computed(() => {
     const percentage = 100;
     goalReached.value = true
     left = `calc(${percentage}% - ${percentage * 0.35}px)`;
-    console.log(left)
   }
   else{
     const percentage = value.value;
-    left = `calc(${percentage}% - ${percentage * 0.40}px)`;
-    console.log(left)
   }
   return {
     left,

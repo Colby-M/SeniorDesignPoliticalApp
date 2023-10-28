@@ -3,6 +3,7 @@ import MainLayout from '@/components/layouts/MainLayout.vue';
 import ToolbarReview from '../components/toolbars/toolbarReview.vue'
 import CardFullPetitionReview from '../components/cards/CardFullPetitionReview.vue';
 import CardSolutionsPersonalSuggestion from '@/components/cards/CardSolutionsPersonalSuggestion.vue';
+import CardSolutionsOtherSuggestions from '@/components/cards/CardSolutionsOtherSuggestions.vue';
 
 interface petitionTypeReview {
   petitionTitle: string; 
@@ -14,6 +15,12 @@ interface petitionTypeReview {
   petitionLocked:boolean;
 }
 
+interface petitionSuggestion {
+  petitionSuggestion: string; 
+  petitionId:string;
+}
+
+/* ---Test Data--- */
 const testSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum iaculis eu non diam phasellus vestibulum lorem. Diam in arcu cursus euismod quis. Nunc non blandit massa enim nec dui nunc. Tincidunt eget nullam non nisi est sit amet facilisis magna.'
 const sampleTagArray = ['tag1', 'tag2', 'tag3', 'tag5']
 
@@ -29,6 +36,13 @@ const testData: petitionTypeReview[] = [
   { petitionId: '9',  petitionTitle: 'Title 9',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 4, petitionTags: sampleTagArray, petitionGoal: 1200},
   { petitionId: '10', petitionTitle: 'Title 10', petitionSummary: testSummary,  petitionLocked: true , petitionScope: 2, petitionTags: sampleTagArray, petitionGoal: 1200},
   // ... add more test data as required
+];
+
+const testSuggestionData: petitionSuggestion[] = [
+  {petitionSuggestion: 'we should not do that', petitionId: '2'},
+  {petitionSuggestion: 'we should do that',     petitionId: '2'},
+  {petitionSuggestion: 'we could do that',      petitionId: '2'},
+  {petitionSuggestion: 'I dont get it',         petitionId: '2'},
 ];
 
 </script>
@@ -47,6 +61,8 @@ const testData: petitionTypeReview[] = [
                                   :petitionTags="testData[1].petitionTags" :petitionSignatures="1600"/>
           <div class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="testData[1].petitionId"></CardSolutionsPersonalSuggestion>
+            <CardSolutionsOtherSuggestions :linkedPetition="testData[1].petitionId" :suggestionText="testData[1].petitionSummary"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions v-for="element in testSuggestionData" :linkedPetition="element.petitionId" :suggestionText="element.petitionSuggestion"></CardSolutionsOtherSuggestions>
 
           </div>
         </div>

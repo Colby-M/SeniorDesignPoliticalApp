@@ -12,7 +12,7 @@ const props = defineProps({
         }
 })
 
-const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'deny', 'refresh', 'approve-petition', 'show-create-popup' ,'follow', 'review', 'suggest'])
+const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'deny', 'refresh', 'approve','approve-petition', 'show-create-popup' ,'follow', 'review', 'suggest'])
 
 /* Currently Unused Buttons... Keeping Here Incase Decide to use them
 <button type="button" class="text-light bg-dark hover:bg-dark/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center dark:focus:ring-[#4285F4]/55 ">
@@ -226,5 +226,7 @@ const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'deny',
   <IconBase iconName="disapprove" iconSize="medium" icon-color="static-light"></IconBase>
 </button>
 
-
+<button v-if="buttonType === 'approve-xs'" @click="emit('approve')" type="button" class="text-light bg-highlight justify-center hover:bg-highlight/90 h-[36px] w-[36px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1.5 py-1.5 items-center  ">
+  <IconBase iconName="approve" iconSize="medium" icon-color="static-light"></IconBase>
+</button>
 </template>

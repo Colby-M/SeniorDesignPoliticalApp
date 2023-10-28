@@ -7,6 +7,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
+
 })
 
 const suggestion = ref('')
