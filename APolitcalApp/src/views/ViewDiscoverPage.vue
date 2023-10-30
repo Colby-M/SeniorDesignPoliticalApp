@@ -2,8 +2,10 @@
 import MainLayout from '@/components/layouts/MainLayout.vue';
 import CardFullPetition from '@/components/cards/CardFullPetition.vue';
 import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
+import supabase from '@/lib/supabaseClient';
 
 import { reactive, onMounted, onUnmounted, ref } from 'vue';
+import { useAuthStore } from '@/stores/Auth';
 /* TODO: Implement Infinite Scoll With Petition Populating Functions */
 
 interface petitionType {
@@ -49,21 +51,26 @@ onUnmounted(() => {
   }
 })
 
-function getPosts(numberPosts: number) {
+async function getPosts(numberPosts: number) {
   /* TODO: Replace with call to supabase (also filtering based on user preferences) */
   console.log('loadingPosts')
   isLoadingPosts.value = true
   //Simulated API Delay
-  setTimeout( () => {
-    for (var i = 0; i < numberPosts; i++) 
-    {
-      postArray.value.push(testData[i % testData.length])
-    }
+  // setTimeout( () => {
+  //   for (var i = 0; i < numberPosts; i++) 
+  //   {
+  //     postArray.value.push(testData[i % testData.length])
+  //   }
 
-    isLoadingPosts.value = false
-  }, 1000)
-
-
+  //   isLoadingPosts.value = false
+  // }, 1000)
+  let { data, error } = await supabase
+    .from('Petitions')
+    .select<"*", petitionType>()
+    .neq('userid', useAuthStore().session?.user.id)
+    .range(postArray.value.length, postArray.value.length + numberPosts);
+  postArray.value.push(...data ?? []);
+  isLoadingPosts.value = false;
 }
 
 const handleScroll = () => {
