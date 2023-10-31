@@ -2,15 +2,20 @@
 import MainLayout from '@/components/layouts/MainLayout.vue';
 import CardFullPetition from '@/components/cards/CardFullPetition.vue';
 import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
+import supabase from '@/lib/supabaseClient';
 
 import { reactive, onMounted, onUnmounted, ref } from 'vue';
+import { useAuthStore } from '@/stores/Auth';
 /* TODO: Implement Infinite Scoll With Petition Populating Functions */
 
 interface petitionType {
-  petitionTitle: string; 
-  petitionSummary: string; 
-  petitionId:string; 
-  petitionLocked:boolean;
+  created_at: Date; 
+  description: string; 
+  id: string; 
+  scope: number;
+  tags: string[];
+  title: string;
+  userid: string;
 }
 
 const isLoadingPosts = ref(false)
@@ -49,21 +54,27 @@ onUnmounted(() => {
   }
 })
 
-function getPosts(numberPosts: number) {
+async function getPosts(numberPosts: number) {
   /* TODO: Replace with call to supabase (also filtering based on user preferences) */
   console.log('loadingPosts')
   isLoadingPosts.value = true
   //Simulated API Delay
-  setTimeout( () => {
-    for (var i = 0; i < numberPosts; i++) 
-    {
-      postArray.value.push(testData[i % testData.length])
-    }
+  // setTimeout( () => {
+  //   for (var i = 0; i < numberPosts; i++) 
+  //   {
+  //     postArray.value.push(testData[i % testData.length])
+  //   }
 
-    isLoadingPosts.value = false
-  }, 1000)
-
-
+  //   isLoadingPosts.value = false
+  // }, 1000)
+  let { data, error } = await supabase
+    .from('Petitions')
+    .select<"*", petitionType>()
+    .neq('userid', useAuthStore().session?.user.id)
+    .range(postArray.value.length, postArray.value.length + numberPosts);
+  console.log(data);
+  postArray.value.push(...data ?? []);
+  isLoadingPosts.value = false;
 }
 
 const handleScroll = () => {
@@ -90,7 +101,7 @@ const handleScroll = () => {
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
         <div class="flex flex-wrap gap-8 px-16 py-2 items-center justify-center">
-          <CardFullPetition v-for="post in postArray" :petitionId="post.petitionId" :petitionTitle="post.petitionTitle" :petitionSummary="post.petitionSummary" :petitionLocked="post.petitionLocked" />
+          <CardFullPetition v-for="post in postArray" :petitionId="post.id" :petitionTitle="post.title" :petitionSummary="post.description" :petitionLocked="false" />
         </div>
         <div v-if="isLoadingPosts" role="status" class="flex justify-center mt-4 mb-4">
               <svg aria-hidden="true" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin fill-highlight" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
