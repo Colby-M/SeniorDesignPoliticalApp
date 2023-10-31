@@ -132,7 +132,7 @@ function submitQuestionForm() {
     /* TODO: Send data to database form  */
 }
 
-function submitPetitionForm() {
+async function submitPetitionForm() {
     isLoading.value = true;
     supabase
         .from('Petitions')
@@ -143,8 +143,11 @@ function submitPetitionForm() {
             scope: createFormData.contentScope.scopeNumber,
             tags: createFormData.contentTagStore.tagArray,
             userid: useAuthStore().session?.user.id
-        }).then(() => isLoading.value = false);
-    emitClosePopup();
+        });
+    setTimeout(() => {
+        isLoading.value = false;
+        emitClosePopup();
+    }, 1000);
 }
 
 function submitPetitionDraftForm() {
