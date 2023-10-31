@@ -4,11 +4,16 @@ import ToolbarReview from '../components/toolbars/toolbarReview.vue'
 import CardFullPetitionReview from '../components/cards/CardFullPetitionReview.vue';
 import CardSolutionsPersonalSuggestion from '@/components/cards/CardSolutionsPersonalSuggestion.vue';
 import CardSolutionsOtherSuggestions from '@/components/cards/CardSolutionsOtherSuggestions.vue';
+import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { useAuthStore } from '@/stores/Auth';
 
+import supabase from '@/lib/supabaseClient';
 /* 
 --KMIE: Proposed Data Flow--
 Load petition in
 
+Add emit from toolbar for approving and denying
 Petition should have linked suggestions in array (ids of comments in array basically)
 For each element in suggestion array render CardSolutionsOtherSuggestions card
 
@@ -27,10 +32,89 @@ interface petitionTypeReview {
   petitionLocked:boolean;
 }
 
+interface testpetitionTypeReview {
+  id: string; 
+  description: string; 
+  title:string;
+  scope: number;
+  goal: number;
+  tags: Array<string>; 
+  locked:boolean;
+}
+
 interface petitionSuggestion {
   petitionSuggestion: string; 
   petitionId:string;
 }
+
+const route = useRoute();
+const loadingContent = ref(true);
+const queryPetitionId = ref<string | null>(null);
+
+const petitionContent = ref<testpetitionTypeReview>({ 
+  id: '', 
+  description: '',
+  tags: [''],
+  title: '',
+  goal: 0,
+  locked: true,
+  scope: 1
+});
+
+const emptyPetition = ref<petitionTypeReview>({ 
+  petitionId: '', 
+  petitionSummary: '',
+  petitionTags: [''],
+  petitionTitle: '',
+  petitionGoal: 0,
+  petitionLocked: true,
+  petitionScope: 1
+});
+
+onMounted(async() => {
+  queryPetitionId.value = route.query.id ? route.query.id?.toString() : null;
+  
+  console.log(queryPetitionId.value)
+  
+  /* If routed here from specific petition then load the petition*/
+  if (queryPetitionId.value !== null){
+    await getPostFromId()
+    loadingContent.value = false
+  }
+
+  /* Otherwise load random petition */
+  else {
+    await getNextPost()
+    loadingContent.value = false
+  }
+});
+
+async function getPostFromId() {
+  console.log('loading from post Id')
+  let { data, error } = await supabase
+    .from('Petitions')
+    .select<"*">()
+    .eq('id', queryPetitionId.value)
+    .single()
+  console.log(data);
+  petitionContent.value = data
+  console.log(petitionContent.value);
+  //If post creator is equal to user then call get next post, if error call get next post
+};
+
+async function getNextPost() {
+  console.log('loading Random row')
+  let { data, error } = await supabase
+    .from('Petitions')
+    .select<"*">()
+    .eq('userid', useAuthStore().session?.user.id)
+    .single()
+  console.log(data);
+  petitionContent.value = data
+  console.log(petitionContent.value);
+  //If post creator is equal to user then call get next post, if error call get next post
+};
+
 
 /* ---Test Data--- */
 const testSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum iaculis eu non diam phasellus vestibulum lorem. Diam in arcu cursus euismod quis. Nunc non blandit massa enim nec dui nunc. Tincidunt eget nullam non nisi est sit amet facilisis magna.'
@@ -67,10 +151,10 @@ const testSuggestionData: petitionSuggestion[] = [
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] w-full overflow-y-auto py-2" ref="scrollComponent">
         <div class="flex flex-col gap-2 items-center py-2 justify-center">
-          <CardFullPetitionReview :petitionTitle="testData[1].petitionTitle" :petitionGoal="testData[1].petitionGoal" 
-                                  :petitionId="testData[1].petitionId" :petitionLocked="testData[1].petitionLocked"  
-                                  :petitionScope="testData[1].petitionScope" :petitionSummary="testData[1].petitionSummary"  
-                                  :petitionTags="testData[1].petitionTags" :petitionSignatures="1600"/>
+          <CardFullPetitionReview :petitionTitle="petitionContent.title" :petitionGoal="petitionContent.goal" 
+                                  :petitionId="petitionContent.id" :petitionLocked="petitionContent.locked"  
+                                  :petitionScope="petitionContent.scope" :petitionSummary="petitionContent.description"  
+                                  :petitionTags="petitionContent.tags" :petitionSignatures="1600"/>
           <div v-if="!testData[1].petitionLocked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="testData[1].petitionId"></CardSolutionsPersonalSuggestion>
             <CardSolutionsOtherSuggestions :linkedPetition="testData[1].petitionId" :suggestionText="testData[1].petitionSummary"></CardSolutionsOtherSuggestions>

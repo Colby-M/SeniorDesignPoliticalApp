@@ -16,24 +16,12 @@ const props = defineProps<{
   petitionLocked:boolean
 }>();
 
-const linkToPetition = computed(() => {
-  if (props.petitionId !== null) {
-    return ('/review/' + props.petitionId)
-  }
-  else {
-    return '/discover'
-  }
-
-})
-
 const denyPetition = () => {
   emit('test')
 }
 
 const reviewPetition = () => {
-  //TODO: Link to petition to review (how will this be done)
-  // let petitionLink =  <RouteLocationRaw>linkToPetition.value
-  // router.push(petitionLink)
+  router.push({path: 'review', query: {id: props.petitionId}})
 }
 
 const approvePetition = () => {
