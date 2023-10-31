@@ -4,6 +4,8 @@
 BACKEND PEOPLE: Fill in function calls to database 
 
 */
+import { useAuthStore } from '@/stores/Auth';
+import supabase from '../../lib/supabaseClient';
 import IconBase from '../icons/IconBase.vue';
 import { reactive, ref } from 'vue';
 const emit = defineEmits()
@@ -43,9 +45,11 @@ const createFormData = reactive({
 
 const statusQuestionLockError = ref(false)
 const statusPetitionContentError = ref(false)
+const isLoading = ref(false);
 
 const validateCreateForm = () => {
     /* Reset Error Messages */
+    if (isLoading.value) return;
     statusPetitionContentError.value = false
     statusQuestionLockError.value = false
 
@@ -128,8 +132,22 @@ function submitQuestionForm() {
     /* TODO: Send data to database form  */
 }
 
-function submitPetitionForm() {
-    /* TODO: Send data to database form  */   
+async function submitPetitionForm() {
+    isLoading.value = true;
+    supabase
+        .from('Petitions')
+        .insert({
+            title: createFormData.contentTitle.text,
+            description: createFormData.contentDescription.text,
+            goal: createFormData.contentGoalSigners.contentText,
+            scope: createFormData.contentScope.scopeNumber,
+            tags: createFormData.contentTagStore.tagArray,
+            userid: useAuthStore().session?.user.id
+        });
+    setTimeout(() => {
+        isLoading.value = false;
+        emitClosePopup();
+    }, 1000);
 }
 
 function submitPetitionDraftForm() {
@@ -267,8 +285,12 @@ function submitPetitionDraftForm() {
                     <!-- Petition Save And Submit Buttons -->
                     <div class="flex flex-col text-center text-dark text-sm gap-2">
                         <div class="flex flex-row gap-2">
-                            <button type="button" name="save-draft" @click="submitPetitionDraftForm" class="test w-1/2 mx-auto bg-light border border-border text-dark text-sm font-medium rounded-full block hover:bg-dark/10 p-2.5 focus:border-dark">Save Draft</button>
-                            <button type="button" name="submit-petition" @click="validateCreateForm" class="test w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Create</button>
+                            <!-- <button type="button" name="save-draft" @click="submitPetitionDraftForm" class="test w-1/2 mx-auto bg-light border border-border text-dark text-sm font-medium rounded-full block hover:bg-dark/10 p-2.5 focus:border-dark">Save Draft</button> -->
+                            <button type="button" :disabled="isLoading" name="submit-petition" @click="validateCreateForm" class="test w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Create</button>
+                        </div>
+                        <div class="loading-container" v-if="isLoading">
+                            <div class="loading"></div>
+                            <div id="loading-text">loading</div>
                         </div>
                         <p v-if="statusPetitionContentError ">This petition is missing required fields</p>
                         <p v-if="statusQuestionLockError">To submit a question all prompts must be set to editable</p>
@@ -278,3 +300,125 @@ function submitPetitionDraftForm() {
         </div>
     </div>
 </template>
+<style scoped>
+    @keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @-moz-keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @-webkit-keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @-o-keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @-moz-keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @-webkit-keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @-o-keyframes rotate-loading {
+        0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+        100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+    }
+
+    @keyframes loading-text-opacity {
+        0%  {opacity: 0}
+        20% {opacity: 0}
+        50% {opacity: 1}
+        100%{opacity: 0}
+    }
+
+    @-moz-keyframes loading-text-opacity {
+        0%  {opacity: 0}
+        20% {opacity: 0}
+        50% {opacity: 1}
+        100%{opacity: 0}
+    }
+
+    @-webkit-keyframes loading-text-opacity {
+        0%  {opacity: 0}
+        20% {opacity: 0}
+        50% {opacity: 1}
+        100%{opacity: 0}
+    }
+
+    @-o-keyframes loading-text-opacity {
+        0%  {opacity: 0}
+        20% {opacity: 0}
+        50% {opacity: 1}
+        100%{opacity: 0}
+    }
+    .loading-container,
+    .loading {
+        height: 100px;
+        position: relative;
+        width: 100px;
+        border-radius: 100%;
+    }
+
+
+    .loading-container { margin: 40px auto }
+
+    .loading {
+        border: 2px solid transparent;
+        border-color: transparent #888 transparent #888;
+        -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+        -moz-transform-origin: 50% 50%;
+        -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+        -o-transform-origin: 50% 50%;
+        -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+        -webkit-transform-origin: 50% 50%;
+        animation: rotate-loading 1.5s linear 0s infinite normal;
+        transform-origin: 50% 50%;
+    }
+
+    .loading-container:hover .loading {
+        border-color: transparent #E45635 transparent #E45635;
+    }
+    .loading-container:hover .loading,
+    .loading-container .loading {
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+    }
+
+    #loading-text {
+        -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
+        -o-animation: loading-text-opacity 2s linear 0s infinite normal;
+        -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
+        animation: loading-text-opacity 2s linear 0s infinite normal;
+        color: #888;
+        font-family: "Helvetica Neue, "Helvetica", ""arial";
+        font-size: 10px;
+        font-weight: bold;
+        margin-top: 45px;
+        opacity: 0;
+        position: absolute;
+        text-align: center;
+        text-transform: uppercase;
+        top: 0;
+        width: 100px;
+    }
+</style>
