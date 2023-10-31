@@ -44,6 +44,7 @@ module.exports = {
           - higher than 5 is darker
       */
       'light': '#f1f5f9',
+      'light-highlight': '#FFFFFF',
       'dark': '#353b3c',
       'highlight': '#5F8173',
       'border': '#aeb1b1'

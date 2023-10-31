@@ -5,6 +5,18 @@ import CardFullPetitionReview from '../components/cards/CardFullPetitionReview.v
 import CardSolutionsPersonalSuggestion from '@/components/cards/CardSolutionsPersonalSuggestion.vue';
 import CardSolutionsOtherSuggestions from '@/components/cards/CardSolutionsOtherSuggestions.vue';
 
+/* 
+--KMIE: Proposed Data Flow--
+Load petition in
+
+Petition should have linked suggestions in array (ids of comments in array basically)
+For each element in suggestion array render CardSolutionsOtherSuggestions card
+
+BOTH PETITIONS AND SUGGESTIONS SHOULD TRACK WHO HAS VOTED ON THEM
+
+*/
+
+/*TODO: ADD linked solution slot to petition table, (array of strings) pass the petition ids as props to the card SFC... can then use simple for loop */
 interface petitionTypeReview {
   petitionTitle: string; 
   petitionSummary: string; 
@@ -62,7 +74,7 @@ const testSuggestionData: petitionSuggestion[] = [
           <div class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="testData[1].petitionId"></CardSolutionsPersonalSuggestion>
             <CardSolutionsOtherSuggestions :linkedPetition="testData[1].petitionId" :suggestionText="testData[1].petitionSummary"></CardSolutionsOtherSuggestions>
-            <CardSolutionsOtherSuggestions v-for="element in testSuggestionData" :linkedPetition="element.petitionId" :suggestionText="element.petitionSuggestion"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions v-for="element in testSuggestionData" :linkedPetition="element.petitionId" :suggestionText="element.petitionSuggestion" :approved="true" :disapproved="false"></CardSolutionsOtherSuggestions>
 
           </div>
         </div>

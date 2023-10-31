@@ -29,7 +29,7 @@ const goalString = computed( () =>
 
 <template>
 
-    <div class="bg-white rounded-lg border border-border bg-light drop-shadow-sm w-[448px] overflow-y-auto">
+    <div class="bg-white rounded-lg border border-border bg-light-highlight drop-shadow-sm w-[448px] overflow-y-auto">
       <div class="p-8 space-y-6">
         <div href="#" class="flex row font-light text-start mb-6 text-xl justify-between text-dark">
           <div class="flex items-center">
@@ -45,7 +45,7 @@ const goalString = computed( () =>
               <IconBase v-if="props.petitionLocked" iconName="locked" iconColor="static-dark" iconSize="small"></IconBase>
               <IconBase v-if="!props.petitionLocked" iconName="unlocked" iconColor="static-dark" iconSize="small"></IconBase>
             </div>
-            <textarea name="summary" readonly maxlength="512" id="petition-summary" v-model="props.petitionSummary" class="bg-light border h-32 border-border text-dark text-sm top-1 rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title..."></textarea>                       
+            <textarea name="summary" readonly maxlength="512" id="petition-summary" v-model="props.petitionSummary" class="border h-32 border-border text-dark text-sm top-1 rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title..."></textarea>                       
           </label>
 
           <!-- Petition Goal -->

@@ -229,4 +229,12 @@ const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'deny',
 <button v-if="buttonType === 'approve-xs'" @click="emit('approve')" type="button" class="text-light bg-highlight justify-center hover:bg-highlight/90 h-[36px] w-[36px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1.5 py-1.5 items-center  ">
   <IconBase iconName="approve" iconSize="medium" icon-color="static-light"></IconBase>
 </button>
+
+<button v-if="buttonType === 'discard-xs-light'" @click="emit('discard')" type="button" class="text-light border border-dark bg-light justify-center hover:bg-dark/10 h-[36px] w-[36px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1.5 py-1.5 items-center  ">
+  <IconBase iconName="disapprove" iconSize="medium" icon-color="static-dark"></IconBase>
+</button>
+
+<button v-if="buttonType === 'approve-xs-light'" @click="emit('approve')" type="button" class="text-light border border-dark bg-light justify-center hover:bg-dark/10 h-[36px] w-[36px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-1.5 py-1.5 items-center  ">
+  <IconBase iconName="approve" iconSize="medium" icon-color="static-dark"></IconBase>
+</button>
 </template>
