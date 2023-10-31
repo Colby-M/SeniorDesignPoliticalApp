@@ -32,8 +32,8 @@ const denyPetition = () => {
 
 const reviewPetition = () => {
   //TODO: Link to petition to review (how will this be done)
-  let petitionLink =  <RouteLocationRaw>linkToPetition.value
-  router.push(petitionLink)
+  // let petitionLink =  <RouteLocationRaw>linkToPetition.value
+  // router.push(petitionLink)
 }
 
 const approvePetition = () => {

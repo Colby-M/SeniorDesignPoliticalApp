@@ -62,10 +62,14 @@ export const useAuthStore = defineStore('auth', () => {
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
-      await supabase.auth.signInWithPassword({
-        email: username,
-        password: password,
-      }).then(() => changedAuth());
+      try {
+          await supabase.auth.signInWithPassword({
+          email: username,
+          password: password,
+        }).then(() => changedAuth());
+      } catch {
+        console.error("The login failed! Please try again!");
+      }
     }
     else if (username.length == 10)
     {
