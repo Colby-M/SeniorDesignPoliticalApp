@@ -38,7 +38,7 @@ const sampleTagArray = ['tag1', 'tag2', 'tag3', 'tag5']
 
 const testData: petitionTypeReview[] = [
   { petitionId: '1',  petitionTitle: 'Title 1',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 1, petitionTags: sampleTagArray, petitionGoal: 1200},
-  { petitionId: '2',  petitionTitle: 'Petition Title 1',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 10250},
+  { petitionId: '2',  petitionTitle: 'Petition Title 1',  petitionSummary: testSummary,  petitionLocked: false , petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 10250},
   { petitionId: '3',  petitionTitle: 'Title 3',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 1200},
   { petitionId: '4',  petitionTitle: 'Title 4',  petitionSummary: testSummary,  petitionLocked: true , petitionScope: 2, petitionTags: sampleTagArray, petitionGoal: 1200},
   { petitionId: '5',  petitionTitle: 'Title 5',  petitionSummary: testSummary,  petitionLocked: false, petitionScope: 3, petitionTags: sampleTagArray, petitionGoal: 1200},
@@ -71,7 +71,7 @@ const testSuggestionData: petitionSuggestion[] = [
                                   :petitionId="testData[1].petitionId" :petitionLocked="testData[1].petitionLocked"  
                                   :petitionScope="testData[1].petitionScope" :petitionSummary="testData[1].petitionSummary"  
                                   :petitionTags="testData[1].petitionTags" :petitionSignatures="1600"/>
-          <div class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
+          <div v-if="!testData[1].petitionLocked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="testData[1].petitionId"></CardSolutionsPersonalSuggestion>
             <CardSolutionsOtherSuggestions :linkedPetition="testData[1].petitionId" :suggestionText="testData[1].petitionSummary"></CardSolutionsOtherSuggestions>
             <CardSolutionsOtherSuggestions v-for="element in testSuggestionData" :linkedPetition="element.petitionId" :suggestionText="element.petitionSuggestion" :approved="true" :disapproved="false"></CardSolutionsOtherSuggestions>
