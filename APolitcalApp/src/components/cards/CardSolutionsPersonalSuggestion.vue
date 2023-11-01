@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import ButtonBase from '../button/ButtonBase.vue';
+import supabase from '@/lib/supabaseClient';
+import { useAuthStore } from '@/stores/Auth';
+import { Console } from 'console';
 
 const props = defineProps({
     linkedPetition: {
@@ -12,12 +15,32 @@ const props = defineProps({
 
 const suggestion = ref('')
 
-const submitSuggestion = () => {
-    // Send Suggestion to database 
+async function submitSuggestion(){
+    let formattedSuggestion = suggestion.value.trim()
+    console.log('submitting...')
+
+    if (formattedSuggestion !== ''){
+        supabase
+            .from('Solution')
+            .insert({
+                title: suggestion.value,
+                petitionid: props.linkedPetition,
+                userid: useAuthStore().session?.user.id
+            });
+        console.log('submitted...')
+    }
+
+    else{
+        
+    }
 }
 
-const discardSuggestion = () => {
-    // Send Suggestion to database 
+async function discardSuggestion() {
+    suggestion.value = ''
+    let { data, error } = await supabase
+        .from('Solution')
+        .select<"*">()
+    console.log(data)
 }
 
 </script>

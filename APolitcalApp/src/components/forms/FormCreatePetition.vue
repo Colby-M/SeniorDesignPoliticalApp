@@ -142,6 +142,7 @@ async function submitPetitionForm() {
             goal: createFormData.contentGoalSigners.contentText,
             scope: createFormData.contentScope.scopeNumber,
             tags: createFormData.contentTagStore.tagArray,
+            locked: createFormData.contentDescription.contentEditable,
             userid: useAuthStore().session?.user.id
         });
     setTimeout(() => {
