@@ -106,10 +106,13 @@ async function getNextPost() {
 };
 
 async function getComments(){
+
+  let petitionId = queryPetitionId.value === null ? petitionContent.value.id : queryPetitionId.value
+
   let { data, error } = await supabase
     .from('Solution')
     .select<"*">()
-    .eq('petitionid', queryPetitionId.value)
+    .eq('petitionid', petitionId)
 
   if (data !== null){
     postArray.value.push(...data ?? []);
