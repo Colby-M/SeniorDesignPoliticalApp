@@ -55,7 +55,7 @@ onMounted(async() => {
   /* If routed here from specific petition then load the petition*/
   if (queryPetitionId.value !== null){
     await getPostFromId()
-    console.log(!petitionIsLocked())
+
     /* If open to suggestions load them */
     if (!petitionIsLocked()){
       await getComments()
@@ -84,7 +84,6 @@ const petitionIsLocked = () => {
 }
 
 async function getPostFromId() {
-  console.log('loading from post Id')
   let { data, error } = await supabase
     .from('Petitions')
     .select<"*">()
@@ -99,7 +98,7 @@ async function getNextPost() {
   let { data, error } = await supabase
     .from('Petitions')
     .select<"*">()
-    .neq('userid', useAuthStore().session?.user.id)
+    .range(0, 0)
     .single()
   petitionContent.value = data
 
@@ -111,9 +110,11 @@ async function getComments(){
     .from('Solution')
     .select<"*">()
     .eq('petitionid', queryPetitionId.value)
-    console.log('commentsbelow')
-    console.log(data)
-  postArray.value.push(...data ?? []);
+
+  if (data !== null){
+    postArray.value.push(...data ?? []);
+  }  
+
 }
 
 //const checkTagsForNull = () => {
