@@ -7,6 +7,7 @@ import IconDiscover from '../icons/IconDiscover.vue';
 import IconCreate from '../icons/IconCreate.vue';
 import IconSettings from '../icons/IconSettings.vue';
 import SidebarLogo from './SidebarLogo.vue';
+import IconNews from '../icons/IconNews.vue';
 
 
 </script>
@@ -41,9 +42,9 @@ import SidebarLogo from './SidebarLogo.vue';
             <RouterLink to="/news">
                 <SidebarElement_IconText>
                     <template #Icon>
-                        <IconBase iconColor="dark" iconSize="medium"> <IconReview/> </IconBase>
+                        <IconBase iconColor="dark" iconSize="medium"> <IconNews/> </IconBase>
                     </template>
-                    <template #Header>review</template>
+                    <template #Header>News</template>
                 </SidebarElement_IconText>
             </RouterLink>
             <RouterLink to="/create">
