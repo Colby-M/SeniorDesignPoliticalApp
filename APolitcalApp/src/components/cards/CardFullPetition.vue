@@ -3,7 +3,6 @@
 import IconBase from '../icons/IconBase.vue';
 import ButtonBase from '../button/ButtonBase.vue'
 
-import { useWizardStore } from '@/stores/wizard';
 import router from '@/router';
 const emit = defineEmits()
 
