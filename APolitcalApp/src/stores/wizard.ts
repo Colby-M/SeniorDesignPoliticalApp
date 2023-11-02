@@ -4,10 +4,10 @@ import router from '@/router';
 
 export const useWizardStore = defineStore('wizard', () => {
     const page = ref("profile");
-    function RouteTo(route: string)
+    function RouteTo(route: string, query: {} | undefined)
     {
         page.value = route;
-        router.push(route);
+        router.push({path: route, query: query});
     }
   return {
     RouteTo,

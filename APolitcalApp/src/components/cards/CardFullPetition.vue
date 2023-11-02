@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 
 import IconBase from '../icons/IconBase.vue';
 import ButtonBase from '../button/ButtonBase.vue'
 
-import router from '@/router';
-import type { RouteLocationRaw } from 'vue-router';
+import { useWizardStore } from '@/stores/wizard';
 
 const emit = defineEmits()
 
@@ -21,7 +19,7 @@ const denyPetition = () => {
 }
 
 const reviewPetition = () => {
-  router.push({path: 'review', query: {id: props.petitionId}})
+  useWizardStore().RouteTo("review", {id: props.petitionId})
 }
 
 const approvePetition = () => {
