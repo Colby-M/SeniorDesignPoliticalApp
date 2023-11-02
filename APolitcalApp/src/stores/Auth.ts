@@ -30,13 +30,18 @@ export const useAuthStore = defineStore('auth', () => {
     supabase.auth.getSession().then(({ data }) => {
       session.value = data.session ?? undefined;
     })
-    router.replace({"query": {"email": null, "password": null}}).finally(() => {
+    router.replace({"query": {"email": undefined, "password": undefined}}).finally(() => {
       if (session.value != null && session.value != undefined)
       {
-        router.push("/profile");
+        if (router.currentRoute.value.name == "home")
+        {
+          // just signed in so go to profile
+          router.push("/profile");
+        }
       }
       else
       {
+        // signed out or missing info so go to landing page
         router.push("/");
       }
     });
