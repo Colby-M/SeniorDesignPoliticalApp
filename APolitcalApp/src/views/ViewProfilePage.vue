@@ -21,7 +21,7 @@
       <ToolbarProfilePersonal></ToolbarProfilePersonal>
     </template>
     <template #ContentSlot>
-      <CardFullPetition :petitionObject="testPetitionObject"></CardFullPetition>
+      
       <CardProfileName></CardProfileName>
     </template>
   </MainLayout>
