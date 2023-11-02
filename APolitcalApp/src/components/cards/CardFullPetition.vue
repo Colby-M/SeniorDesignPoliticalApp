@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 
 import IconBase from '../icons/IconBase.vue';
 import ButtonBase from '../button/ButtonBase.vue'
 
+import { useWizardStore } from '@/stores/wizard';
 import router from '@/router';
-import type { RouteLocationRaw } from 'vue-router';
-
 const emit = defineEmits()
 
 const props = defineProps<{
@@ -16,24 +14,12 @@ const props = defineProps<{
   petitionLocked:boolean
 }>();
 
-const linkToPetition = computed(() => {
-  if (props.petitionId !== null) {
-    return ('/review/' + props.petitionId)
-  }
-  else {
-    return '/discover'
-  }
-
-})
-
 const denyPetition = () => {
   emit('test')
 }
 
 const reviewPetition = () => {
-  //TODO: Link to petition to review (how will this be done)
-  // let petitionLink =  <RouteLocationRaw>linkToPetition.value
-  // router.push(petitionLink)
+  router.push({path: 'review', query: {id: props.petitionId}})
 }
 
 const approvePetition = () => {

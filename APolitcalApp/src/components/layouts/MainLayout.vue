@@ -13,7 +13,7 @@ const showCreatePopup = ref(false)
 <template>
     <FormCreatePetition v-if="showCreatePopup" @close-popup="showCreatePopup=false"></FormCreatePetition>
     <div class="grid w-full h-screen justify-center grid-cols-mobile sm:grid-cols-sm-md-lg-xl">
-        <div class="hidden sm:flex flex-start sm:pb-24 max-h-screen">
+        <div class="hidden sm:flex flex-start sm:pb-24 px-2 max-h-screen">
             <Sidebar_Column @show-create-popup="showCreatePopup = true"></Sidebar_Column>
         </div>
         <div class="grid w-full h-full grid-rows-mobile max-h-screen sm:px-2 sm:grid-rows-sm-md-lg-xl">

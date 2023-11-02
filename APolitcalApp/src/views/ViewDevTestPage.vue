@@ -15,7 +15,10 @@ const samplePetitionData = [
 
 /* TODO: Replace with supabase calls */
 const sampleFullPetitionData = {petitionTitle: "Sample", petitionId: "124124", petitionSummary: "sample petition summary. sample petition summary sample petition summary. sample petition summary"};
+/* Setup Notes
 
+
+*/
 
 </script>
 

@@ -56,7 +56,6 @@ onUnmounted(() => {
 
 async function getPosts(numberPosts: number) {
   /* TODO: Replace with call to supabase (also filtering based on user preferences) */
-  console.log('loadingPosts')
   isLoadingPosts.value = true
   //Simulated API Delay
   // setTimeout( () => {
@@ -72,7 +71,6 @@ async function getPosts(numberPosts: number) {
     .select<"*", petitionType>()
     .neq('userid', useAuthStore().session?.user.id)
     .range(postArray.value.length, postArray.value.length + numberPosts);
-  console.log(data);
   postArray.value.push(...data ?? []);
   isLoadingPosts.value = false;
 }
@@ -114,7 +112,7 @@ const handleScroll = () => {
   </MainLayout>
 </template>
 
-<style>
+<style scoped>
 /* Hide scrollbar in WebKit-based browsers */
 ::-webkit-scrollbar {
   width: 0.5em;
