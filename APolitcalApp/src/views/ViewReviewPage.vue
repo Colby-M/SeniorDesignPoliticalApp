@@ -5,7 +5,7 @@ import CardFullPetitionReview from '../components/cards/CardFullPetitionReview.v
 import CardSolutionsPersonalSuggestion from '@/components/cards/CardSolutionsPersonalSuggestion.vue';
 import CardSolutionsOtherSuggestions from '@/components/cards/CardSolutionsOtherSuggestions.vue';
 import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/Auth';
 
 import supabase from '@/lib/supabaseClient';
@@ -30,12 +30,20 @@ interface petitionTypeReview {
   goal: number;
   tags: Array<string>; 
   locked:boolean;
+  uservotes: Array<string>;
+};
+
+interface solutionTypeReview {
+  id: string; 
+  description: string; 
+  title:string;
+  uservotes: Array<string>; 
 }
 
 const route = useRoute();
 const loadingContent = ref(true);
 const queryPetitionId = ref<string | null>(null);
-const postArray = ref<petitionTypeReview[]>([])
+const postArray = ref<solutionTypeReview[]>([])
 
 const petitionContent = ref<petitionTypeReview>({ 
   id: '', 
@@ -44,7 +52,8 @@ const petitionContent = ref<petitionTypeReview>({
   title: '',
   goal: 0,
   locked: true,
-  scope: 1
+  scope: 1,
+  uservotes: [],
 });
 
 
@@ -58,7 +67,7 @@ onMounted(async() => {
 
     /* If open to suggestions load them */
     if (!petitionIsLocked()){
-      await getComments()
+      await getComments(queryPetitionId.value)
     }
 
     loadingContent.value = false
@@ -71,7 +80,7 @@ onMounted(async() => {
     await getNextPost()
     if (!petitionIsLocked()){
 
-      await getComments()
+      await getComments(petitionContent.value.id)
     
     }
 
@@ -105,10 +114,9 @@ async function getNextPost() {
 
 };
 
-async function getComments(){
+async function getComments(petitionId: string){
 
-  let petitionId = queryPetitionId.value === null ? petitionContent.value.id : queryPetitionId.value
-
+  console.log(petitionId)
   let { data, error } = await supabase
     .from('Solution')
     .select<"*">()
@@ -118,6 +126,15 @@ async function getComments(){
     postArray.value.push(...data ?? []);
   }  
 
+}
+
+function computeLikes (userid: Array<string> | null) {
+  if (userid === null){
+    return 0
+  }
+  else{
+    return userid.length
+  }
 }
 
 //const checkTagsForNull = () => {
@@ -147,8 +164,8 @@ async function getComments(){
                                   :petitionTags="petitionContent.tags" :petitionSignatures="1600"/>
           <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id"></CardSolutionsPersonalSuggestion>
-            <CardSolutionsOtherSuggestions :linkedPetition="petitionContent.id" :suggestionText="petitionContent.description"></CardSolutionsOtherSuggestions>
-            <CardSolutionsOtherSuggestions v-for="element in postArray" :linkedPetition="element.id" :suggestionText="element.description"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions :linkedPetition="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="computeLikes(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions v-for="post in postArray" :linkedPetition="post.id" :suggestionText="post.description" :uservotes="computeLikes(post.uservotes)"></CardSolutionsOtherSuggestions>
           </div>
         </div>
       </div>

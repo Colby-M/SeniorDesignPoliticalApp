@@ -12,11 +12,21 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    uservotes: {
+        type: Number,
+        required: true
+    }
+})
+
+const numberOfVotes = ref(0)
+
+const calculateNumberOfVotes = computed( () => {
+    return(1)
 })
 
 //Add function to convert likes to formatted (eg... 3.2K rather than 3200)
 
-onMounted(async () => {
+onMounted(() => {
     //Read Supabase Data for Solution Text and Votes from Suggestion ID
         //Check if approved or disapproved by the viewing user (populate refs upvote/downvote)
         //Get number of approvals (populate card ref)
@@ -66,7 +76,7 @@ const downvoteSuggestion = () => {
                     <ButtonBase v-if="upvote" buttonType="approve-xs" @approve="upvoteSuggestion"></ButtonBase>
                     <ButtonBase v-if="!upvote" buttonType="approve-xs-light" @approve="upvoteSuggestion"></ButtonBase>
                 </div>
-                <div class="w-16 h-9 z-30 left-0 absolute text-xs flex justify-end px-1 items-center bg-light rounded-[32px] border border-dark">900
+                <div class="w-16 h-9 z-30 left-0 absolute text-xs flex justify-end px-1 items-center bg-light rounded-[32px] border border-dark">{{uservotes}}
                 </div>    
             </div>
         </div>
