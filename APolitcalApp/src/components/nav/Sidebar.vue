@@ -5,7 +5,6 @@ import { RouterLink, useRoute } from 'vue-router';
 import router from '@/router';
 import { ref } from 'vue';
 import IconBase from '../icons/IconBase.vue';
-import { useWizardStore } from '@/stores/wizard';
 
 /* TODO: Add dynamic routing to user specific profile page*/
 const sidebarData = ref([
@@ -16,7 +15,6 @@ const sidebarData = ref([
     {text: 'DevTests',  icon: 'editable', path: 'devTest'}
 ]);
 
-const wizardStore = useWizardStore();
 
 function isActive(path: string): boolean {
     return router.currentRoute.value.name == path;
