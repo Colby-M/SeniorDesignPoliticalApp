@@ -43,7 +43,11 @@ interface solutionTypeReview {
 const route = useRoute();
 const loadingContent = ref(true);
 const queryPetitionId = ref<string | null>(null);
-const postArray = ref<solutionTypeReview[]>([])
+const postArray = ref<solutionTypeReview[]>([]);
+const excludedIds = ref<string[]>([])
+
+/* This is used for smooth re render of users own submitted suggestion */
+const renderNewPostArray = ref<solutionTypeReview[]>([]);
 
 const petitionContent = ref<petitionTypeReview>({ 
   id: '', 
@@ -116,17 +120,25 @@ async function getNextPost() {
 
 async function getComments(petitionId: string){
 
+  if (postArray.value.length > 0){
+    excludedIds.value = []
+    
+    postArray.value.forEach(function (item){
+      excludedIds.value.push(item.id)
+    })
+  }
+
   console.log(petitionId)
   let { data, error } = await supabase
     .from('Solution')
     .select<"*">()
     .eq('petitionid', petitionId)
+    .not('id', 'in', `(${excludedIds.value.join(',')})`);
 
-  if (data !== null){
-    postArray.value.push(...data ?? []);
-  }  
+  postArray.value.push(...data ?? []);
 
 }
+
 
 function computeLikes (userid: Array<string> | null) {
   if (userid === null){
@@ -136,11 +148,6 @@ function computeLikes (userid: Array<string> | null) {
     return userid.length
   }
 }
-
-//const checkTagsForNull = () => {
-//  petitionContent.tag
-//}
-
 
 </script>
 
@@ -163,7 +170,7 @@ function computeLikes (userid: Array<string> | null) {
                                   :petitionScope="petitionContent.scope" :petitionSummary="petitionContent.description"  
                                   :petitionTags="petitionContent.tags" :petitionSignatures="1600"/>
           <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
-            <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id"></CardSolutionsPersonalSuggestion>
+            <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id" @re-render="getComments(petitionContent.id)"></CardSolutionsPersonalSuggestion>
             <CardSolutionsOtherSuggestions :linkedPetition="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="computeLikes(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
             <CardSolutionsOtherSuggestions v-for="post in postArray" :linkedPetition="post.id" :suggestionText="post.description" :uservotes="computeLikes(post.uservotes)"></CardSolutionsOtherSuggestions>
           </div>
