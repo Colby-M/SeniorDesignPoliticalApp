@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import ButtonBase from '../button/ButtonBase.vue';
 
-//When linking to database we should only need suggestion ID as prop
 const props = defineProps({
     linkedPetition: {
         type: String,
@@ -18,13 +17,49 @@ const props = defineProps({
     }
 })
 
-const numberOfVotes = ref(0)
+function formatNumber(num: number): string {
+  if (num < 1000) {
+    return num.toString();
+  }
 
-const calculateNumberOfVotes = computed( () => {
-    return(1)
-})
+  const units = ['k', 'm', 'b', 't'];
 
-//Add function to convert likes to formatted (eg... 3.2K rather than 3200)
+  let unitIndex = -1;
+  let scaledNum = num;
+
+  while (scaledNum >= 1000 && unitIndex < units.length - 1) {
+    scaledNum /= 1000;
+
+    unitIndex++;
+  }
+
+  // Convert the number to a string
+  const scaledNumStr = scaledNum.toString();
+
+  // Find the position of the decimal point
+  const dotIndex = scaledNumStr.indexOf('.');
+  
+  if (dotIndex === -1) {
+    return scaledNum.toFixed(0) + units[unitIndex]
+  }
+  
+
+  //If number is greater than 10000 do not display decimals
+  if (scaledNum > 10){
+
+    const end = Math.min(dotIndex + 1, scaledNumStr.length);
+    scaledNum = parseFloat(scaledNumStr.substring(0, end));
+
+    return scaledNum.toString() + units[unitIndex]
+  }
+
+  // Otherwise, truncate the number to the specified number of decimal places
+  const end = Math.min(dotIndex + 1 + 1, scaledNumStr.length);
+  scaledNum = parseFloat(scaledNumStr.substring(0, end));
+  
+  return scaledNum.toString() + units[unitIndex]
+
+}
 
 onMounted(() => {
     //Read Supabase Data for Solution Text and Votes from Suggestion ID
@@ -76,7 +111,7 @@ const downvoteSuggestion = () => {
                     <ButtonBase v-if="upvote" buttonType="approve-xs" @approve="upvoteSuggestion"></ButtonBase>
                     <ButtonBase v-if="!upvote" buttonType="approve-xs-light" @approve="upvoteSuggestion"></ButtonBase>
                 </div>
-                <div class="w-16 h-9 z-30 left-0 absolute text-xs flex justify-end px-1 items-center bg-light rounded-[32px] border border-dark">{{uservotes}}
+                <div class="w-[68px] h-9 z-30 left-0 absolute text-xs flex justify-end items-center px-1 bg-light-highlight rounded-[32px] border border-dark">{{formatNumber(props.uservotes)}}
                 </div>    
             </div>
         </div>

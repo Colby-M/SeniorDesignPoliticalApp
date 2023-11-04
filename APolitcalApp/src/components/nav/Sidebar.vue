@@ -6,13 +6,11 @@ import router from '@/router';
 import { ref } from 'vue';
 import IconBase from '../icons/IconBase.vue';
 
-/* TODO: Add dynamic routing to user specific profile page*/
 const sidebarData = ref([
     {text: 'Profile',   icon: 'profile',  path: 'profile'},
     {text: 'Discover',  icon: 'discover', path: 'discover'},
     {text: 'Review',    icon: 'review',   path: 'review'},
     {text: 'Settings',  icon: 'settings', path: 'settings'},
-    {text: 'DevTests',  icon: 'editable', path: 'devTest'}
 ]);
 
 

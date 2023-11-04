@@ -6,22 +6,8 @@ import CardSolutionsPersonalSuggestion from '@/components/cards/CardSolutionsPer
 import CardSolutionsOtherSuggestions from '@/components/cards/CardSolutionsOtherSuggestions.vue';
 import { useRoute } from 'vue-router';
 import { onMounted, ref, computed } from 'vue';
-import { useAuthStore } from '@/stores/Auth';
-
 import supabase from '@/lib/supabaseClient';
-/* 
---KMIE: Proposed Data Flow--
-Load petition in
 
-Add emit from toolbar for approving and denying
-Petition should have linked suggestions in array (ids of comments in array basically)
-For each element in suggestion array render CardSolutionsOtherSuggestions card
-
-BOTH PETITIONS AND SUGGESTIONS SHOULD TRACK WHO HAS VOTED ON THEM
-
-*/
-
-/*TODO: ADD linked solution slot to petition table, (array of strings) pass the petition ids as props to the card SFC... can then use simple for loop */
 interface petitionTypeReview {
   id: string; 
   description: string; 
@@ -136,11 +122,6 @@ function computeLikes (userid: Array<string> | null) {
     return userid.length
   }
 }
-
-//const checkTagsForNull = () => {
-//  petitionContent.tag
-//}
-
 
 </script>
 

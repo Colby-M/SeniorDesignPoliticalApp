@@ -4,9 +4,8 @@ import CardFullPetition from '@/components/cards/CardFullPetition.vue';
 import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
 import supabase from '@/lib/supabaseClient';
 
-import { reactive, onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { useAuthStore } from '@/stores/Auth';
-/* TODO: Implement Infinite Scoll With Petition Populating Functions */
 
 interface petitionType {
   created_at: Date; 
@@ -20,21 +19,6 @@ interface petitionType {
 
 const isLoadingPosts = ref(false)
 const postArray = ref<petitionType[]>([])
-//const testSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fermentum iaculis eu non diam phasellus vestibulum lorem. Diam in arcu cursus euismod quis. Nunc non blandit massa enim nec dui nunc. Tincidunt eget nullam non nisi est sit amet facilisis magna.'
-
-//const testData: petitionType[] = [
-  //{ petitionId: '1',  petitionTitle: 'Title 1',  petitionSummary: testSummary,  petitionLocked: false },
-  //{ petitionId: '2',  petitionTitle: 'Title 2',  petitionSummary: testSummary,  petitionLocked: true  },
-  //{ petitionId: '3',  petitionTitle: 'Title 3',  petitionSummary: testSummary,  petitionLocked: false },
-  //{ petitionId: '4',  petitionTitle: 'Title 4',  petitionSummary: testSummary,  petitionLocked: true  },
-  //{ petitionId: '5',  petitionTitle: 'Title 5',  petitionSummary: testSummary,  petitionLocked: false },
-  //{ petitionId: '6',  petitionTitle: 'Title 6',  petitionSummary: testSummary,  petitionLocked: true  },
-  //{ petitionId: '7',  petitionTitle: 'Title 7',  petitionSummary: testSummary,  petitionLocked: false },
-  //{ petitionId: '8',  petitionTitle: 'Title 8',  petitionSummary: testSummary,  petitionLocked: true  },
-  //{ petitionId: '9',  petitionTitle: 'Title 9',  petitionSummary: testSummary,  petitionLocked: false },
-  //{ petitionId: '10', petitionTitle: 'Title 10', petitionSummary: testSummary,  petitionLocked: true  },
-  // ... add more test data as required
-//];
 
 onMounted(async () => {
   let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
@@ -55,17 +39,8 @@ onUnmounted(() => {
 })
 
 async function getPosts(numberPosts: number) {
-  /* TODO: Replace with call to supabase (also filtering based on user preferences) */
   isLoadingPosts.value = true
-  //Simulated API Delay
-  // setTimeout( () => {
-  //   for (var i = 0; i < numberPosts; i++) 
-  //   {
-  //     postArray.value.push(testData[i % testData.length])
-  //   }
 
-  //   isLoadingPosts.value = false
-  // }, 1000)
   let { data, error } = await supabase
     .from('Petitions')
     .select<"*", petitionType>()
@@ -87,7 +62,6 @@ const handleScroll = () => {
     getPosts(10);
   }
 }
-
 </script>
 
 
