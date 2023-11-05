@@ -214,7 +214,7 @@ const emit = defineEmits(['filter', 'discard', 'block', 'deny-petition', 'deny',
   <IconBase iconName="review" iconColor="static-dark"></IconBase>
 </button>
 
-<button v-if="buttonType === 'filter'" @click="emit('filter')" type="button" class="text-light bg-transparent hover:bg-dark/90 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center  ">
+<button v-if="buttonType === 'filter'" @click="emit('filter')" type="button" class="text-light bg-transparent hover:bg-dark/10 h-[56px] w-[56px] focus:ring-4 focus:outline-none focus:ring-dark/50 font-medium rounded-full text-xs justify px-3 py-2.5 items-center  ">
   <IconBase iconName="filter" iconSize="large"></IconBase>
 </button>
 
