@@ -133,16 +133,27 @@ async function approvePetition(){
   /* Check that user has not already voted on the petition */
   if (userVoteArray.indexOf(currentUserid) === -1) {
     userVoteArray.push(currentUserid)
-    console.log(userVoteArray)
+
     await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', petitionContent.value.id)
 
 
   }
-  //excludePost(petitionContent.value.id);
-  //getNextPost();
+  excludePost(petitionContent.value.id);
+  getNextPost();
 }
 
-const denyPetition = () => {
+async function denyPetition() {
+  let userVoteArray = petitionContent.value.uservotes === null ? [] : petitionContent.value.uservotes;
+  let indexOfId = userVoteArray.indexOf(currentUserid)
+  /* Check that user has not already voted on the petition */
+  if (indexOfId !== -1) {
+    
+    userVoteArray.splice(indexOfId, 1)
+
+    await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', petitionContent.value.id)
+
+
+  }
   excludePost(petitionContent.value.id);
   getNextPost();
 
@@ -168,6 +179,7 @@ async function getNextPost() {
     .select<"*">()
     .range(0, 0)
     .single()
+    
   petitionContent.value = data
 
 /*

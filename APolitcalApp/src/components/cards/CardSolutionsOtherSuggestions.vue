@@ -61,6 +61,8 @@ const downvoteSuggestion = () => {
 
 }
 
+
+
 </script>
 
 <template>

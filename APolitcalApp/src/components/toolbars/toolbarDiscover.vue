@@ -17,12 +17,10 @@ const filterClicked = () => {
     <toolbarBase>
         <template #toolbar-buttons-lg>
             <ButtonBase buttonType="filter" @filter="filterClicked"></ButtonBase>
-            <ButtonBase buttonType="refresh-lg" @refresh="refreshClicked"></ButtonBase>
         </template>
 
         <template #toolbar-buttons-sm>
             <ButtonBase buttonType="filter" @filter="filterClicked"></ButtonBase>
-            <ButtonBase buttonType="refresh-sm" @refresh="refreshClicked"></ButtonBase>
         </template>
 
         <template #toolbar-search-filter>
