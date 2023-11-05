@@ -3,10 +3,6 @@ import toolbarBase from './toolbarBase.vue'
 import ButtonBase from '../button/ButtonBase.vue'
 import SearchBar from '../search/SearchBar.vue'
 
-const refreshClicked = () => {
-    //Add Refresh Function
-}
-
 const filterClicked = () => {
     //Add Refresh Function
 }

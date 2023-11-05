@@ -163,7 +163,7 @@ function submitPetitionDraftForm() {
             <div class="p-8 space-y-6">
                 <div href="#" class="flex row font-light text-start mb-6 text-2xl justify-between text-dark">
                     <div class="flex items-center">
-                        <img class="w-8 h-8 mr-2" src="../logo/VoteBoatLogo.png" alt="logo">
+                        <img class="w-8 h-8 mr-2" src="../logo/testlogo2.png" alt="logo">
                         Create Petition
                     </div>
                     <button @click="emitClosePopup"> <IconBase iconColor="static-dark" iconName="exit" iconSize="medium"/> </button>                        

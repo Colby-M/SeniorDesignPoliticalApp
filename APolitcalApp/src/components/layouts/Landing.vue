@@ -24,12 +24,12 @@ const ShowSignUp = ref(false);
     <div class="grid w-full h-screen justify-center grid-cols-mobile z-10 sm:grid-cols-landing">
         <div class="hidden sm:flex justify-end border-border my-auto"> 
             <div class="flex items-center pr-8">
-                <img src="../logo/VoteBoatLogo.png" class="sm:h-[284px] sm:w-[284]"/>
+                <img src="../logo/testlogo2.png" class="sm:h-[284px] sm:w-[284]"/>
             </div>
         </div>
         <div class="my-auto mx-auto sm:mr-auto sm:ml-0">
-            <div class="flex flex-col gap-4 items-center justify-center sm:pl-12">
-                <img src="../logo/VoteBoatLogo.png" class="w-44 h-44 sm:hidden"/>
+            <div class="flex flex-col gap-5 items-center justify-center sm:pl-12">
+                <img src="../logo/testlogo2.png" class="w-44 h-44 sm:hidden"/>
                 <ButtonSignInOptions buttonType="sign-up-github"></ButtonSignInOptions>
                 <p class="font">or</p>
                 <ButtonSignInOptions buttonType="sign-up"  @show-sign-up="ShowSignUp = true"></ButtonSignInOptions>

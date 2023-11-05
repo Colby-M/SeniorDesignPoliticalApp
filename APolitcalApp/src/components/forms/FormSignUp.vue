@@ -51,7 +51,7 @@ const emitClosePopup = () => {
                 <div>
                     <div href="#" class="grid grid-cols-2 font-light mb-6 text-2xl text-dark">
                         <div class="flex items-center">
-                            <img class="w-8 h-8 mr-2" src="../logo/VoteBoatLogo.png" alt="logo">
+                            <img class="w-8 h-8 mr-2" src="../logo/testlogo2.png" alt="logo">
                             Vote Boat
                         </div>
                         <button @click="emitClosePopup" class="justify-self-end"> <IconBase iconColor="animate-dark" iconName="exit" iconSize="medium"/> </button>                        
