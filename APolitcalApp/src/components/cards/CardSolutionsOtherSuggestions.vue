@@ -32,8 +32,9 @@ const downvote = ref(false)
 const currentUserid = useAuthStore().session?.user.id === undefined ? '' : <string>useAuthStore().session?.user.id;
 const numberOfVotes = ref(0)
 
-
-
+/*--------------------------------------
+           Mount Events
+---------------------------------------*/
 onMounted( () => {
     numberOfVotes.value = props.uservotes.length
 
@@ -76,8 +77,6 @@ function calculateNumberOfVotes (userVoteArray: Array<string>) {
     return (userVoteArray.length)
 };
 
-
-
 /*--------------------------------------
         Getter/Sender Functions
 ---------------------------------------*/
@@ -94,7 +93,7 @@ async function approveSolution(){
     numberOfVotes.value = calculateNumberOfVotes(userVoteArray)
 
   }
-}
+};
 
 async function denySolution() {
   let userVoteArray = props.uservotes;
@@ -108,8 +107,7 @@ async function denySolution() {
 
     numberOfVotes.value = calculateNumberOfVotes(userVoteArray)
   }
-
-}
+};
 
 </script>
 
