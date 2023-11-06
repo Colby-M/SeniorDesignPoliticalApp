@@ -1,23 +1,14 @@
 <script setup lang="ts">
-/* TODO
--------------
-BACKEND PEOPLE: Fill in function calls to database 
-
-*/
 import { useAuthStore } from '@/stores/Auth';
 import supabase from '../../lib/supabaseClient';
 import IconBase from '../icons/IconBase.vue';
 import { reactive, ref } from 'vue';
-const emit = defineEmits()
-const createFormData = reactive({
 
-    contentType: <number>0,
-/*  contentType =
-        0: Question
-        1: Petition   */
+const emit = defineEmits()
+
+const createFormData = reactive({
     contentTitle: {
         text: <string>'',
-        contentEditable: <boolean>true,
     },
     contentDescription: {
         text: <string>'',               /*  text limited to 512 characters */
@@ -25,12 +16,10 @@ const createFormData = reactive({
     },
     contentGoalSigners: {
         contentText: <number>0,
-        contentEditable: <boolean>true,
     },
     contentTagStore: {
         tagField: <string>'',
         tagArray: <string[]>[],         /*  each tag is limited to 25 characters */
-        contentEditable: <boolean>true,
     },    
     contentScope: {
         scopeNumber: <number>2,
@@ -43,7 +32,6 @@ const createFormData = reactive({
 
 })
 
-const statusQuestionLockError = ref(false)
 const statusPetitionContentError = ref(false)
 const isLoading = ref(false);
 
@@ -51,46 +39,21 @@ const validateCreateForm = () => {
     /* Reset Error Messages */
     if (isLoading.value) return;
     statusPetitionContentError.value = false
-    statusQuestionLockError.value = false
 
-    /* If petition summary exists ALL Fields must be populated */
-    if (createFormData.contentDescription.text != ''){
-        /* If all fields are populated it is a petition... submit it*/
-        if (   (createFormData.contentTitle.text !== '')
-            && (createFormData.contentGoalSigners.contentText !== 0)
-            && (createFormData.contentTagStore.tagArray.length > 0)) 
-        {
-            /* Change content type to petition and call send function*/
-            createFormData.contentType = 1
-            submitPetitionForm()
-        }
-        /* Field Is Missing Show Error */
-        else {
-            statusPetitionContentError.value = true
-        }
+
+    /* All Fields must be populated */
+    /* If all fields are populated it is a petition... submit it*/
+    if (   (createFormData.contentDescription.text != '')
+        && (createFormData.contentTitle.text !== '')
+        && (createFormData.contentGoalSigners.contentText > 0)
+        && (createFormData.contentTagStore.tagArray.length > 0)) 
+    {
+        /* Change content type to petition and call send function*/
+        submitPetitionForm()
     }
-
-    /* If petition title exists with no summary ALL Fields must be editable */
-    else if(createFormData.contentTitle.text != '') {
-        /* If all fields are editable it is a question...submit it */
-        if (   createFormData.contentDescription.contentEditable
-            && createFormData.contentGoalSigners.contentEditable
-            && createFormData.contentTagStore.contentEditable
-            && createFormData.contentTitle.contentEditable) 
-        {
-            /* Change content type to question and call send function */
-            createFormData.contentType = 0
-            submitQuestionForm()
-        }
-
-        /* Field Is Missing Show Error */
-        else {
-            statusQuestionLockError.value = true
-        }
-    }
-
+    /* Field Is Missing Show Error */
     else {
-        /* Do Nothing */
+        statusPetitionContentError.value = true
     }
 
 }
@@ -125,11 +88,6 @@ function removeTag(tag: string){
     if (indexToRemove !== -1) {
         createFormData.contentTagStore.tagArray.splice(indexToRemove, 1)
     }
-}
-
-
-function submitQuestionForm() {
-    /* TODO: Send data to database form  */
 }
 
 async function submitPetitionForm() {
@@ -176,18 +134,6 @@ function submitPetitionDraftForm() {
                             <div class="flex-row flex items-center">
                                 <span class="text-dark text-left">Title</span>
                             </div>
-                            <div class="text-right flex flex-row gap-2">
-                                <div v-if="createFormData.contentTitle.contentEditable">
-                                    <IconBase iconColor="dark" iconSize="small" iconName="editable"></IconBase>
-                                </div>
-                                <div v-if="!createFormData.contentTitle.contentEditable">
-                                    <IconBase iconColor="dark" iconSize="small" iconName="locked"></IconBase>
-                                </div>
-                                <label class="relative inline-flex cursor-pointer">
-                                    <input id="petition-title-lock" type="checkbox" v-model="createFormData.contentTitle.contentEditable" class="sr-only peer">
-                                    <div class="w-9 h-5 bg-dark peer-focus:outline-none peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-light after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-light after:border-dark after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-highlight"></div>
-                                </label>
-                            </div>
                         </div>
 
                         <input type="title" name="title" id="petitionTitle" maxlength="25" v-model="createFormData.contentTitle.text" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="petition title...">                      
@@ -222,18 +168,6 @@ function submitPetitionDraftForm() {
                                 <div class="flex-row flex items-center">
                                     <span class="text-dark text-left">Signature Goal</span>
                                 </div>
-                                <div class="text-right flex flex-row gap-2">
-                                    <div v-if="createFormData.contentGoalSigners.contentEditable">
-                                        <IconBase iconColor="dark" iconSize="small" iconName="editable"></IconBase>
-                                    </div>
-                                    <div v-if="!createFormData.contentGoalSigners.contentEditable">
-                                        <IconBase iconColor="dark" iconSize="small" iconName="locked"></IconBase>
-                                    </div>
-                                    <label class="relative inline-flex cursor-pointer">
-                                        <input id="petition-goal-lock" type="checkbox" v-model="createFormData.contentGoalSigners.contentEditable" class="sr-only peer">
-                                        <div class="w-9 h-5 bg-dark peer-focus:outline-none peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-light after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-light after:border-dark after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-highlight"></div>
-                                    </label>
-                                </div>
                             </div>
                             <input type="number" name="goal" id="goal" min="0" v-model="createFormData.contentGoalSigners.contentText" class="bg-light border border-border text-dark text-sm rounded-lg p-2.5 block focus:border-dark" placeholder="goal">                       
                         </div>
@@ -242,18 +176,6 @@ function submitPetitionDraftForm() {
                             <div class="flex flex-row items-center justify-between">
                                 <div class="flex-row flex items-center">
                                     <span class="text-dark text-left">Tags</span>
-                                </div>
-                                <div class="text-right flex flex-row gap-2">
-                                    <div v-if="createFormData.contentTagStore.contentEditable">
-                                        <IconBase iconColor="dark" iconSize="small" iconName="editable"></IconBase>
-                                    </div>
-                                    <div v-if="!createFormData.contentTagStore.contentEditable">
-                                        <IconBase iconColor="dark" iconSize="small" iconName="locked"></IconBase>
-                                    </div>
-                                    <label class="relative inline-flex cursor-pointer">
-                                        <input id="petition-tag-lock" type="checkbox" v-model="createFormData.contentTagStore.contentEditable" class="sr-only peer">
-                                        <div class="w-9 h-5 bg-dark peer-focus:outline-none peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-light after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-light after:border-dark after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-highlight"></div>
-                                    </label>
                                 </div>
                             </div>
                             <input type="tags" name="tags" id="tags" v-model="createFormData.contentTagStore.tagField" @input="constructTags" maxlength="30" class="bg-light border border-border text-dark text-sm rounded-lg block p-2.5 focus:border-dark" placeholder="tag 1, tag 2,...">                       
@@ -293,8 +215,7 @@ function submitPetitionDraftForm() {
                             <div class="loading"></div>
                             <div id="loading-text">loading</div>
                         </div>
-                        <p v-if="statusPetitionContentError ">This petition is missing required fields</p>
-                        <p v-if="statusQuestionLockError">To submit a question all prompts must be set to editable</p>
+                        <p v-if="statusPetitionContentError ">Reqired fields are empty or invalid</p>
                     </div>
                 </form>
             </div>

@@ -24,6 +24,50 @@ const props = defineProps({
 
 });
 
+function formatNumber(num: number): string {
+  if (num < 1000) {
+    return num.toString();
+  }
+
+  const units = ['k', 'm', 'b', 't'];
+
+  let unitIndex = -1;
+  let scaledNum = num;
+
+  while (scaledNum >= 1000 && unitIndex < units.length - 1) {
+    scaledNum /= 1000;
+
+    unitIndex++;
+  }
+
+  // Convert the number to a string
+  const scaledNumStr = scaledNum.toString();
+
+  // Find the position of the decimal point
+  const dotIndex = scaledNumStr.indexOf('.');
+  
+  if (dotIndex === -1) {
+    return scaledNum.toFixed(0) + units[unitIndex]
+  }
+  
+
+  //If number is greater than 10000 do not display decimals
+  if (scaledNum > 10){
+
+    const end = Math.min(dotIndex + 1, scaledNumStr.length);
+    scaledNum = parseFloat(scaledNumStr.substring(0, end));
+
+    return scaledNum.toString() + units[unitIndex]
+  }
+
+  // Otherwise, truncate the number to the specified number of decimal places
+  const end = Math.min(dotIndex + 1 + 1, scaledNumStr.length);
+  scaledNum = parseFloat(scaledNumStr.substring(0, end));
+  
+  return scaledNum.toString() + units[unitIndex]
+
+}
+
 /*--------------------------------------
            Reactive Variables
 ---------------------------------------*/
