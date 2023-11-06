@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
+import supabase from '@/lib/supabaseClient';
 import ButtonBase from '../button/ButtonBase.vue';
+import { useAuthStore } from '@/stores/Auth';
 
-//When linking to database we should only need suggestion ID as prop
 const props = defineProps({
-    linkedPetition: {
+    solutionID: {
         type: String,
         required: true,
     },
@@ -13,38 +14,40 @@ const props = defineProps({
         required: true,
     },
     uservotes: {
-        type: Number,
+        type: Array<string>,
         required: true
-    }
+    },
+
 })
 
-const numberOfVotes = ref(0)
-
-const calculateNumberOfVotes = computed( () => {
-    return(1)
-})
-
-//Add function to convert likes to formatted (eg... 3.2K rather than 3200)
-
-onMounted(() => {
-    //Read Supabase Data for Solution Text and Votes from Suggestion ID
-        //Check if approved or disapproved by the viewing user (populate refs upvote/downvote)
-        //Get number of approvals (populate card ref)
-        
-})
-
+/*--------------------------------------
+           Reactive Variables
+---------------------------------------*/
 const upvote   = ref(false)
 const downvote = ref(false)
-const upvoteNumber = ref(Number)
+const currentUserid = useAuthStore().session?.user.id === undefined ? '' : <string>useAuthStore().session?.user.id;
+const numberOfVotes = ref(0)
 
+
+const calculateNumberOfVotes = computed( () => {
+    numberOfVotes.value = props.uservotes.length
+})
+
+/*--------------------------------------
+            Utility Functions
+---------------------------------------*/
 const upvoteSuggestion = () => {
     //Add Call to Supabase
     if(upvote.value === true) {
         upvote.value = false
+        numberOfVotes.value--
+        denySolution()
     }
     else{
         upvote.value = true
         downvote.value = false
+        numberOfVotes.value++
+        approveSolution()
     }
 
 }
@@ -57,11 +60,39 @@ const downvoteSuggestion = () => {
     else{
         downvote.value = true
         upvote.value = false
+        numberOfVotes.value--
+        denySolution()
     }
 
 }
 
+/*--------------------------------------
+        Getter/Sender Functions
+---------------------------------------*/
+async function approveSolution(){
+  let userVoteArray = props.uservotes;
 
+  /* Check that user has not already voted on the petition */
+  if (userVoteArray.indexOf(currentUserid) === -1) {
+    userVoteArray.push(currentUserid)
+    await supabase.from('Solution').update({uservotes: userVoteArray}).eq('id', props.solutionID)
+
+
+  }
+}
+
+async function denySolution() {
+  let userVoteArray = props.uservotes;
+  let indexOfId = userVoteArray.indexOf(currentUserid)
+  /* Check that user has not already voted on the petition */
+  if (indexOfId !== -1) {
+    
+    userVoteArray.splice(indexOfId, 1)
+
+    await supabase.from('Solution').update({uservotes: userVoteArray}).eq('id', props.solutionID)
+  }
+
+}
 
 </script>
 
@@ -78,7 +109,7 @@ const downvoteSuggestion = () => {
                     <ButtonBase v-if="upvote" buttonType="approve-xs" @approve="upvoteSuggestion"></ButtonBase>
                     <ButtonBase v-if="!upvote" buttonType="approve-xs-light" @approve="upvoteSuggestion"></ButtonBase>
                 </div>
-                <div class="w-16 h-9 z-30 left-0 absolute text-xs flex justify-end px-1 items-center bg-light rounded-[32px] border border-dark">{{uservotes}}
+                <div class="w-16 h-9 z-30 left-0 absolute text-xs flex justify-end px-1 items-center bg-light rounded-[32px] border border-dark">{{numberOfVotes}}
                 </div>    
             </div>
         </div>

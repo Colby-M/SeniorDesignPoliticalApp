@@ -9,6 +9,13 @@ import { onMounted, ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/Auth';
 
 import supabase from '@/lib/supabaseClient';
+
+/*
+
+MAJOR TODO: Generate solution in table with petition description when petition is created so it can be voted on...
+
+*/
+
 /* 
 --KMIE: Proposed Data Flow--
 Load petition in
@@ -124,6 +131,15 @@ function computeLikes (uservotes: Array<string> | null) {
   }
 }
 
+function formatVoteArray(uservotes: Array<string> | null){
+  if (uservotes === null){
+    return []
+  }
+  else{
+    return uservotes
+  }
+}
+
 /*--------------------------------------
             Emit Functions
 ---------------------------------------*/
@@ -235,8 +251,8 @@ async function getComments(petitionId: string){
                                   :petitionTags="petitionContent.tags" :petitionSignatures="computeLikes(petitionContent.uservotes)"/>
           <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id" @re-render="getComments(petitionContent.id)"></CardSolutionsPersonalSuggestion>
-            <CardSolutionsOtherSuggestions :linkedPetition="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="computeLikes(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
-            <CardSolutionsOtherSuggestions v-for="post in postArray" :linkedPetition="post.id" :suggestionText="post.description" :uservotes="computeLikes(post.uservotes)"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions :solutionID="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="formatVoteArray(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions v-for="post in postArray" :solutionID="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)"></CardSolutionsOtherSuggestions>
           </div>
         </div>
       </div>
