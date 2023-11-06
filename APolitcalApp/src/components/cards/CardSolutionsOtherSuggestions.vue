@@ -17,8 +17,12 @@ const props = defineProps({
         type: Array<string>,
         required: true
     },
+    original: {
+        type: Boolean,
+        reqired: true,
+    }
 
-})
+});
 
 /*--------------------------------------
            Reactive Variables
@@ -29,9 +33,14 @@ const currentUserid = useAuthStore().session?.user.id === undefined ? '' : <stri
 const numberOfVotes = ref(0)
 
 
-const calculateNumberOfVotes = computed( () => {
+
+onMounted( () => {
     numberOfVotes.value = props.uservotes.length
-})
+
+    if (props.uservotes.indexOf(currentUserid) !== -1) {
+        upvote.value = true
+    }
+});
 
 /*--------------------------------------
             Utility Functions
@@ -40,17 +49,15 @@ const upvoteSuggestion = () => {
     //Add Call to Supabase
     if(upvote.value === true) {
         upvote.value = false
-        numberOfVotes.value--
         denySolution()
     }
     else{
         upvote.value = true
         downvote.value = false
-        numberOfVotes.value++
         approveSolution()
     }
 
-}
+};
 
 const downvoteSuggestion = () => {
     //Add Call to Supabase
@@ -60,11 +67,16 @@ const downvoteSuggestion = () => {
     else{
         downvote.value = true
         upvote.value = false
-        numberOfVotes.value--
         denySolution()
     }
 
-}
+};
+
+function calculateNumberOfVotes (userVoteArray: Array<string>) {
+    return (userVoteArray.length)
+};
+
+
 
 /*--------------------------------------
         Getter/Sender Functions
@@ -75,8 +87,11 @@ async function approveSolution(){
   /* Check that user has not already voted on the petition */
   if (userVoteArray.indexOf(currentUserid) === -1) {
     userVoteArray.push(currentUserid)
-    await supabase.from('Solution').update({uservotes: userVoteArray}).eq('id', props.solutionID)
+    /* If orignal solution send the vote to the petition rather than the solution */
+    let res = props.original ? await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', props.solutionID) 
+                             : await supabase.from('Solution').update({uservotes: userVoteArray}).eq('id', props.solutionID);
 
+    numberOfVotes.value = calculateNumberOfVotes(userVoteArray)
 
   }
 }
@@ -90,6 +105,8 @@ async function denySolution() {
     userVoteArray.splice(indexOfId, 1)
 
     await supabase.from('Solution').update({uservotes: userVoteArray}).eq('id', props.solutionID)
+
+    numberOfVotes.value = calculateNumberOfVotes(userVoteArray)
   }
 
 }
