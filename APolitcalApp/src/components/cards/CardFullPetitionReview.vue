@@ -29,7 +29,7 @@ const goalString = computed( () =>
 
 <template>
 
-    <div class="bg-white rounded-lg border border-border bg-light-highlight drop-shadow-sm w-[448px] overflow-y-auto">
+    <div class="bg-white rounded-lg border w-[92.5%] border-border bg-light-highlight drop-shadow-sm overflow-y-auto xs:w-[448px]">
       <div class="p-8 space-y-6">
         <div href="#" class="flex row font-light text-start mb-6 text-xl justify-between text-dark">
           <div class="flex items-center">
