@@ -73,7 +73,7 @@ const handleScroll = () => {
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
-        <div class="flex flex-wrap gap-8 xs:px-16 py-2 items-center justify-center">
+        <div class="flex flex-wrap gap-8 py-2 items-center justify-center">
           <CardFullPetition v-for="post in postArray" :petitionId="post.id" :petitionTitle="post.title" :petitionSummary="post.description" :petitionLocked="post.locked" />
         </div>
         <div v-if="isLoadingPosts" role="status" class="flex justify-center mt-4 mb-4">
