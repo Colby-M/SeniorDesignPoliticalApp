@@ -20,6 +20,7 @@ interface petitionType {
 
 const isLoadingPosts = ref(false)
 const postArray = ref<petitionType[]>([])
+const filter = ref(0);
 
 onMounted(async () => {
   let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
@@ -46,6 +47,7 @@ async function getPosts(numberPosts: number) {
     .from('Petitions')
     .select<"*", petitionType>()
     .neq('userid', useAuthStore().session?.user.id)
+    .eq('scope', filter.value)
     .range(postArray.value.length, postArray.value.length + numberPosts);
   postArray.value.push(...data ?? []);
   isLoadingPosts.value = false;
@@ -63,13 +65,24 @@ const handleScroll = () => {
     getPosts(10);
   }
 }
+
+const refresh = () => {
+  postArray.value = [];
+  getPosts(10);
+}
+
+const changeFilter = (changedFilter: number) => {
+  postArray.value = [];
+  filter.value = changedFilter;
+  getPosts(10);
+}
 </script>
 
 
 <template>
   <MainLayout>
     <template #ToolbarSlot>
-      <ToolbarDiscover></ToolbarDiscover>
+      <ToolbarDiscover @refresh="refresh()" @change-filter="changeFilter(filter)"></ToolbarDiscover>
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
