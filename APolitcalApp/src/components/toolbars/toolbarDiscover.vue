@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import toolbarBase from './toolbarBase.vue'
-import ButtonBase from '../button/ButtonBase.vue'
-import SearchBar from '../search/SearchBar.vue'
-const emits = defineEmits(['refresh', 'change-filter']);
+    import toolbarBase from './toolbarBase.vue'
+    import ButtonBase from '../button/ButtonBase.vue'
+    import SearchBar from '../search/SearchBar.vue'
+    const emits = defineEmits(['refresh', 'change-filter']);
 
-const refreshClicked = () => {
-    emits("refresh");
-}
+    const refreshClicked = () => {
+        emits("refresh");
+    }
 
-const filterClicked = (filter: number) => {
-    emits('change-filter', filter);
-    toggleDropdown();
-}
+    const filterClicked = (filter: number) => {
+        emits('change-filter', filter);
+        toggleDropdown();
+    }
 
-const toggleDropdown = () => {
-    document.getElementById("dropdown")?.classList.toggle("hidden");
-}
+    const toggleDropdown = () => {
+        document.getElementById("dropdown")?.classList.toggle("hidden");
+    }
 
 </script>
 

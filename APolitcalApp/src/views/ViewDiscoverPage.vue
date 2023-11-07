@@ -3,23 +3,13 @@
   import CardFullPetition from '@/components/cards/CardFullPetition.vue';
   import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
   import supabase from '@/lib/supabaseClient';
+  import type IPetitionType from '@/interfaces/IPetitionType';
 
   import { onMounted, onUnmounted, ref } from 'vue';
   import { useAuthStore } from '@/stores/Auth';
 
-  interface petitionType {
-    created_at: Date; 
-    description: string; 
-    id: string; 
-    scope: number;
-    tags: string[];
-    title: string;
-    userid: string;
-    locked: boolean;
-  }
-
   const isLoadingPosts = ref(false)
-  const postArray = ref<petitionType[]>([])
+  const postArray = ref<IPetitionType[]>([])
   const filter = ref(0);
 
   onMounted(async () => {
@@ -45,7 +35,7 @@
 
     let { data, error } = await supabase
       .from('Petitions')
-      .select<"*", petitionType>()
+      .select<"*", IPetitionType>()
       .neq('userid', useAuthStore().session?.user.id)
       .eq('scope', filter.value)
       .range(postArray.value.length, postArray.value.length + numberPosts);
