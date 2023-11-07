@@ -82,7 +82,7 @@ const changeFilter = (changedFilter: number) => {
 <template>
   <MainLayout>
     <template #ToolbarSlot>
-      <ToolbarDiscover @refresh="refresh()" @change-filter="changeFilter(filter)"></ToolbarDiscover>
+      <ToolbarDiscover @refresh="refresh()" @change-filter="changeFilter"></ToolbarDiscover>
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
