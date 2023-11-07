@@ -1,29 +1,58 @@
 <script lang="ts" setup>
-
+import supabase from '@/lib/supabaseClient';
 import IconBase from '../icons/IconBase.vue';
 import ButtonBase from '../button/ButtonBase.vue'
-
+import { useAuthStore } from '@/stores/Auth';
 import router from '@/router';
+
+
+/*--------------------------------------
+                Types
+---------------------------------------*/
 const emit = defineEmits()
+const currentUserid = useAuthStore().session?.user.id === undefined ? '' : <string>useAuthStore().session?.user.id;
 
 const props = defineProps<{
   petitionTitle: string; 
   petitionSummary: string; 
   petitionId:string; 
-  petitionLocked:boolean
+  petitionLocked:boolean;
+  uservotes:string[];
 }>();
-
-const denyPetition = () => {
-  emit('test')
-}
 
 const reviewPetition = () => {
   router.push({path: 'review', query: {id: props.petitionId}})
 }
 
-const approvePetition = () => {
-  //TODO: Add approve database call, save petition id to history database
+async function approvePetition(){
+  let userVoteArray = props.uservotes;
+
+  /* Check that user has not already voted on the petition */
+  if (userVoteArray.indexOf(currentUserid) === -1) {
+    userVoteArray.push(currentUserid)
+    await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', props.petitionId)
+
+
+  }
 }
+
+async function denyPetition() {
+  let userVoteArray = props.uservotes;
+  let indexOfId = userVoteArray.indexOf(currentUserid)
+  /* Check that user has not already voted on the petition */
+  if (indexOfId !== -1) {
+    
+    userVoteArray.splice(indexOfId, 1)
+
+    await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', props.petitionId)
+
+
+  }
+
+}
+
+
+
 
 </script>
 

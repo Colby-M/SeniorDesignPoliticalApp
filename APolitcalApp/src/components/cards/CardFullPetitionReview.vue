@@ -33,7 +33,7 @@ const goalString = computed( () =>
       <div class="p-8 space-y-6">
         <div href="#" class="flex row font-light text-start mb-6 text-xl justify-between text-dark">
           <div class="flex items-center">
-            <img class="w-8 h-8 mr-2" src="../logo/VoteBoatLogo.png" alt="logo">
+            <img class="w-8 h-8 mr-2" src="../logo/testlogo2.png" alt="logo">
             {{props.petitionTitle}}
           </div>                    
         </div>

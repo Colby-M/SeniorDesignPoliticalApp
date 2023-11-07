@@ -3,8 +3,10 @@ import toolbarBase from './toolbarBase.vue'
 import ButtonBase from '../button/ButtonBase.vue'
 import SearchBar from '../search/SearchBar.vue'
 
+const emit = defineEmits(['approve-petition', 'deny-petition']);
+
 const approveClicked = () => { 
-    //Add Refresh Function
+    emit('approve-petition')
 }
 
 const filterClicked = () => {
@@ -12,7 +14,7 @@ const filterClicked = () => {
 }
 
 const denyClicked = () => {
-    //Add Refresh Function
+    emit('deny-petition')
 }
 
 </script>
