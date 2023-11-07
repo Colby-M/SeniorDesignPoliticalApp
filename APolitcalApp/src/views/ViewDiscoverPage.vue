@@ -15,6 +15,7 @@ interface petitionType {
   tags: string[];
   title: string;
   userid: string;
+  uservotes: string[];
   locked: boolean;
 }
 
@@ -63,6 +64,16 @@ const handleScroll = () => {
     getPosts(10);
   }
 }
+
+function formatVoteArray(uservotes: string[] | null){
+  if (uservotes === null){
+    return []
+  }
+  else{
+    return uservotes
+  }
+}
+
 </script>
 
 
@@ -74,7 +85,7 @@ const handleScroll = () => {
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
         <div class="flex flex-wrap gap-8 px-16 py-2 items-center justify-center">
-          <CardFullPetition v-for="post in postArray" :petitionId="post.id" :petitionTitle="post.title" :petitionSummary="post.description" :petitionLocked="post.locked" />
+          <CardFullPetition v-for="post in postArray" :petitionId="post.id" :petitionTitle="post.title" :petitionSummary="post.description" :petitionLocked="post.locked" :uservotes="formatVoteArray(post.uservotes)" />
         </div>
         <div v-if="isLoadingPosts" role="status" class="flex justify-center mt-4 mb-4">
               <svg aria-hidden="true" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin fill-highlight" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

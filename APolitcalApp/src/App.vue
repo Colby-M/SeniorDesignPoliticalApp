@@ -5,7 +5,7 @@ import { RouterView } from 'vue-router'
 <template>
 
 
-  <div class="h-full bg-light">
+  <div class="h-full bg-gradient-to-r from-light via-[#F7FAFC] to-light">
       <RouterView />
   </div>
 

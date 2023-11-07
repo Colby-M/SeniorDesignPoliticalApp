@@ -7,6 +7,7 @@ import CardSolutionsOtherSuggestions from '@/components/cards/CardSolutionsOther
 import { useRoute } from 'vue-router';
 import { onMounted, ref, computed } from 'vue';
 import supabase from '@/lib/supabaseClient';
+import { useAuthStore } from '@/stores/Auth';
 
 interface petitionTypeReview {
   id: string; 
@@ -24,12 +25,21 @@ interface solutionTypeReview {
   description: string; 
   title:string;
   uservotes: Array<string>; 
-}
+};
 
+/*--------------------------------------
+           Reactive Variables
+---------------------------------------*/
 const route = useRoute();
+const currentUserid = useAuthStore().session?.user.id === undefined ? '' : <string>useAuthStore().session?.user.id;
+
 const loadingContent = ref(true);
+const loadingApproval = ref(true);
+
 const queryPetitionId = ref<string | null>(null);
-const postArray = ref<solutionTypeReview[]>([])
+const postArray = ref<solutionTypeReview[]>([]);
+const excludedSolutionIds = ref<string[]>([]);
+const excludedPetitionIds = ref<string[]>([]);
 
 const petitionContent = ref<petitionTypeReview>({ 
   id: '', 
@@ -42,21 +52,23 @@ const petitionContent = ref<petitionTypeReview>({
   uservotes: [],
 });
 
-
+/*--------------------------------------
+           Mount Events
+---------------------------------------*/
 onMounted(async() => {
   /* Obtain query string */
   queryPetitionId.value = route.query.id ? route.query.id?.toString() : null;
   
   /* If routed here from specific petition then load the petition*/
   if (queryPetitionId.value !== null){
-    await getPostFromId()
+    await getPostFromId();
 
     /* If open to suggestions load them */
     if (!petitionIsLocked()){
-      await getComments(queryPetitionId.value)
+      await getComments(queryPetitionId.value);
     }
 
-    loadingContent.value = false
+    loadingContent.value = false;
   }
 
   /* Otherwise load random petition (need random functionality) */
@@ -66,18 +78,82 @@ onMounted(async() => {
     await getNextPost()
     if (!petitionIsLocked()){
 
-      await getComments(petitionContent.value.id)
+      await getComments(petitionContent.value.id);
     
     }
 
-    loadingContent.value = false
+    loadingContent.value = false;
   }
 });
 
+/*--------------------------------------
+            Utility Functions
+---------------------------------------*/
 const petitionIsLocked = () => {
-  return petitionContent.value.locked
+  return petitionContent.value.locked;
 }
 
+function excludePost (petitionId: string) {
+  /* List of posts to prevent duplicates */
+  excludedPetitionIds.value.push(petitionId);
+}
+
+function computeLikes (uservotes: Array<string> | null) {
+  if (uservotes === null){
+    return 0;
+  }
+  else{
+    return uservotes.length;
+  }
+}
+
+function formatVoteArray(uservotes: Array<string> | null){
+  if (uservotes === null){
+    return []
+  }
+  else{
+    return uservotes
+  }
+}
+
+/*--------------------------------------
+            Emit Functions
+---------------------------------------*/
+async function approvePetition(){
+  let userVoteArray = petitionContent.value.uservotes === null ? [] : petitionContent.value.uservotes;
+
+  /* Check that user has not already voted on the petition */
+  if (userVoteArray.indexOf(currentUserid) === -1) {
+    userVoteArray.push(currentUserid)
+
+    await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', petitionContent.value.id)
+
+
+  }
+  excludePost(petitionContent.value.id);
+  getNextPost();
+}
+
+async function denyPetition() {
+  let userVoteArray = petitionContent.value.uservotes === null ? [] : petitionContent.value.uservotes;
+  let indexOfId = userVoteArray.indexOf(currentUserid)
+  /* Check that user has not already voted on the petition */
+  if (indexOfId !== -1) {
+    
+    userVoteArray.splice(indexOfId, 1)
+
+    await supabase.from('Petitions').update({uservotes: userVoteArray}).eq('id', petitionContent.value.id)
+
+
+  }
+  excludePost(petitionContent.value.id);
+  getNextPost();
+
+}
+
+/*--------------------------------------
+        Getter/Sender Functions
+---------------------------------------*/
 async function getPostFromId() {
   let { data, error } = await supabase
     .from('Petitions')
@@ -86,41 +162,44 @@ async function getPostFromId() {
     .single()
   petitionContent.value = data
 
+
 };
 
 async function getNextPost() {
-
   let { data, error } = await supabase
     .from('Petitions')
     .select<"*">()
     .range(0, 0)
     .single()
+    
   petitionContent.value = data
 
+/*
+    .not('id', 'in', `(${excludedPetitionIds.value.join(',')})`)
+    .not('uservotes', 'cs', useAuthStore().session?.user.id)
+    .neq('userid', useAuthStore().session?.user.id)
+*/
 
 };
 
 async function getComments(petitionId: string){
+  /* If there are already posts rendered, do not re-render them */
+  if (postArray.value.length > 0){
+    excludedSolutionIds.value = []
+    
+    postArray.value.forEach(function (item){
+      excludedSolutionIds.value.push(item.id)
+    })
+  }
 
-  console.log(petitionId)
   let { data, error } = await supabase
     .from('Solution')
     .select<"*">()
     .eq('petitionid', petitionId)
+    .not('id', 'in', `(${excludedSolutionIds.value.join(',')})`);
 
-  if (data !== null){
-    postArray.value.push(...data ?? []);
-  }  
+  postArray.value.push(...data ?? []);
 
-}
-
-function computeLikes (userid: Array<string> | null) {
-  if (userid === null){
-    return 0
-  }
-  else{
-    return userid.length
-  }
 }
 
 </script>
@@ -128,7 +207,7 @@ function computeLikes (userid: Array<string> | null) {
 <template>
   <MainLayout>
     <template #ToolbarSlot>
-      <ToolbarReview></ToolbarReview>
+      <ToolbarReview @approve-petition="approvePetition" @deny-petition="denyPetition"></ToolbarReview>
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] w-full overflow-y-auto py-2" ref="scrollComponent">
@@ -142,11 +221,11 @@ function computeLikes (userid: Array<string> | null) {
           <CardFullPetitionReview :petitionTitle="petitionContent.title" :petitionGoal="petitionContent.goal" 
                                   :petitionId="petitionContent.id" :petitionLocked="petitionContent.locked"  
                                   :petitionScope="petitionContent.scope" :petitionSummary="petitionContent.description"  
-                                  :petitionTags="petitionContent.tags" :petitionSignatures="1600"/>
+                                  :petitionTags="petitionContent.tags" :petitionSignatures="computeLikes(petitionContent.uservotes)"/>
           <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
-            <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id"></CardSolutionsPersonalSuggestion>
-            <CardSolutionsOtherSuggestions :linkedPetition="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="computeLikes(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
-            <CardSolutionsOtherSuggestions v-for="post in postArray" :linkedPetition="post.id" :suggestionText="post.description" :uservotes="computeLikes(post.uservotes)"></CardSolutionsOtherSuggestions>
+            <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id" @re-render="getComments(petitionContent.id)"></CardSolutionsPersonalSuggestion>
+            <CardSolutionsOtherSuggestions :original="true" :solutionID="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="formatVoteArray(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
+            <CardSolutionsOtherSuggestions :original="false" v-for="post in postArray" :solutionID="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)"></CardSolutionsOtherSuggestions>
           </div>
         </div>
       </div>
