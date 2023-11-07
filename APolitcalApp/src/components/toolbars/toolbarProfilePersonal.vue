@@ -19,7 +19,6 @@ const filterClicked = () => {
         </template>
 
         <template #toolbar-search-filter>
-            <SearchBar></SearchBar>
         </template>
     </toolbarBase>
 </template>

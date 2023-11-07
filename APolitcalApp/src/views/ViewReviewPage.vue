@@ -174,6 +174,7 @@ async function getNextPost() {
     
   petitionContent.value = data
 
+  getComments(petitionContent.value.id)
 /*
     .not('id', 'in', `(${excludedPetitionIds.value.join(',')})`)
     .not('uservotes', 'cs', useAuthStore().session?.user.id)
@@ -222,7 +223,7 @@ async function getComments(petitionId: string){
                                   :petitionId="petitionContent.id" :petitionLocked="petitionContent.locked"  
                                   :petitionScope="petitionContent.scope" :petitionSummary="petitionContent.description"  
                                   :petitionTags="petitionContent.tags" :petitionSignatures="computeLikes(petitionContent.uservotes)"/>
-          <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed px-6 py-4 border-border h-96">
+          <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed xxs:px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id" @re-render="getComments(petitionContent.id)"></CardSolutionsPersonalSuggestion>
             <CardSolutionsOtherSuggestions :original="true" :solutionID="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="formatVoteArray(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
             <CardSolutionsOtherSuggestions :original="false" v-for="post in postArray" :solutionID="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)"></CardSolutionsOtherSuggestions>

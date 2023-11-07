@@ -49,9 +49,9 @@ async function discardSuggestion() {
 </script>
 
 <template>
-    <div class="w-96 h-64">
-        <div class=" w-96 h-56 grid grid-rows-1 grid-cols-1 border-dark rounded-lg">
-            <textarea class="rounded-lg h-56 border border-dashed bg-light-highlight px-2 text-center resize-none" v-model="suggestion" placeholder="your suggestion..." />
+    <div class="w-[91%] xxs:w-96 h-38 xxs:h-64">
+        <div class="w-full h-36 xxs:h-56 border border-dashed items-center justify-center border-dark rounded-lg">
+            <textarea class="rounded-lg w-full h-56 border border-dashed bg-light-highlight px-2 text-center resize-none" v-model="suggestion" placeholder="your suggestion..." />
         </div>
         <div class="w-full flex relative bottom-5 items-end flex-row gap-2 justify-end px-2">
             <ButtonBase buttonType="discard-xs" @discard="discardSuggestion"></ButtonBase>

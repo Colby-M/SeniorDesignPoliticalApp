@@ -5,10 +5,19 @@ module.exports = {
     "./src/**/*.{vue,js,ts}"
   ],
   theme: {
+    screens: {
+      'xxs': '422px',
+      'xs': '484px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       gridTemplateColumns: {
         'sm-md-lg-xl' : 'min-content minmax(434px, 967px)', /* Template Columns for resolutions > w-640px */
-        'mobile'      : 'minmax(400px, 639px)',             /* Template Columns for resolutions < w-640px */
+        'mobile'      : 'minmax(320px, 639px)',             /* Template Columns for resolutions < w-640px */
         'landing'     : '1fr 1fr',                          /* Template Columns for landing page          */
         'form-1/3-2/3': '1fr 2fr'
       },

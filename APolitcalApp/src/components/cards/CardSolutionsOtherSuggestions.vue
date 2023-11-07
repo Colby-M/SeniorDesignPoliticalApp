@@ -156,8 +156,8 @@ async function denySolution() {
 </script>
 
 <template>
-    <div class="w-96 h-64">
-        <div class=" w-96 h-56 border border-dark rounded-lg">
+    <div class="w-[91%] xxs:w-96 h-38 xxs:h-64">
+        <div class="w-full h-36 xxs:h-56 border border-dark rounded-lg">
             <textarea readonly class="w-full bg-light-highlight h-full rounded-lg px-2 text-center resize-none" v-model="props.suggestionText" />
         </div>
         <div class="w-full flex relative bottom-5 items-end flex-row gap-2 justify-end px-2">
