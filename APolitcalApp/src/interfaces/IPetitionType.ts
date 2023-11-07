@@ -6,4 +6,5 @@ export default interface IPetitionType {
     tags: string[];
     title: string;
     userid: string;
+    locked: boolean;
 }
