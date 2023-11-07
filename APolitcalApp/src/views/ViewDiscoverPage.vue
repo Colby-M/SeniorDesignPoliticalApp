@@ -1,81 +1,81 @@
 <script setup lang="ts">
-import MainLayout from '@/components/layouts/MainLayout.vue';
-import CardFullPetition from '@/components/cards/CardFullPetition.vue';
-import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
-import supabase from '@/lib/supabaseClient';
+  import MainLayout from '@/components/layouts/MainLayout.vue';
+  import CardFullPetition from '@/components/cards/CardFullPetition.vue';
+  import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
+  import supabase from '@/lib/supabaseClient';
 
-import { onMounted, onUnmounted, ref } from 'vue';
-import { useAuthStore } from '@/stores/Auth';
+  import { onMounted, onUnmounted, ref } from 'vue';
+  import { useAuthStore } from '@/stores/Auth';
 
-interface petitionType {
-  created_at: Date; 
-  description: string; 
-  id: string; 
-  scope: number;
-  tags: string[];
-  title: string;
-  userid: string;
-  locked: boolean;
-}
-
-const isLoadingPosts = ref(false)
-const postArray = ref<petitionType[]>([])
-const filter = ref(0);
-
-onMounted(async () => {
-  let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
-  if(internalDiv !== null)
-  {
-    await getPosts(10);
-    internalDiv.addEventListener("scroll", handleScroll)
+  interface petitionType {
+    created_at: Date; 
+    description: string; 
+    id: string; 
+    scope: number;
+    tags: string[];
+    title: string;
+    userid: string;
+    locked: boolean;
   }
 
-})
+  const isLoadingPosts = ref(false)
+  const postArray = ref<petitionType[]>([])
+  const filter = ref(0);
 
-onUnmounted(() => {
-  let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
-  if(internalDiv !== null)
-  {
-    internalDiv.removeEventListener("scroll", handleScroll)
+  onMounted(async () => {
+    let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
+    if(internalDiv !== null)
+    {
+      await getPosts(10);
+      internalDiv.addEventListener("scroll", handleScroll)
+    }
+
+  })
+
+  onUnmounted(() => {
+    let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
+    if(internalDiv !== null)
+    {
+      internalDiv.removeEventListener("scroll", handleScroll)
+    }
+  })
+
+  async function getPosts(numberPosts: number) {
+    isLoadingPosts.value = true
+
+    let { data, error } = await supabase
+      .from('Petitions')
+      .select<"*", petitionType>()
+      .neq('userid', useAuthStore().session?.user.id)
+      .eq('scope', filter.value)
+      .range(postArray.value.length, postArray.value.length + numberPosts);
+    postArray.value.push(...data ?? []);
+    isLoadingPosts.value = false;
   }
-})
 
-async function getPosts(numberPosts: number) {
-  isLoadingPosts.value = true
+  const handleScroll = () => {
+    let element = <HTMLElement>document.getElementById("discoverScroll");
+    const scrollY = element.scrollTop;
+    const scrollHeight = element.scrollHeight;
+    const offsetHeight = element.offsetHeight;
 
-  let { data, error } = await supabase
-    .from('Petitions')
-    .select<"*", petitionType>()
-    .neq('userid', useAuthStore().session?.user.id)
-    .eq('scope', filter.value)
-    .range(postArray.value.length, postArray.value.length + numberPosts);
-  postArray.value.push(...data ?? []);
-  isLoadingPosts.value = false;
-}
+    const scrollThreshold = 0.8;
 
-const handleScroll = () => {
-  let element = <HTMLElement>document.getElementById("discoverScroll");
-  const scrollY = element.scrollTop;
-  const scrollHeight = element.scrollHeight;
-  const offsetHeight = element.offsetHeight;
+    if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
+      getPosts(10);
+    }
+  }
 
-  const scrollThreshold = 0.8;
-
-  if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
+  const refresh = () => {
+    postArray.value = [];
     getPosts(10);
   }
-}
 
-const refresh = () => {
-  postArray.value = [];
-  getPosts(10);
-}
-
-const changeFilter = (changedFilter: number) => {
-  postArray.value = [];
-  filter.value = changedFilter;
-  getPosts(10);
-}
+  const changeFilter = (changedFilter: number) => {
+    postArray.value = [];
+    filter.value = changedFilter;
+    getPosts(10);
+  }
 </script>
 
 
