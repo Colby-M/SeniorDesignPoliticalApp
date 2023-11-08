@@ -26,7 +26,6 @@ const blockClicked = () => {
         </template>
 
         <template #toolbar-search-filter>
-            <SearchBar></SearchBar>
         </template>
     </toolbarBase>
 </template>
