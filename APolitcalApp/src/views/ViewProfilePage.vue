@@ -25,8 +25,6 @@
     .from('Solution')
     .select<"*", ISolutionType>()
     .eq('userid', authStore.session?.user.id)).data ?? [];
-
-    console.log(petitions.value, solutions.value);
   });
 </script>
 
@@ -48,7 +46,7 @@
           <div>
             <p>Your Solutions</p>
             <div class="flex flex-col gap-2">
-              <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :suggestionText="post.description" :uservotes="post.uservotes.length ?? 0" />
+              <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :solution-i-d="post.id" :suggestionText="post.description" :uservotes="post.uservotes" :key="post.id" />
             </div>
           </div>
         </div>
