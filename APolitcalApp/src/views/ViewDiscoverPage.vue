@@ -1,69 +1,60 @@
 <script setup lang="ts">
-import MainLayout from '@/components/layouts/MainLayout.vue';
-import CardFullPetition from '@/components/cards/CardFullPetition.vue';
-import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
-import supabase from '@/lib/supabaseClient';
+  import MainLayout from '@/components/layouts/MainLayout.vue';
+  import CardFullPetition from '@/components/cards/CardFullPetition.vue';
+  import ToolbarDiscover from '@/components/toolbars/toolbarDiscover.vue';
+  import supabase from '@/lib/supabaseClient';
+  import type IPetitionType from '@/interfaces/IPetitionType';
 
-import { onMounted, onUnmounted, ref } from 'vue';
-import { useAuthStore } from '@/stores/Auth';
+  import { onMounted, onUnmounted, ref } from 'vue';
+  import { useAuthStore } from '@/stores/Auth';
 
-interface petitionType {
-  created_at: Date; 
-  description: string; 
-  id: string; 
-  scope: number;
-  tags: string[];
-  title: string;
-  userid: string;
-  uservotes: string[];
-  locked: boolean;
-}
+  const isLoadingPosts = ref(false)
+  const postArray = ref<IPetitionType[]>([])
+  const filter = ref(0);
 
-const isLoadingPosts = ref(false)
-const postArray = ref<petitionType[]>([])
+  onMounted(async () => {
+    let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
+    if(internalDiv !== null)
+    {
+      await getPosts(10);
+      internalDiv.addEventListener("scroll", handleScroll)
+    }
 
-onMounted(async () => {
-  let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
-  if(internalDiv !== null)
-  {
-    await getPosts(10);
-    internalDiv.addEventListener("scroll", handleScroll)
+  })
+
+  onUnmounted(() => {
+    let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
+    if(internalDiv !== null)
+    {
+      internalDiv.removeEventListener("scroll", handleScroll)
+    }
+  })
+
+  async function getPosts(numberPosts: number) {
+    isLoadingPosts.value = true
+
+    let { data, error } = await supabase
+      .from('Petitions')
+      .select<"*", IPetitionType>()
+      .neq('userid', useAuthStore().session?.user.id)
+      .eq('scope', filter.value)
+      .range(postArray.value.length, postArray.value.length + numberPosts);
+    postArray.value.push(...data ?? []);
+    isLoadingPosts.value = false;
   }
 
-})
+  const handleScroll = () => {
+    let element = <HTMLElement>document.getElementById("discoverScroll");
+    const scrollY = element.scrollTop;
+    const scrollHeight = element.scrollHeight;
+    const offsetHeight = element.offsetHeight;
 
-onUnmounted(() => {
-  let internalDiv = <HTMLElement>document.getElementById("discoverScroll");
-  if(internalDiv !== null)
-  {
-    internalDiv.removeEventListener("scroll", handleScroll)
+    const scrollThreshold = 0.8;
+
+    if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
+      getPosts(10);
+    }
   }
-})
-
-async function getPosts(numberPosts: number) {
-  isLoadingPosts.value = true
-
-  let { data, error } = await supabase
-    .from('Petitions')
-    .select<"*", petitionType>()
-    .neq('userid', useAuthStore().session?.user.id)
-    .range(postArray.value.length, postArray.value.length + numberPosts);
-  postArray.value.push(...data ?? []);
-  isLoadingPosts.value = false;
-}
-
-const handleScroll = () => {
-  let element = <HTMLElement>document.getElementById("discoverScroll");
-  const scrollY = element.scrollTop;
-  const scrollHeight = element.scrollHeight;
-  const offsetHeight = element.offsetHeight;
-
-  const scrollThreshold = 0.8;
-
-  if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
-    getPosts(10);
-  }
-}
 
 function formatVoteArray(uservotes: string[] | null){
   if (uservotes === null){
@@ -74,13 +65,24 @@ function formatVoteArray(uservotes: string[] | null){
   }
 }
 
+
+  const refresh = () => {
+    postArray.value = [];
+    getPosts(10);
+  }
+
+  const changeFilter = (changedFilter: number) => {
+    postArray.value = [];
+    filter.value = changedFilter;
+    getPosts(10);
+  }
 </script>
 
 
 <template>
   <MainLayout>
     <template #ToolbarSlot>
-      <ToolbarDiscover></ToolbarDiscover>
+      <ToolbarDiscover @refresh="refresh()" @change-filter="changeFilter"></ToolbarDiscover>
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] overflow-y-auto" ref="scrollComponent">
