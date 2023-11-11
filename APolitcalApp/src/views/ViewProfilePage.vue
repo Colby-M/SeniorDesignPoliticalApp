@@ -45,23 +45,23 @@
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] w-full overflow-y-auto py-2" ref="scrollComponent">
-      <div class="flex flex-col gap-5">
-        <AuthAccount @sign-out="authStore.logout()" v-if="authStore.session" :session="authStore.session" />
-        <div class="flex w-full justify-between">
-          <div>
-            <p>Your Petitions</p>
-            <div class="flex flex-col gap-2">
-              <CardPetitionTitle v-for="petition in petitions" :key="petition.id" :petition-id="petition.id" :petition-title="petition.title" />
+        <div class="flex flex-col items-center gap-5">
+          <AuthAccount @sign-out="authStore.logout()" v-if="authStore.session" :session="authStore.session" />
+          <div class="flex flex-col justify-center items-center md:flex-row md:justify-center md:items-start gap-2">
+            <div>
+              <p>Your Petitions</p>
+              <div class="flex flex-col gap-2">
+                <CardPetitionTitle v-for="petition in petitions" :key="petition.id" :petition-id="petition.id" :petition-title="petition.title" />
+              </div>
             </div>
-          </div>
-          <div>
-            <p>Your Solutions</p>
-            <div class="flex flex-col gap-2">
-              <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :solution-i-d="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)" :key="post.id" />
+            <div class="text-center">            
+              <p>Your Solutions</p>
+              <div class="flex flex-wrap w-96 justify-center">
+                <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :solution-i-d="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)" :key="post.id" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </template>
   </MainLayout>
