@@ -4,6 +4,7 @@ export default interface IPetitionType {
     id: string; 
     scope: number;
     tags: string[];
+    uservotes: string[];
     title: string;
     userid: string;
     locked: boolean;

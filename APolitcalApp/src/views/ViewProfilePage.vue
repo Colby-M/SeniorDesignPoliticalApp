@@ -26,6 +26,16 @@
     .select<"*", ISolutionType>()
     .eq('userid', authStore.session?.user.id)).data ?? [];
   });
+
+
+  function formatVoteArray(uservotes: Array<string> | null){
+  if (uservotes === null){
+    return []
+  }
+  else{
+    return uservotes
+  }
+}
 </script>
 
 <template>
@@ -34,6 +44,7 @@
       <ToolbarProfilePersonal></ToolbarProfilePersonal>
     </template>
     <template #ContentSlot>
+      <div id="discoverScroll" class="max-h-[100vh] w-full overflow-y-auto py-2" ref="scrollComponent">
       <div class="flex flex-col gap-5">
         <AuthAccount @sign-out="authStore.logout()" v-if="authStore.session" :session="authStore.session" />
         <div class="flex w-full justify-between">
@@ -46,10 +57,11 @@
           <div>
             <p>Your Solutions</p>
             <div class="flex flex-col gap-2">
-              <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :solution-i-d="post.id" :suggestionText="post.description" :uservotes="post.uservotes" :key="post.id" />
+              <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :solution-i-d="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)" :key="post.id" />
             </div>
           </div>
         </div>
+      </div>
       </div>
     </template>
   </MainLayout>
