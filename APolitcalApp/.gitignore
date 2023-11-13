@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-APolitcalApp\package-lock.json
+package-lock.json*
 node_modules
 .DS_Store
 dist
