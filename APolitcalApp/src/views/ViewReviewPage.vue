@@ -9,6 +9,7 @@ import { onMounted, ref, computed } from 'vue';
 import supabase from '@/lib/supabaseClient';
 import { useAuthStore } from '@/stores/Auth';
 
+
 interface petitionTypeReview {
   id: string; 
   description: string; 
@@ -115,6 +116,7 @@ function formatVoteArray(uservotes: Array<string> | null){
     return uservotes
   }
 }
+
 
 /*--------------------------------------
             Emit Functions

@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import ButtonBase from '../button/ButtonBase.vue';
 import supabase from '@/lib/supabaseClient';
 import { useAuthStore } from '@/stores/Auth';
+import {NinjasAPIProfFilter} from '../../lib/ninjaClient';
+import type IFilterType from '../../interfaces/IFilterType'
 
 const props = defineProps({
     linkedPetition: {
@@ -14,11 +16,18 @@ const props = defineProps({
 
 const loadingSend = ref(false);
 const suggestion = ref('');
+const responseTest = ref()
 
 async function submitSuggestion(){
     //TODO Error handling
     let formattedSuggestion = suggestion.value.trim()
 
+    responseTest.value = NinjasAPIProfFilter(formattedSuggestion)
+
+    if (responseTest.has_profanity === true) {
+        console.log('profanity detected')
+    }
+    /*
     if (formattedSuggestion !== ''){
         loadingSend.value = true
         const res = await supabase.from('Solution').insert({ title: formattedSuggestion, description: formattedSuggestion, petitionid: props.linkedPetition, userid: useAuthStore().session?.user.id});
@@ -32,9 +41,10 @@ async function submitSuggestion(){
         emitReRenderEvent()
     }
 
-    else{
+    else{ */
         /* Do Nothing */
-    }
+    //}
+    
 };
 const emit = defineEmits();
 
