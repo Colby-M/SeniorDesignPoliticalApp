@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import ButtonBase from '../button/ButtonBase.vue';
 import supabase from '@/lib/supabaseClient';
 import { useAuthStore } from '@/stores/Auth';
+import NinjasAPIProfFilter from '../../lib/ninjaClient';
+import type IFilterType from '../../interfaces/IFilterType'
 
 const props = defineProps({
     linkedPetition: {
@@ -14,11 +16,19 @@ const props = defineProps({
 
 const loadingSend = ref(false);
 const suggestion = ref('');
+const profanityDetected = ref(false);
 
 async function submitSuggestion(){
     //TODO Error handling
     let formattedSuggestion = suggestion.value.trim()
 
+    let containsProfanity = await NinjasAPIProfFilter(formattedSuggestion)
+
+    if (containsProfanity === true) {
+        profanityDetected.value = true;
+        suggestion.value = ''
+        return
+    }
     if (formattedSuggestion !== ''){
         loadingSend.value = true
         const res = await supabase.from('Solution').insert({ title: formattedSuggestion, description: formattedSuggestion, petitionid: props.linkedPetition, userid: useAuthStore().session?.user.id});
@@ -26,15 +36,17 @@ async function submitSuggestion(){
         setTimeout(() => {
             loadingSend.value = false;
         }, 750);
+        profanityDetected.value = false
         suggestion.value = ''
 
         //Emit event to re-render suggestions to include this one in the section
         emitReRenderEvent()
     }
 
-    else{
+    else{ 
         /* Do Nothing */
     }
+    
 };
 const emit = defineEmits();
 
@@ -46,12 +58,19 @@ async function discardSuggestion() {
     suggestion.value = ''
 };
 
+const checkPlaceholderText = () => {
+    if (profanityDetected.value === true) {
+        return 'profanity detected'
+    }
+    return 'your suggestion...'
+}
+
 </script>
 
 <template>
     <div class="w-[91%] xxs:w-96 h-38 xxs:h-64">
         <div class="w-full h-36 xxs:h-56 border border-dashed items-center justify-center border-dark rounded-lg">
-            <textarea class="rounded-lg w-full h-56 border border-dashed bg-light-highlight px-2 text-center resize-none" v-model="suggestion" placeholder="your suggestion..." />
+            <textarea class="rounded-lg w-full h-56 border border-dashed bg-light-highlight px-2 text-center resize-none" v-model="suggestion" :placeholder="checkPlaceholderText()" />
         </div>
         <div class="w-full flex relative bottom-5 items-end flex-row gap-2 justify-end px-2">
             <ButtonBase buttonType="discard-xs" @discard="discardSuggestion"></ButtonBase>

@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/Auth';
 import supabase from '../../lib/supabaseClient';
 import IconBase from '../icons/IconBase.vue';
 import { reactive, ref } from 'vue';
+import NinjasAPIProfFilter from '@/lib/ninjaClient';
 
 const emit = defineEmits()
 
@@ -34,12 +35,15 @@ const createFormData = reactive({
 
 const statusPetitionContentError = ref(false)
 const isLoading = ref(false);
+const profanityDetected = ref(false);
 
-const validateCreateForm = () => {
+async function validateCreateForm () {
     /* Reset Error Messages */
     if (isLoading.value) return;
     statusPetitionContentError.value = false
+    profanityDetected.value = false
 
+    profanityDetected.value = (await NinjasAPIProfFilter(createFormData.contentDescription.text)) || (await NinjasAPIProfFilter(createFormData.contentTitle.text))
 
     /* All Fields must be populated */
     /* If all fields are populated it is a petition... submit it*/
@@ -216,6 +220,7 @@ function submitPetitionDraftForm() {
                             <div id="loading-text">loading</div>
                         </div>
                         <p v-if="statusPetitionContentError ">Reqired fields are empty or invalid</p>
+                        <p v-if="profanityDetected ">Our systems flagged this post for profanity</p>
                     </div>
                 </form>
             </div>
