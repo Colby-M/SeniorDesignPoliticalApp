@@ -89,9 +89,10 @@ export const useAuthStore = defineStore('auth', () => {
   async function signUp(
     username: string | null,
     password: string | null,
+    token: string,
     firstName: string | null = null,
     lastName: string | null = null,
-    age: number | null = null
+    age: number | null = null,
   )
   {
     if (password == null || username == null) return;
@@ -101,7 +102,8 @@ export const useAuthStore = defineStore('auth', () => {
         email: username,
         password: password,
         options: {
-          emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173", 
+          emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173",
+          captchaToken: token,
           data: {
             first_name: firstName,
             last_name: lastName,
@@ -130,3 +132,5 @@ export const useAuthStore = defineStore('auth', () => {
     signUp
   }
 })
+
+

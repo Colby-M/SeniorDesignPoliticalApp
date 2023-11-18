@@ -13,6 +13,8 @@
   const authStore = useAuthStore();
   const petitions = ref<IPetitionType[]>();
   const solutions = ref<ISolutionType[]>();
+  const renderSolution = ref(false);
+  const renderPetition = ref(false);
   onMounted(async () => {
     // get our own petitions
     petitions.value = (await supabase
@@ -25,6 +27,15 @@
     .from('Solution')
     .select<"*", ISolutionType>()
     .eq('userid', authStore.session?.user.id)).data ?? [];
+
+    if (petitions.value.length !== 0){
+      renderPetition.value = true;
+    };
+  
+    if (solutions.value.length !== 0){
+      renderSolution.value = true;
+    };
+
   });
 
 
@@ -48,13 +59,13 @@
         <div class="flex flex-col items-center gap-5">
           <AuthAccount @sign-out="authStore.logout()" v-if="authStore.session" :session="authStore.session" />
           <div class="flex flex-col justify-center items-center md:flex-row md:justify-center md:items-start gap-2">
-            <div>
+            <div v-if="renderPetition">
               <p>Your Petitions</p>
               <div class="flex flex-col gap-2">
                 <CardPetitionTitle v-for="petition in petitions" :key="petition.id" :petition-id="petition.id" :petition-title="petition.title" />
               </div>
             </div>
-            <div class="text-center">            
+            <div v-if="renderSolution" class="text-center">            
               <p>Your Solutions</p>
               <div class="flex flex-wrap w-96 justify-center">
                 <CardSolutionsOtherSuggestions v-for="post in solutions" :linkedPetition="post.id" :solution-i-d="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)" :key="post.id" />

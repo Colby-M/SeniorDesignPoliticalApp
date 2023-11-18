@@ -1,12 +1,26 @@
 <script setup lang="ts">
 import ButtonSignInOptions from '../button/ButtonSignInOptions.vue';
 import IconBase from '../icons/IconBase.vue';
-import {computed, reactive } from 'vue';
+import {computed, reactive, ref } from 'vue';
+import HCaptcha from "@hcaptcha/vue3-hcaptcha"
 
 /* AUTH Components */
 import { useAuthStore } from '../../stores/Auth';
 
+const verified = ref(false);
+const expired = ref(false);
+const token = ref("");
+const eKey = ref("");
+const error = ref("");
 const authStore = useAuthStore();
+
+function onVerify(tokenStr: string, ekey: string) {
+  verified.value = true;
+  token.value = tokenStr;
+  eKey.value = ekey;
+  console.log(`Callback token: ${tokenStr}, ekey: ${ekey}`);
+}
+
 const input = reactive({
     username: null,
     password: null,
@@ -27,10 +41,11 @@ const visible = computed( () => {
 
 const emit = defineEmits();
 
+
 const validateForm = () =>{
     /* passwords do not match, do not submit and warn the user */
     if(input.password === input.confirmPassword) {
-        authStore.signUp(input.username, input.password)
+        authStore.signUp(input.username, input.password, token.value)
     }
     else {
         input.validated = false;
@@ -75,8 +90,9 @@ const emitClosePopup = () => {
                         <p v-if="input.validated === false" class="text-sm font-normal justify-self-end text-dark">Passwords do not match</p>
                     </div>
                     <!-- TODO: Add Redirect to Forgot Password Page -->
-                    <div class="w-full flex items-center justify-center">
-                        <button type="submit" @click="validateForm" class="w-1/2 mx-auto bg-dark/90 border font-medium text-sm border-border justify-self-auto text-light rounded-full hover:bg-dark/70 duration-300 p-2.5">Sign up</button>
+                    <div class="w-full flex flex-col gap-2 items-center justify-center">
+                        <HCaptcha sitekey="10000000-ffff-ffff-ffff-000000000001" @verify="onVerify"></HCaptcha>
+                        <button type="button" @click="validateForm" class="w-1/2 mx-auto bg-dark/90 border font-medium text-sm border-border justify-self-auto text-light rounded-full hover:bg-dark/70 duration-300 p-2.5">Sign up</button>
                     </div>
                     <div class="flex items-center">
                         <div class="flex-1 border-b border-border"></div>
@@ -84,6 +100,7 @@ const emitClosePopup = () => {
                         <div class="flex-1 border-b border-border"></div>
                     </div>
                     <div class="w-full flex items-center justify-center">
+
                         <ButtonSignInOptions buttonType="sign-up-github"></ButtonSignInOptions>
                     </div>
                 </form>
