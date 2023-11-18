@@ -43,7 +43,7 @@ async function validateCreateForm () {
     statusPetitionContentError.value = false
     profanityDetected.value = false
 
-    profanityDetected.value = (await NinjasAPIProfFilter(createFormData.contentDescription.text)) || (await NinjasAPIProfFilter(createFormData.contentTitle.text))
+    //profanityDetected.value = (await NinjasAPIProfFilter(createFormData.contentDescription.text)) || (await NinjasAPIProfFilter(createFormData.contentTitle.text))
 
     /* All Fields must be populated */
     /* If all fields are populated it is a petition... submit it*/
@@ -53,7 +53,7 @@ async function validateCreateForm () {
         && (createFormData.contentTagStore.tagArray.length > 0)) 
     {
         /* Change content type to petition and call send function*/
-        submitPetitionForm()
+        await submitPetitionForm()
     }
     /* Field Is Missing Show Error */
     else {
@@ -96,17 +96,19 @@ function removeTag(tag: string){
 
 async function submitPetitionForm() {
     isLoading.value = true;
-    supabase
+    console.log('submitting form')
+
+    let status = await supabase
         .from('Petitions')
         .insert({
-            title: createFormData.contentTitle.text,
-            description: createFormData.contentDescription.text,
-            goal: createFormData.contentGoalSigners.contentText,
-            scope: createFormData.contentScope.scopeNumber,
-            tags: createFormData.contentTagStore.tagArray,
-            locked: createFormData.contentDescription.contentEditable,
-            userid: useAuthStore().session?.user.id
-        });
+            title: createFormData.contentTitle.text, 
+            description: createFormData.contentDescription.text, 
+            goal: createFormData.contentGoalSigners.contentText, 
+            scope: createFormData.contentScope.scopeNumber, 
+            tags: createFormData.contentTagStore.tagArray, 
+            locked: createFormData.contentDescription.contentEditable, 
+            userid: useAuthStore().session?.user.id});
+
     setTimeout(() => {
         isLoading.value = false;
         emitClosePopup();
