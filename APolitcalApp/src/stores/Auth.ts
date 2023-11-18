@@ -60,6 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout()
   {
     await supabase.auth.signOut();
+    router.push(process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173" )
   }
 
   async function signInWithCredentials(username: string | null, password: string | null)
@@ -80,7 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
     {
       const { data, error } = await supabase.auth.signInWithPassword({
         phone: username,
-        password: password
+        password: password,
       });
     }
   }
@@ -100,6 +101,7 @@ export const useAuthStore = defineStore('auth', () => {
         email: username,
         password: password,
         options: {
+          emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173", 
           data: {
             first_name: firstName,
             last_name: lastName,
@@ -108,6 +110,8 @@ export const useAuthStore = defineStore('auth', () => {
           }
         }
       })
+      console.log(error)
+      console.log(data)
     }
     else if (username.length == 10 && username.matchAll(new RegExp("[0-9]")))
     {
