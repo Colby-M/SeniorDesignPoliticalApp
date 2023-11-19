@@ -12,6 +12,10 @@ const props = defineProps({
     petitionId: {
         type: String,
         required: true
+    },
+    petitionLocked: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -19,10 +23,11 @@ const props = defineProps({
 
 <template>
     <RouterLink :to="{path: 'review', query: {id: petitionId}}">
-        <div class="group flex flex-row w-64 h-14 border-dark rounded-full border gap-4 items-center bg-light hover:border-dark duration-300">
+        <div class="group flex flex-row w-64 h-14 border-dark rounded-full border gap-4 items-center bg-light-highlight hover:border-dark duration-300">
             <div class="w-14 h-14 flex rounded-full items-center justify-center bg-dark">
                 <!-- TODO Replace Icon Base with link to users profile image (Work with backend to define this process) -->
-                <IconBase iconColor="static-light" iconName="locked" iconSize="large"></IconBase>
+                <IconBase v-if="petitionLocked" iconColor="static-light" iconName="locked" iconSize="large"></IconBase>
+                <IconBase v-if="!petitionLocked" iconColor="static-light" iconName="unlocked" iconSize="large"></IconBase>
             </div>
             <span class="text-dark font-normal text-sm">{{ petitionTitle }}</span>
         </div>
