@@ -29,6 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
   {
     supabase.auth.getSession().then(({ data }) => {
       session.value = data.session ?? undefined;
+      console.log(session.value)
     })
     router.replace({"query": {"email": undefined, "password": undefined}}).finally(() => {
       if (session.value != null && session.value != undefined)
@@ -36,7 +37,8 @@ export const useAuthStore = defineStore('auth', () => {
         if (router.currentRoute.value.name == "home")
         {
           // just signed in so go to profile
-          router.push("/profile");
+          console.log('sign')
+          router.push('/profile')
         }
       }
       else
@@ -68,14 +70,10 @@ export const useAuthStore = defineStore('auth', () => {
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
-      try {
-          await supabase.auth.signInWithPassword({
-          email: username,
-          password: password,
-        }).then(() => changedAuth());
-      } catch {
-        console.error("The login failed! Please try again!");
-      }
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: username,
+        password: password,
+      });
     }
     else if (username.length == 10)
     {
@@ -102,7 +100,7 @@ export const useAuthStore = defineStore('auth', () => {
         email: username,
         password: password,
         options: {
-          emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173",
+          emailRedirectTo: "http://localhost:5173/profile",
           captchaToken: token,
           data: {
             first_name: firstName,

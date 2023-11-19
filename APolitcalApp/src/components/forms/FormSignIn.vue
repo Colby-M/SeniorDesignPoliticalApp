@@ -72,7 +72,7 @@ const emitClosePopup = () => {
                     </div>
                     <!-- TODO: Add Redirect to Forgot Password Page -->
                     <a href="#" class="text-sm font-extralight justify-self-end text-dark hover:underline">Forgot password?</a>
-                    <button type="submit" @click="authStore.signInWithCredentials(input.username, input.password)" class="w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Sign in</button>
+                    <button type="button" @click="authStore.signInWithCredentials(input.username, input.password)" class="w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Sign in</button>
                     <div class="flex items-center">
                         <div class="flex-1 border-b border-border"></div>
                         <span class="px-2">or</span>

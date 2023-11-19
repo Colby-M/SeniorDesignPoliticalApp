@@ -4,6 +4,9 @@ import IconBase from '../icons/IconBase.vue';
 import {computed, reactive, ref } from 'vue';
 import HCaptcha from "@hcaptcha/vue3-hcaptcha"
 
+
+// RULES: MIN 6 Password length, not current user
+
 /* AUTH Components */
 import { useAuthStore } from '../../stores/Auth';
 
@@ -56,7 +59,6 @@ const emitClosePopup = () => {
     emit('close-popup');
 }
 
-/* TODO: Redirect to Discover Page on sign in */
 </script>
 
 <template>
@@ -92,7 +94,7 @@ const emitClosePopup = () => {
                     <!-- TODO: Add Redirect to Forgot Password Page -->
                     <div class="w-full flex flex-col gap-2 items-center justify-center">
                         <HCaptcha sitekey="10000000-ffff-ffff-ffff-000000000001" @verify="onVerify"></HCaptcha>
-                        <button type="button" @click="validateForm" class="w-1/2 mx-auto bg-dark/90 border font-medium text-sm border-border justify-self-auto text-light rounded-full hover:bg-dark/70 duration-300 p-2.5">Sign up</button>
+                        <button v-if="verified" type="button" @click="validateForm" class="w-1/2 mx-auto bg-dark/90 border font-medium text-sm border-border justify-self-auto text-light rounded-full hover:bg-dark/70 duration-300 p-2.5">Sign up</button>
                     </div>
                     <div class="flex items-center">
                         <div class="flex-1 border-b border-border"></div>

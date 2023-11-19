@@ -15,6 +15,8 @@
   const solutions = ref<ISolutionType[]>();
   const renderSolution = ref(false);
   const renderPetition = ref(false);
+
+  
   onMounted(async () => {
     // get our own petitions
     petitions.value = (await supabase
