@@ -96,7 +96,6 @@ export const useAuthStore = defineStore('auth', () => {
   async function signUp(
     username: string | null,
     password: string | null,
-    token: string,
     firstName: string | null = null,
     lastName: string | null = null,
     age: number | null = null,
@@ -111,7 +110,7 @@ export const useAuthStore = defineStore('auth', () => {
         password: password,
         options: {
           emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173",
-          captchaToken: token,
+          captchaToken: captchaToken.value,
           data: {
             first_name: firstName,
             last_name: lastName,
@@ -134,13 +133,33 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function passwordResetEmail(email: string)
+  {
+    if (captchaToken.value == undefined || captchaToken.value == null)
+    {
+      alert("Problem with captcha, please redo");
+      return;
+    }
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/password-reset" : "http://localhost:5173/password-reset",
+      captchaToken: captchaToken.value
+    })
+  }
+
+  async function passwordResetForAccount(newPassword: string)
+  {
+    await supabase.auth.updateUser({ password: newPassword });
+  }
+
   return {
     logout,
     session,
     captchaToken,
     signInWithCredentials,
     signInWithGithub,
-    signUp
+    signUp,
+    passwordResetEmail,
+    passwordResetForAccount
   }
 })
 

@@ -22,6 +22,7 @@ function onVerify(tokenStr: string, ekey: string) {
   token.value = tokenStr;
   eKey.value = ekey;
   console.log(`Callback token: ${tokenStr}, ekey: ${ekey}`);
+  authStore.captchaToken = token.value;
 }
 
 const input = reactive({
@@ -48,7 +49,7 @@ const emit = defineEmits(['close-popup']);
 const validateForm = () =>{
     /* passwords do not match, do not submit and warn the user */
     if(input.password === input.confirmPassword) {
-        authStore.signUp(input.username, input.password, token.value)
+        authStore.signUp(input.username, input.password)
     }
     else {
         input.validated = false;
