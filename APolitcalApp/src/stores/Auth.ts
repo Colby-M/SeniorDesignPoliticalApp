@@ -70,10 +70,14 @@ export const useAuthStore = defineStore('auth', () => {
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      try {
+        await supabase.auth.signInWithPassword({
         email: username,
         password: password,
-      });
+      }).then(() => changedAuth());
+    } catch {
+      console.error("The login failed! Please try again!");
+    }
     }
     else if (username.length == 10)
     {
@@ -96,7 +100,8 @@ export const useAuthStore = defineStore('auth', () => {
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
-      const { data, error } = await supabase.auth.signUp({
+      try { 
+        await supabase.auth.signUp({
         email: username,
         password: password,
         options: {
@@ -108,10 +113,12 @@ export const useAuthStore = defineStore('auth', () => {
             age: age,
             full_name: firstName + ' ' + lastName
           }
+          
         }
-      })
-      console.log(error)
-      console.log(data)
+      }).then( () => changedAuth())
+    }catch {
+      console.error("The login failed! Please try again!");
+    }
     }
     else if (username.length == 10 && username.matchAll(new RegExp("[0-9]")))
     {
