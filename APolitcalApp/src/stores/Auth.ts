@@ -29,6 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
   {
     supabase.auth.getSession().then(({ data }) => {
       session.value = data.session ?? undefined;
+      console.log(session.value)
     })
     router.replace({"query": {"email": undefined, "password": undefined}}).finally(() => {
       if (session.value != null && session.value != undefined)
@@ -36,7 +37,8 @@ export const useAuthStore = defineStore('auth', () => {
         if (router.currentRoute.value.name == "home")
         {
           // just signed in so go to profile
-          router.push("/profile");
+          console.log('sign')
+          router.push('/profile')
         }
       }
       else
@@ -60,6 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout()
   {
     await supabase.auth.signOut();
+    router.push(process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173" )
   }
 
   async function signInWithCredentials(username: string | null, password: string | null)
@@ -68,19 +71,19 @@ export const useAuthStore = defineStore('auth', () => {
     if (username.includes("@"))
     {
       try {
-          await supabase.auth.signInWithPassword({
-          email: username,
-          password: password,
-        }).then(() => changedAuth());
-      } catch {
-        console.error("The login failed! Please try again!");
-      }
+        await supabase.auth.signInWithPassword({
+        email: username,
+        password: password,
+      }).then(() => changedAuth());
+    } catch {
+      console.error("The login failed! Please try again!");
+    }
     }
     else if (username.length == 10)
     {
       const { data, error } = await supabase.auth.signInWithPassword({
         phone: username,
-        password: password
+        password: password,
       });
     }
   }
@@ -88,26 +91,34 @@ export const useAuthStore = defineStore('auth', () => {
   async function signUp(
     username: string | null,
     password: string | null,
+    token: string,
     firstName: string | null = null,
     lastName: string | null = null,
-    age: number | null = null
+    age: number | null = null,
   )
   {
     if (password == null || username == null) return;
     if (username.includes("@"))
     {
-      const { data, error } = await supabase.auth.signUp({
+      try { 
+        await supabase.auth.signUp({
         email: username,
         password: password,
         options: {
+          emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173",
+          captchaToken: token,
           data: {
             first_name: firstName,
             last_name: lastName,
             age: age,
             full_name: firstName + ' ' + lastName
           }
+          
         }
-      })
+      }).then( () => changedAuth())
+    }catch {
+      console.error("The login failed! Please try again!");
+    }
     }
     else if (username.length == 10 && username.matchAll(new RegExp("[0-9]")))
     {
@@ -126,3 +137,5 @@ export const useAuthStore = defineStore('auth', () => {
     signUp
   }
 })
+
+

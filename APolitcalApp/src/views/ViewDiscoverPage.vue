@@ -9,7 +9,9 @@
   import { useAuthStore } from '@/stores/Auth';
 
   const isLoadingPosts = ref(false)
+  const shouldNotLoadPosts = ref(false)
   const postArray = ref<IPetitionType[]>([])
+  const tempPostArray = ref<IPetitionType[]>([])
   const filter = ref(0);
 
   onMounted(async () => {
@@ -31,16 +33,23 @@
   })
 
   async function getPosts(numberPosts: number) {
+    tempPostArray.value = []
     isLoadingPosts.value = true
-
+  
     let { data, error } = await supabase
       .from('Petitions')
       .select<"*", IPetitionType>()
       .neq('userid', useAuthStore().session?.user.id)
       .eq('scope', filter.value)
       .range(postArray.value.length, postArray.value.length + numberPosts);
+    
+    /* Check if no petition are got... if so stop trying to load them */
+    tempPostArray.value.push(...data ?? []);
+    shouldNotLoadPosts.value = tempPostArray.value.length === 0 ? true : false;
+
     postArray.value.push(...data ?? []);
     isLoadingPosts.value = false;
+  
   }
 
   const handleScroll = () => {
@@ -52,7 +61,9 @@
     const scrollThreshold = 0.8;
 
     if (scrollY + offsetHeight >= scrollHeight * scrollThreshold && !isLoadingPosts.value) {
-      getPosts(10);
+      if (!shouldNotLoadPosts.value) {
+        getPosts(10);
+      }
     }
   }
 
