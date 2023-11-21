@@ -7,6 +7,8 @@ import router from '@/router';
 export const useAuthStore = defineStore('auth', () => {
 
   const session = ref<Session>();
+  const signingIn = ref(false);
+  const captchaToken = ref();
   supabase.auth.getSession().then(({ data }) => {
     session.value = data.session ?? undefined;
   })
@@ -25,32 +27,44 @@ export const useAuthStore = defineStore('auth', () => {
   // })
   supabase.auth.onAuthStateChange(() => changedAuth())
 
-  function changedAuth()
+  async function changedAuth()
   {
-    supabase.auth.getSession().then(({ data }) => {
-      session.value = data.session ?? undefined;
-      console.log(session.value)
-    })
-    router.replace({"query": {"email": undefined, "password": undefined}}).finally(() => {
-      if (session.value != null && session.value != undefined)
+    const data = await supabase.auth.getSession()
+    // .then(({ data }) => {
+    //   session.value = data.session ?? undefined;
+    //   console.log(session.value)
+    // })
+    if (data.error)
+    {
+      console.log(data.error);
+    }
+    console.log(data.data);
+    // console.log(signingIn);
+    session.value = data.data.session ?? undefined;
+    if (session.value != null && session.value != undefined)
       {
         if (router.currentRoute.value.name == "home")
         {
           // just signed in so go to profile
-          console.log('sign')
           router.push('/profile')
         }
       }
       else
       {
+        if (signingIn.value == true)
+        {
+          // failed to sign in
+          alert("Failed to sign in! Please try again.");
+        }
         // signed out or missing info so go to landing page
         router.push("/");
-      }
-    });
+    }
+    signingIn.value = false;
   }
 
   async function signInWithGithub()
   {
+    signingIn.value = true;
     await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
@@ -61,31 +75,22 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function logout()
   {
+    router.push("/");
     await supabase.auth.signOut();
-    router.push(process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173" )
   }
 
   async function signInWithCredentials(username: string | null, password: string | null)
   {
+    signingIn.value = true;
+    console.log(captchaToken.value);
     if (password == null || username == null) return;
-    if (username.includes("@"))
-    {
-      try {
-        await supabase.auth.signInWithPassword({
-        email: username,
-        password: password,
-      }).then(() => changedAuth());
-    } catch {
-      console.error("The login failed! Please try again!");
-    }
-    }
-    else if (username.length == 10)
-    {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        phone: username,
-        password: password,
-      });
-    }
+    const data = await supabase.auth.signInWithPassword({
+      email: username,
+      password: password,
+      options: { captchaToken: captchaToken.value }
+    });
+    console.log(data);
+    changedAuth();
   }
 
   async function signUp(
@@ -132,6 +137,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     logout,
     session,
+    captchaToken,
     signInWithCredentials,
     signInWithGithub,
     signUp

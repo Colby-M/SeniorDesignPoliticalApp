@@ -42,7 +42,7 @@ const visible = computed( () => {
     return props.isVisible
 })
 
-const emit = defineEmits();
+const emit = defineEmits(['close-popup']);
 
 
 const validateForm = () =>{
@@ -80,20 +80,20 @@ const emitClosePopup = () => {
                 <form class="space-y-6" action="#">
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-dark">Your email or Phone number</label>
-                        <input type="email" name="email" id="email" v-model="input.username" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="email or phone number" required="true">
+                        <input type="email" autocomplete="username" name="email" id="email" v-model="input.username" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="email or phone number" required="true">
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-dark">Password</label>
-                        <input type="password" name="password" id="password" v-model="input.password" @input="input.validated = true" placeholder="••••••••••••••••" class="bg-light border border-border text-dark rounded-lg text-small block w-full p-2.5 focus:border-dark" required="true">
+                        <input type="password" autocomplete="new-password" name="password" id="password" v-model="input.password" @input="input.validated = true" placeholder="••••••••••••••••" class="bg-light border border-border text-dark rounded-lg text-small block w-full p-2.5 focus:border-dark" required="true">
                     </div>
                     <div>
                         <label for="confirm password" class="block mb-2 text-sm font-medium text-dark">Confirm Password</label>
-                        <input type="password" name="confirm-password" id="confirm-password" v-model="input.confirmPassword" placeholder="confirm password" @input="input.validated = true" class="bg-light border border-border text-dark rounded-lg text-small block w-full p-2.5 focus:border-dark" required="true">
+                        <input type="password" name="confirm-password" autocomplete="new-password" id="confirm-password" v-model="input.confirmPassword" placeholder="confirm password" @input="input.validated = true" class="bg-light border border-border text-dark rounded-lg text-small block w-full p-2.5 focus:border-dark" required="true">
                         <p v-if="input.validated === false" class="text-sm font-normal justify-self-end text-dark">Passwords do not match</p>
                     </div>
                     <!-- TODO: Add Redirect to Forgot Password Page -->
                     <div class="w-full flex flex-col gap-2 items-center justify-center">
-                        <HCaptcha sitekey="10000000-ffff-ffff-ffff-000000000001" @verify="onVerify"></HCaptcha>
+                        <HCaptcha sitekey="ee05c211-2075-42da-8c04-abeb41edfb4d" @verify="onVerify"></HCaptcha>
                         <button v-if="verified" type="submit" @click="validateForm" class="w-1/2 mx-auto bg-dark/90 border font-medium text-sm border-border justify-self-auto text-light rounded-full hover:bg-dark/70 duration-300 p-2.5">Sign up</button>
                     </div>
                     <div class="flex items-center">

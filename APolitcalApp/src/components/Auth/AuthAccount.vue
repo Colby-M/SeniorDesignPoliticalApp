@@ -27,14 +27,14 @@ async function getProfile() {
 
     let { data, error, status } = await supabase
       .from('Profiles')
-      .select(`full_name, age`)
+      .select(`username, age`)
       .eq('id', user.id)
       .single();
 
     if (error && status !== 406) throw error;
 
     if (data) {
-      username.value = data.full_name;
+      username.value = data.username;
       age.value = data.age;
     }
   } catch (error) {
@@ -79,7 +79,7 @@ function signOut()
     </div>
     <div class="flex gap-2">
       <label for="username">Name</label>
-      <input id="username" type="text" class="bg-light border p-1" v-model="username" />
+      <input id="username" type="text" autocomplete="name" class="bg-light border p-1" v-model="username" />
     </div>
     <div class="flex gap-5">
       <label for="website">Age</label>
