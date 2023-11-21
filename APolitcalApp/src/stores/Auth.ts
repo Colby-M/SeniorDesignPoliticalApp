@@ -105,7 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
         email: username,
         password: password,
         options: {
-          emailRedirectTo: "http://localhost:5173/profile",
+          emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173",
           captchaToken: token,
           data: {
             first_name: firstName,
