@@ -37,7 +37,6 @@ export const useAuthStore = defineStore('auth', () => {
         if (router.currentRoute.value.name == "home")
         {
           // just signed in so go to profile
-          console.log('sign')
           router.push('/profile')
         }
       }

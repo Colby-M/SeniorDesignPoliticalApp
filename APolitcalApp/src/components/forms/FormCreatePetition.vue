@@ -100,7 +100,6 @@ function removeTag(tag: string){
 
 async function submitPetitionForm() {
     isLoading.value = true;
-    console.log('submitting form')
 
     let status = await supabase
         .from('Petitions')

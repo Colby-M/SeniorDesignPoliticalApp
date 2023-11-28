@@ -97,7 +97,6 @@ const petitionIsLocked = () => {
 function excludePost (petitionId: string) {
   /* List of posts to prevent duplicates */
   excludedPetitionIds.value.push(petitionId);
-  console.log(excludedPetitionIds.value)
 }
 
 function computeLikes (uservotes: Array<string> | null) {
