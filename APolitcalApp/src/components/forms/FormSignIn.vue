@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import ButtonSignInOptions from '../button/ButtonSignInOptions.vue';
 import IconBase from '../icons/IconBase.vue';
-import {computed, reactive } from 'vue';
+import {computed, reactive, ref } from 'vue';
+import HCaptcha from "@hcaptcha/vue3-hcaptcha";
 
 /* AUTH Components */
 import { useAuthStore } from '../../stores/Auth';
@@ -24,10 +25,26 @@ const visible = computed( () => {
     return props.isVisible
 })
 
-const emit = defineEmits();
+const emit = defineEmits(['close-popup']);
 
 const emitClosePopup = () => {
     emit('close-popup');
+}
+function resetPassword()
+{
+    if (input.username == undefined || input.username == null)
+    {
+        alert("Please input your username first then hit forgot password");
+    }
+    else if (authStore.captchaToken == undefined || authStore.captchaToken == null)
+    {
+        alert("Please do the captcha to reset your password.");
+    }
+    else
+    {
+        authStore.passwordResetEmail(input.username);
+        alert("Look for the email to reset the password.");
+    }
 }
 
 /* 
@@ -63,15 +80,16 @@ const emitClosePopup = () => {
                 </h1>
                 <form class="space-y-6" action="#">
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-dark">Your email or Phone number</label>
-                        <input type="email" name="email" id="email" v-model="input.username" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="email or phone number" required="true">
+                        <label for="email" class="block mb-2 text-sm font-medium text-dark">Your Email</label>
+                        <input type="email" autocomplete="username" name="email" id="email" v-model="input.username" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" placeholder="email or phone number" required="true">
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-dark">Password</label>
-                        <input type="password" name="password" id="password" v-model="input.password" placeholder="••••••••••••••••" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" required="true">
+                        <input type="password" autocomplete="current-password" name="password" id="password" v-model="input.password" placeholder="••••••••••••••••" class="bg-light border border-border text-dark text-sm rounded-lg block w-full p-2.5 focus:border-dark" required="true">
                     </div>
                     <!-- TODO: Add Redirect to Forgot Password Page -->
-                    <a href="#" class="text-sm font-extralight justify-self-end text-dark hover:underline">Forgot password?</a>
+                    <a @click="resetPassword" class="text-sm font-extralight justify-self-end text-dark hover:underline cursor-pointer">Forgot password?</a>
+                    <HCaptcha sitekey="ee05c211-2075-42da-8c04-abeb41edfb4d" @verify="(token: any) => authStore.captchaToken = token"></HCaptcha>
                     <button type="button" @click="authStore.signInWithCredentials(input.username, input.password)" class="w-1/2 mx-auto bg-highlight/90 border border-border text-light text-sm font-medium rounded-full block hover:bg-highlight/70 p-2.5 focus:border-dark">Sign in</button>
                     <div class="flex items-center">
                         <div class="flex-1 border-b border-border"></div>

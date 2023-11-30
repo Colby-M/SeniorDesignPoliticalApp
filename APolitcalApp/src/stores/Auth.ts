@@ -7,6 +7,8 @@ import router from '@/router';
 export const useAuthStore = defineStore('auth', () => {
 
   const session = ref<Session>();
+  const signingIn = ref(false);
+  const captchaToken = ref();
   supabase.auth.getSession().then(({ data }) => {
     session.value = data.session ?? undefined;
   })
@@ -25,32 +27,48 @@ export const useAuthStore = defineStore('auth', () => {
   // })
   supabase.auth.onAuthStateChange(() => changedAuth())
 
-  function changedAuth()
+  async function changedAuth()
   {
-    supabase.auth.getSession().then(({ data }) => {
-      session.value = data.session ?? undefined;
-      console.log(session.value)
-    })
-    router.replace({"query": {"email": undefined, "password": undefined}}).finally(() => {
-      if (session.value != null && session.value != undefined)
+    const data = await supabase.auth.getSession()
+    // .then(({ data }) => {
+    //   session.value = data.session ?? undefined;
+    //   console.log(session.value)
+    // })
+    if (data.error)
+    {
+      console.log(data.error);
+    }
+    console.log(data.data);
+    // console.log(signingIn);
+    session.value = data.data.session ?? undefined;
+    if (session.value != null && session.value != undefined)
       {
         if (router.currentRoute.value.name == "home")
         {
           // just signed in so go to profile
-          console.log('sign')
           router.push('/profile')
         }
       }
       else
       {
+        if (signingIn.value == true)
+        {
+          // failed to sign in
+          alert("Failed to sign in! Please try again.");
+        }
         // signed out or missing info so go to landing page
-        router.push("/");
-      }
-    });
+        if (router.currentRoute.value.name != "passwordReset")
+        {
+          console.log(router.currentRoute.value.name);
+          router.push("/");
+        }
+    }
+    signingIn.value = false;
   }
 
   async function signInWithGithub()
   {
+    signingIn.value = true;
     await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
@@ -61,37 +79,25 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function logout()
   {
+    router.push("/");
     await supabase.auth.signOut();
-    router.push(process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173" )
   }
 
   async function signInWithCredentials(username: string | null, password: string | null)
   {
+    signingIn.value = true;
     if (password == null || username == null) return;
-    if (username.includes("@"))
-    {
-      try {
-        await supabase.auth.signInWithPassword({
-        email: username,
-        password: password,
-      }).then(() => changedAuth());
-    } catch {
-      console.error("The login failed! Please try again!");
-    }
-    }
-    else if (username.length == 10)
-    {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        phone: username,
-        password: password,
-      });
-    }
+    const data = await supabase.auth.signInWithPassword({
+      email: username,
+      password: password,
+      options: { captchaToken: captchaToken.value }
+    });
+    changedAuth();
   }
 
   async function signUp(
     username: string | null,
     password: string | null,
-    token: string,
     firstName: string | null = null,
     lastName: string | null = null,
     age: number | null = null,
@@ -106,7 +112,7 @@ export const useAuthStore = defineStore('auth', () => {
         password: password,
         options: {
           emailRedirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/" : "http://localhost:5173",
-          captchaToken: token,
+          captchaToken: captchaToken.value,
           data: {
             first_name: firstName,
             last_name: lastName,
@@ -129,12 +135,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function passwordResetEmail(email: string)
+  {
+    if (captchaToken.value == undefined || captchaToken.value == null)
+    {
+      alert("Problem with captcha, please redo");
+      return;
+    }
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: process.env.NODE_ENV === 'production' ? "https://colby-m.github.io/SeniorDesignPoliticalApp/password-reset" : "http://localhost:5173/password-reset",
+      captchaToken: captchaToken.value
+    })
+  }
+
+  async function passwordResetForAccount(newPassword: string)
+  {
+    await supabase.auth.updateUser({ password: newPassword });
+    router.push("/");
+  }
+
   return {
     logout,
     session,
+    captchaToken,
     signInWithCredentials,
     signInWithGithub,
-    signUp
+    signUp,
+    passwordResetEmail,
+    passwordResetForAccount
   }
 })
 
