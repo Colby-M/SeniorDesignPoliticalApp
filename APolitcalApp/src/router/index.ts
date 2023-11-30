@@ -3,7 +3,7 @@ import LandingPageView from '../views/LandingPageView.vue'
 
 const router = createRouter({
   // history: createMemoryHistory(import.meta.env.BASE_URL),
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',

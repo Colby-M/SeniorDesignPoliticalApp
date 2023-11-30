@@ -21,6 +21,5 @@ export default defineConfig({
       }
     }
   },
-  base: process.env.NODE_ENV === 'production' ? "/SeniorDesignPoliticalApp/"
-  : "/"
+  base: process.env.BASE_URL
 })

@@ -57,7 +57,11 @@ export const useAuthStore = defineStore('auth', () => {
           alert("Failed to sign in! Please try again.");
         }
         // signed out or missing info so go to landing page
-        router.push("/");
+        if (router.currentRoute.value.name != "passwordReset")
+        {
+          console.log(router.currentRoute.value.name);
+          router.push("/");
+        }
     }
     signingIn.value = false;
   }
@@ -82,14 +86,12 @@ export const useAuthStore = defineStore('auth', () => {
   async function signInWithCredentials(username: string | null, password: string | null)
   {
     signingIn.value = true;
-    console.log(captchaToken.value);
     if (password == null || username == null) return;
     const data = await supabase.auth.signInWithPassword({
       email: username,
       password: password,
       options: { captchaToken: captchaToken.value }
     });
-    console.log(data);
     changedAuth();
   }
 
@@ -149,6 +151,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function passwordResetForAccount(newPassword: string)
   {
     await supabase.auth.updateUser({ password: newPassword });
+    router.push("/");
   }
 
   return {
