@@ -10,7 +10,7 @@ const sidebarData = ref([
     {text: 'Profile',   icon: 'profile',  path: 'profile'},
     {text: 'Discover',  icon: 'discover', path: 'discover'},
     {text: 'Review',    icon: 'review',   path: 'review'},
-    {text: 'Settings',  icon: 'settings', path: 'settings'},
+    /* Leaving here for future {text: 'Settings',  icon: 'settings', path: 'settings'}, */
 ]);
 
 
