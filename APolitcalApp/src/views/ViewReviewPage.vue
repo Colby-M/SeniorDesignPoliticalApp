@@ -153,6 +153,11 @@ async function denyPetition() {
 
 }
 
+async function nextPetition() {
+  excludePost(petitionContent.value.id);
+  getNextPost();
+}
+
 /*--------------------------------------
         Getter/Sender Functions
 ---------------------------------------*/
@@ -172,13 +177,16 @@ async function getNextPost() {
     .from('Petitions')
     .select<"*">()
     .range(0, 0)
+    .not('id', 'in', `(${excludedPetitionIds.value.join(',')})`)
+    .neq('userid', useAuthStore().session?.user.id)
     .single()
     
   petitionContent.value = data
+  postArray.value = [];
 
   getComments(petitionContent.value.id)
 /*
-    .not('id', 'in', `(${excludedPetitionIds.value.join(',')})`)
+
     .not('uservotes', 'cs', useAuthStore().session?.user.id)
     .neq('userid', useAuthStore().session?.user.id)
 */
@@ -210,7 +218,7 @@ async function getComments(petitionId: string){
 <template>
   <MainLayout>
     <template #ToolbarSlot>
-      <ToolbarReview @approve-petition="approvePetition" @deny-petition="denyPetition"></ToolbarReview>
+      <ToolbarReview @approve-petition="approvePetition" @deny-petition="denyPetition" @next-petition="nextPetition"></ToolbarReview>
     </template>
     <template #ContentSlot>
       <div id="discoverScroll" class="max-h-[100vh] w-full overflow-y-auto py-2" ref="scrollComponent">
@@ -225,13 +233,17 @@ async function getComments(petitionId: string){
                                   :petitionId="petitionContent.id" :petitionLocked="petitionContent.locked"  
                                   :petitionScope="petitionContent.scope" :petitionSummary="petitionContent.description"  
                                   :petitionTags="petitionContent.tags" :petitionSignatures="computeLikes(petitionContent.uservotes)"/>
+        </div>
           <div v-if="!petitionContent.locked" class="w-full flex flex-wrap gap-4 justify-center border-t border-dashed xxs:px-6 py-4 border-border h-96">
             <CardSolutionsPersonalSuggestion :linkedPetition="petitionContent.id" @re-render="getComments(petitionContent.id)"></CardSolutionsPersonalSuggestion>
             <CardSolutionsOtherSuggestions :original="true" :solutionID="petitionContent.id" :suggestionText="petitionContent.description" :uservotes="formatVoteArray(petitionContent.uservotes)"></CardSolutionsOtherSuggestions>
             <CardSolutionsOtherSuggestions :original="false" v-for="post in postArray" :solutionID="post.id" :suggestionText="post.description" :uservotes="formatVoteArray(post.uservotes)"></CardSolutionsOtherSuggestions>
           </div>
-        </div>
+        
       </div>
     </template>
   </MainLayout>
 </template>
+
+<style scoped>
+</style>

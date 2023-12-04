@@ -43,7 +43,11 @@ async function validateCreateForm () {
     statusPetitionContentError.value = false
     profanityDetected.value = false
 
-    //profanityDetected.value = (await NinjasAPIProfFilter(createFormData.contentDescription.text)) || (await NinjasAPIProfFilter(createFormData.contentTitle.text))
+    profanityDetected.value = (await NinjasAPIProfFilter(createFormData.contentDescription.text)) || (await NinjasAPIProfFilter(createFormData.contentTitle.text))
+
+    if (profanityDetected.value = true) {
+        return
+    }
 
     /* All Fields must be populated */
     /* If all fields are populated it is a petition... submit it*/
@@ -96,7 +100,6 @@ function removeTag(tag: string){
 
 async function submitPetitionForm() {
     isLoading.value = true;
-    console.log('submitting form')
 
     let status = await supabase
         .from('Petitions')
