@@ -45,7 +45,7 @@ async function validateCreateForm () {
 
     profanityDetected.value = (await NinjasAPIProfFilter(createFormData.contentDescription.text)) || (await NinjasAPIProfFilter(createFormData.contentTitle.text))
 
-    if (profanityDetected.value = true) {
+    if (profanityDetected.value === true) {
         return
     }
 
